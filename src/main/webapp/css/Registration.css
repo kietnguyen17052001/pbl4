@@ -1,0 +1,117 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: tahoma;
+}
+
+html {
+	font-size: 15px;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	background-color: #f5f6fa;
+}
+
+.container {
+	width: 80%;
+	height: 100vh;
+	margin-top: 5vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container .main {
+	width: 45%;
+	height: 100%;
+}
+
+.main .top-form, .bottom-form {
+	background-color: white;
+	border: 1px solid silver;
+	border-radius: 2px;
+	text-align: center;
+}
+
+.main .top-form {
+	height: 85%;
+}
+
+.main .top-form .name-app {
+	font-size: 2rem;
+	margin: 20px;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif
+}
+
+.main .top-form .form-signup input, .gender, .birthday {
+	display: block;
+	width: 70%;
+	margin-left: 15%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid silver;
+	margin-bottom: 10px;
+}
+
+.main .top-form .form-signup input:last-child {
+	margin-top: 20px;
+	background-color: #eb4d4b;
+	color: white;
+	border: 1px solid #eb4d4b;
+}
+
+.main .top-form .form-signup input:last-child:hover {
+	opacity: 0.9;
+	cursor: pointer;
+}
+
+.gender, .birthday {
+	text-align: left;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+}
+
+.gender p, .birthday p {
+	font-size: 0.9rem;
+	color: gray;
+	width: 20%;
+}
+
+.gender div, .birthday div {
+	width: 80%;
+}
+
+select {
+	padding: 5px;
+}
+
+.login {
+	text-decoration: none;
+}
+
+.name-app, input:last-child, .login {
+	font-weight: bold;
+}
+
+.main .bottom-form {
+	margin-top: 5%;
+	height: 10%;
+	position: relative;
+}
+
+.main .bottom-form p {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 0.9rem;
+}
+
+.main .bottom-form .login {
+	color: #eb4d4b;
+}

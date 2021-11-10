@@ -1,0 +1,113 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: tahoma;
+}
+
+html {
+	font-size: 15px;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	background-color: #f5f6fa;
+}
+
+.container {
+	width: 70%;
+	height: 80vh;
+	margin-top: 10vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container .left, .right {
+	width: 45%;
+	height: 90%;
+}
+
+.left img {
+	width: 100%;
+	height: 100%;
+}
+
+.right .top-form, .bottom-form {
+	background-color: white;
+	border: 1px solid silver;
+	border-radius: 2px;
+	text-align: center;
+}
+
+.right .top-form {
+	height: 75%;
+}
+
+.name-app {
+	font-size: 2.5rem;
+	margin: 20px;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif;
+}
+
+.form-login input {
+	display: block;
+	width: 70%;
+	margin-left: 15%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid silver;
+	margin-bottom: 10px;
+}
+
+.form-login input:last-child {
+	margin-top: 20px;
+	background-color: #eb4d4b;
+	color: white;
+	border: 1px solid #eb4d4b;
+}
+
+.form-login input:last-child:hover {
+	opacity: 0.9;
+	cursor: pointer;
+}
+
+.forgot-password {
+	margin-top: 20px;
+}
+
+.forgot-password, .sign-up {
+	text-decoration: none;
+}
+
+.right .top-form .other {
+	color: gray;
+}
+
+.right .top-form .forgot-password {
+	color: black;
+}
+
+.name-app, input:last-child, .sign-up {
+	font-weight: bold;
+}
+
+.right .bottom-form {
+	margin-top: 5%;
+	height: 20%;
+	position: relative;
+}
+
+.right .bottom-form p {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 0.9rem;
+}
+
+.right .bottom-form .sign-up {
+	color: #eb4d4b;
+}
