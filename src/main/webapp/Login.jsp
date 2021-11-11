@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Đăng nhập Sugar App</title>
 <link rel="stylesheet" href="css/Login.css" type="text/css" />
+<script src="js/Login_Registration.js"></script>
 </head>
 <body>
 	<div class="container">

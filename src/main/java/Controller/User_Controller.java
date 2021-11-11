@@ -1,6 +1,6 @@
 package Controller;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.User_DAO;
-import Model.User;
+import Model.BEAN.User;
+import Model.BO.User_BO;
 
 /**
  * Servlet implementation class User_Controller
@@ -37,6 +37,8 @@ public class User_Controller extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		// PrintWriter out = response.getWriter();
 		String type = request.getParameter("type");
 		switch (type) {
 		case "create":
@@ -44,7 +46,10 @@ public class User_Controller extends HttpServlet {
 				createUser(request, response);
 				request.getRequestDispatcher("Login.jsp").forward(request, response);
 			} catch (Exception e) {
-				response.sendRedirect("Registration.jsp");
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Invalid information!');");
+				out.println("location='Registration.jsp';");
+				out.println("</script>");
 				System.out.println(e.getMessage());
 			}
 			break;
@@ -53,10 +58,12 @@ public class User_Controller extends HttpServlet {
 				if (login(request, response)) { // login successful
 					request.getRequestDispatcher("Main.jsp").forward(request, response);
 				} else {
-					response.sendRedirect("Login.jsp");
+					out.println("<script type=\"text/javascript\">");
+					out.println("alert('User or password incorrect!');");
+					out.println("location='Login.jsp';");
+					out.println("</script>");
 				}
 			} catch (Exception e) {
-				response.sendRedirect("Login.jsp");
 				System.out.println(e.getMessage());
 			}
 			break;
@@ -88,10 +95,28 @@ public class User_Controller extends HttpServlet {
 				+ request.getParameter("year");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dBirthday = sdf.parse(birthday);
+		if (username == "") {
+			username = null;
+		}
+		if (firstname == "") {
+			firstname = null;
+		}
+		if (lastname == "") {
+			lastname = null;
+		}
+		if (email == "") {
+			email = null;
+		}
+		if (phone == "") {
+			phone = null;
+		}
+		if (password == "") {
+			password = null;
+		}
 		User user = new User(1, "user", username, firstname, lastname, gender, password, email, phone, null, dBirthday,
 				null, null, null, null, null, null, null, null, 0, 0, new Date(), new Date());
 		// call add_user() in User_DAO
-		User_DAO.getInstance().add_user(user);
+		User_BO.getInstance().addUser(user);
 	}
 
 	// login
@@ -99,6 +124,6 @@ public class User_Controller extends HttpServlet {
 		String username_phone_mail = request.getParameter("username_phone_mail");
 		String password = request.getParameter("password");
 		// call login() in User_DAO
-		return User_DAO.getInstance().login(username_phone_mail, password);
+		return User_BO.getInstance().login(username_phone_mail, password);
 	}
 }

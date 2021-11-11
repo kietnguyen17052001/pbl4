@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Đăng ký tài khoản Sugar App</title>
 <link rel="stylesheet" href="css/Registration.css" type="text/css" />
+<script src="js/Login_Registration.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -13,7 +14,8 @@
 			<div class="top-form">
 				<p class="name-app">SUGAR APP</p>
 				<div class="form-signup">
-					<form action="User_Controller?type=create" method="post">
+					<form action="User_Controller?type=create" method="post"
+						name="registration">
 						<input type="text" name="lastname" placeholder="Họ"> <input
 							type="text" name="firstname" placeholder="Tên"> <input
 							type="text" name="email" placeholder="Email"> <input
