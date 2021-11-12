@@ -36,7 +36,7 @@ public class User_Controller extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		// PrintWriter out = response.getWriter();
 		String type = request.getParameter("type");
@@ -60,9 +60,11 @@ public class User_Controller extends HttpServlet {
 				if (isExistUsername_phone_mail(request, response)) { // username or phone or email exist in db
 					getServletContext().getRequestDispatcher("/Registration.jsp").forward(request, response);
 				} else {
+					createUser(request, response);
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		case "edit":

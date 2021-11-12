@@ -26,16 +26,16 @@
 				<ul>
 					<li class="home"><a
 						href="User_Controller?type=home&userId=<%=userId%>"
-						target="center-main"><i class="fas fa-home"></i></a></li>
+						><i class="fas fa-home"></i></a></li>
 					<li class="message"><a
 						href="User_Controller?type=message&userId=<%=userId%>"
-						target="center-main"><i class="far fa-comments"></i></a></li>
+						><i class="far fa-comments"></i></a></li>
 					<li class="follow"><a
 						href="User_Controller?type=follow&userId=<%=userId%>"><i
 							class="far fa-heart"></i></a></li>
 					<li class="profile"><a
 						href="User_Controller?type=profile&userId=<%=userId%>"
-						target="center-main"><i class="far fa-user"></i></a></li>
+						><i class="far fa-user"></i></a></li>
 				</ul>
 			</div>
 		</div>
