@@ -5,25 +5,32 @@
 	font-family: tahoma;
 }
 
+body {
+	background-color: #f5f6fa;
+}
+
 html {
 	font-size: 15px;
 }
 
-.top-page, .main-page {
+.top-page, .main-page, bottom-page {
 	width: 100%;
 }
 
-.box-top, .box-main {
+.box-top, .box-main, .box-bottom {
 	width: 70%;
 	margin-left: 15%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	display: flex;
-	display: flex;
+}
+
+.box-top {
+	background-color: white;
 }
 
 .top-page {
+	background-color: white;
 	height: 10vh;
 	border-bottom: 1px solid silver;
 }
@@ -44,20 +51,31 @@ html {
 	border: 1px solid silver;
 }
 
-.option ul li {
+.option ul li, .box-bottom ul li {
 	display: inline-block;
 	list-style: none;
 	margin-left: 15px;
 }
 
-.option ul li a {
+.option ul li a, .box-bottom ul li a {
 	text-decoration: none;
 	color: black;
+}
+
+.option ul li a {
 	font-size: 2rem;
 }
 
+.box-bottom ul li a {
+	font-size: 0.8rem;
+	color: silver;
+}
+
+.box-bottom ul li a:hover {
+	border-bottom: 1px solid silver;
+}
+
 .main-page {
-	background-color: #f5f6fa;
 	flex-direction: column;
 }
 
@@ -97,4 +115,8 @@ html {
 .num-post, .num-follower, .num-following {
 	text-decoration: none;
 	color: black;
+}
+
+.box-bottom {
+	justify-content: center;
 }

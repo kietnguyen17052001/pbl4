@@ -20,7 +20,7 @@
 				<a href="#" target="top-main">Suger App</a>
 			</div>
 			<div class="search">
-				<input type="text" placeholder="search">
+				<input type="text" placeholder="Search">
 			</div>
 			<div class="option">
 				<ul>

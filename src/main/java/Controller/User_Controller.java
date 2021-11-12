@@ -70,17 +70,17 @@ public class User_Controller extends HttpServlet {
 		case "home":
 			userId = request.getParameter("userId");
 			request.setAttribute("userId", userId);
-			getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
 			break;
 		case "message":
 			userId = request.getParameter("userId");
 			request.setAttribute("userId", userId);
-			getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
 			break;
 		case "follow":
 			userId = request.getParameter("userId");
 			request.setAttribute("userId", userId);
-			getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/FollowPage.jsp").forward(request, response);
 			break;
 		case "profile":
 			userId = request.getParameter("userId");

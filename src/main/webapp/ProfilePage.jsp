@@ -21,7 +21,7 @@
 				<a href="#" target="top-main">Suger App</a>
 			</div>
 			<div class="search">
-				<input type="text" placeholder="search">
+				<input type="text" placeholder="Search">
 			</div>
 			<div class="option">
 				<ul>
@@ -72,6 +72,24 @@
 				</div>
 			</div>
 			<div class="post-user"></div>
+		</div>
+	</div>
+	<div class="bottom-page">
+		<div class="box-bottom">
+			<div class="team-member">
+				<ul>
+					<li><a href="#">Nguyen Dang Kiet</a></li>
+					<li><a href="#">Duong Dinh Thanh</a></li>
+					<li><a href="#">Nguyen Tan Sy</a></li>
+				</ul>
+			</div>
+			<div class="university">
+				<ul>
+					<li><a href="#">Da Nang University of Technology</a></li>
+					<li><a href="#">IT Falcuty</a></li>
+					<li><a href="#">PBL4</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>
