@@ -10,6 +10,7 @@ public class User_DAO {
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
+	private String querySelect = "Select * from Users";
 	private static User_DAO instance;
 
 	public static User_DAO getInstance() throws Exception {
@@ -34,9 +35,21 @@ public class User_DAO {
 		return sbuilder.toString().toUpperCase();
 	}
 
+	// exist username or phone or mail
+	public boolean isExistUsername_phone_mail(String information) throws Exception {
+		String query = querySelect + " where userName = ? or mobilePhone = ? or email = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, encrypt(information));
+		ps.setString(2, information);
+		ps.setString(3, information);
+		rs = ps.executeQuery();
+		return rs.next();
+	}
+
 	// insert new user
 	public void addUser(User user) throws Exception {
-		String query = "Insert into Users values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String query = "Insert into Users values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, user.getUser_type());
@@ -45,7 +58,7 @@ public class User_DAO {
 		ps.setString(4, user.getLast_name());
 		ps.setInt(5, user.getGender());
 		ps.setString(6, encrypt(user.getPassword()));
-		ps.setString(7, encrypt(user.getEmail()));
+		ps.setString(7, user.getEmail());
 		ps.setString(8, user.getPhone());
 		ps.setString(9, user.getCity());
 		ps.setObject(10, user.getBirthday());
@@ -57,23 +70,55 @@ public class User_DAO {
 		ps.setString(16, user.getFacebook());
 		ps.setString(17, user.getInstagram());
 		ps.setString(18, user.getUser_status());
-		ps.setInt(19, user.getFollowing());
-		ps.setInt(20, user.getFollower());
-		ps.setObject(21, user.getRegistered_date());
-		ps.setObject(22, user.getUpdated_date());
+		ps.setInt(19, user.getPost());
+		ps.setInt(20, user.getFollowing());
+		ps.setInt(21, user.getFollower());
+		ps.setObject(22, user.getRegistered_date());
+		ps.setObject(23, user.getUpdated_date());
 		ps.executeUpdate();
 	}
 
 	// login
-	public boolean login(String username_phone_mail, String password) throws Exception {
-		String query = "Select * from Users where (userName = ? or mobilePhone = ? or email = ?) and password_sha = ?";
+	public boolean isExistUser(String username_phone_mail, String password) throws Exception {
+		String query = querySelect + " where (userName = ? or mobilePhone = ? or email = ?) and password_sha = ?";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, encrypt(username_phone_mail));
 		ps.setString(2, username_phone_mail);
-		ps.setString(3, encrypt(username_phone_mail));
+		ps.setString(3, username_phone_mail);
 		ps.setString(4, encrypt(password));
 		rs = ps.executeQuery();
 		return rs.next();
+	}
+
+	// get id user
+	public String getUserId(String username_phone_mail) throws Exception {
+		String query = querySelect + " where userName = ? or mobilePhone = ? or email = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, encrypt(username_phone_mail));
+		ps.setString(2, username_phone_mail);
+		ps.setString(3, username_phone_mail);
+		rs = ps.executeQuery();
+		rs.next();
+		return rs.getString("userId");
+	}
+
+	// get user by id
+	public User getUserById(String id) throws Exception {
+		String query = querySelect + " where userId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, id);
+		rs = ps.executeQuery();
+		rs.next();
+		User user = new User(rs.getInt("userId"), rs.getString("userType"), rs.getString("userName"),
+				rs.getString("firstName"), rs.getString("lastName"), rs.getInt("gender"), rs.getString("password_sha"),
+				rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"), rs.getObject("birthday"),
+				rs.getString("photo").getBytes(), rs.getString("about"), rs.getString("passions"), rs.getString("job"),
+				rs.getString("company"), rs.getString("facebook"), rs.getString("instargram"),
+				rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
+				rs.getObject("registeredDate"), rs.getObject("updateDate"));
+		return user;
 	}
 }

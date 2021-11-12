@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Đăng ký tài khoản Sugar App</title>
+<title>Register</title>
 <link rel="stylesheet" href="css/Registration.css" type="text/css" />
 <script src="js/Login_Registration.js"></script>
 </head>
@@ -16,14 +16,14 @@
 				<div class="form-signup">
 					<form action="User_Controller?type=create" method="post"
 						name="registration">
-						<input type="text" name="lastname" placeholder="Họ"> <input
-							type="text" name="firstname" placeholder="Tên"> <input
-							type="text" name="email" placeholder="Email"> <input
-							type="text" name="phone" placeholder="Số điện thoại"> <input
-							type="text" name="username" placeholder="Tên người dùng">
-						<input type="password" name="password" placeholder="Mật khẩu">
+						<input type="text" name="lastname" placeholder="Last name">
+						<input type="text" name="firstname" placeholder="First name">
+						<input type="text" name="email" placeholder="Email"> <input
+							type="text" name="phone" placeholder="Phone number"> <input
+							type="text" name="username" placeholder="Username"> <input
+							type="password" name="password" placeholder="Password">
 						<div class="birthday">
-							<p>Sinh nhật</p>
+							<p>Birthday</p>
 							<div>
 								<select name="day" id="">
 									<option value="01">1</option>
@@ -58,18 +58,18 @@
 									<option value="30">30</option>
 									<option value="31">31</option>
 								</select> <select name="month" id="">
-									<option value="01">Tháng 1</option>
-									<option value="02">Tháng 2</option>
-									<option value="03">Tháng 3</option>
-									<option value="04">Tháng 4</option>
-									<option value="05">Tháng 5</option>
-									<option value="06">Tháng 6</option>
-									<option value="07">Tháng 7</option>
-									<option value="08">Tháng 8</option>
-									<option value="09">Tháng 9</option>
-									<option value="10">Tháng 10</option>
-									<option value="11">Tháng 11</option>
-									<option value="12">Tháng 12</option>
+									<option value="01">January</option>
+									<option value="02">February</option>
+									<option value="03">March</option>
+									<option value="04">April</option>
+									<option value="05">May</option>
+									<option value="06">June</option>
+									<option value="07">July</option>
+									<option value="08">August</option>
+									<option value="09">September</option>
+									<option value="10">October</option>
+									<option value="11">November</option>
+									<option value="12">December</option>
 								</select> <select name="year" id="">
 									<option value="2021">2021</option>
 									<option value="2020">2020</option>
@@ -122,22 +122,22 @@
 							</div>
 						</div>
 						<div class="gender">
-							<p>Giới tính</p>
+							<p>Gender</p>
 							<div>
 								<select name="gender">
-									<option value="1">Nam</option>
-									<option value="0">Nữ</option>
-									<option value="3">Khác</option>
+									<option value="1">Male</option>
+									<option value="0">Female</option>
+									<option value="3">Other</option>
 								</select>
 							</div>
 						</div>
-						<input type="submit" value="Đăng ký">
+						<input type="submit" value="Register">
 					</form>
 				</div>
 			</div>
 			<div class="bottom-form">
 				<p>
-					Bạn có tài khoản? <a href="Login.jsp" class="login">Đăng nhập</a>
+					Do you have an account? <a href="Login.jsp" class="login">Login</a>
 				</p>
 			</div>
 		</div>

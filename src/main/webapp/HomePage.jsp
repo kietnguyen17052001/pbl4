@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="Model.BEAN.User"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://kit.fontawesome.com/89a4fa0ef7.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/Page.css" type="text/css">
+<title>Sugar App</title>
+</head>
+<body>
+	<%
+	String userId = (String) request.getAttribute("userId");
+	%>
+	<div class="top-page">
+		<div class="box-top">
+			<div class="name-app">
+				<a href="#" target="top-main">Suger App</a>
+			</div>
+			<div class="search">
+				<input type="text" placeholder="search">
+			</div>
+			<div class="option">
+				<ul>
+					<li class="home"><a
+						href="User_Controller?type=home&userId=<%=userId%>"
+						target="center-main"><i class="fas fa-home"></i></a></li>
+					<li class="message"><a
+						href="User_Controller?type=message&userId=<%=userId%>"
+						target="center-main"><i class="far fa-comments"></i></a></li>
+					<li class="follow"><a
+						href="User_Controller?type=follow&userId=<%=userId%>"><i
+							class="far fa-heart"></i></a></li>
+					<li class="profile"><a
+						href="User_Controller?type=profile&userId=<%=userId%>"
+						target="center-main"><i class="far fa-user"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="main-page"></div>
+</body>
+</html>

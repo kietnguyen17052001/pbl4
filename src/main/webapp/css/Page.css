@@ -1,0 +1,100 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: tahoma;
+}
+
+html {
+	font-size: 15px;
+}
+
+.top-page, .main-page {
+	width: 100%;
+}
+
+.box-top, .box-main {
+	width: 70%;
+	margin-left: 15%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	display: flex;
+	display: flex;
+}
+
+.top-page {
+	height: 10vh;
+	border-bottom: 1px solid silver;
+}
+
+.name-app a {
+	text-decoration: none;
+	color: #eb4d4b;
+	font-size: 2.5rem;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif;
+}
+
+.search input {
+	display: block;
+	padding: 5px;
+	width: 250px;
+	border-radius: 5px;
+	border: 1px solid silver;
+}
+
+.option ul li {
+	display: inline-block;
+	list-style: none;
+	margin-left: 15px;
+}
+
+.option ul li a {
+	text-decoration: none;
+	color: black;
+	font-size: 2rem;
+}
+
+.main-page {
+	background-color: #f5f6fa;
+	flex-direction: column;
+}
+
+.user, .about-user {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.user {
+	border-bottom: 1px solid silver;
+}
+
+.left {
+	margin-right: 100px;
+}
+
+.right table tr td {
+	padding: 10px;
+	text-align: center;
+}
+
+.edit-profile {
+	background-color: white;
+	border: 1px solid silver;
+	border-radius: 5px;
+	padding: 5px;
+	width: 200px;
+	font-weight: bold;
+}
+
+.edit-profile:hover {
+	cursor: pointer;
+}
+
+.num-post, .num-follower, .num-following {
+	text-decoration: none;
+	color: black;
+}

@@ -20,6 +20,7 @@ public class User {
 	private String facebook;
 	private String instagram;
 	private String user_status;
+	private int post; // so luong bai viet
 	private int following; // so luong nguoi ma ban theo doi
 	private int follower; // so luong nguoi theo doi ban
 	private Object registered_date;
@@ -27,7 +28,7 @@ public class User {
 
 	public User(int user_id, String user_type, String user_name, String first_name, String last_name, int gender,
 			String password, String email, String phone, String city, Object birthday, byte[] photo, String about,
-			String passion, String job, String company, String facebook, String instagram, String user_status,
+			String passion, String job, String company, String facebook, String instagram, String user_status, int post,
 			int following, int follower, Object registered_date, Object updated_date) {
 		this.user_id = user_id;
 		this.user_type = user_type;
@@ -48,6 +49,7 @@ public class User {
 		this.facebook = facebook;
 		this.instagram = instagram;
 		this.user_status = user_status;
+		this.post = post;
 		this.following = following;
 		this.follower = follower;
 		this.registered_date = registered_date;
@@ -236,6 +238,14 @@ public class User {
 
 	public void setUpdated_date(Object updated_date) {
 		this.updated_date = updated_date;
+	}
+
+	public int getPost() {
+		return post;
+	}
+
+	public void setPost(int post) {
+		this.post = post;
 	}
 
 }

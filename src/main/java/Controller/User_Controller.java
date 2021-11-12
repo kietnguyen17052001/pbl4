@@ -36,38 +36,60 @@ public class User_Controller extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		// PrintWriter out = response.getWriter();
 		String type = request.getParameter("type");
+		String userId;
 		switch (type) {
-		case "create":
-			try {
-				createUser(request, response);
-				request.getRequestDispatcher("Login.jsp").forward(request, response);
-			} catch (Exception e) {
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Invalid information!');");
-				out.println("location='Registration.jsp';");
-				out.println("</script>");
-				System.out.println(e.getMessage());
-			}
-			break;
 		case "login":
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
 			try {
-				if (login(request, response)) { // login successful
-					request.getRequestDispatcher("Main.jsp").forward(request, response);
+				if (User_BO.getInstance().isExistUser(username, password)) {
+					userId = User_BO.getInstance().getIdUser(username);
+					request.setAttribute("userId", userId);
+					getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
 				} else {
-					out.println("<script type=\"text/javascript\">");
-					out.println("alert('User or password incorrect!');");
-					out.println("location='Login.jsp';");
-					out.println("</script>");
+					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+			}
+		case "create":
+			try {
+				if (isExistUsername_phone_mail(request, response)) { // username or phone or email exist in db
+					getServletContext().getRequestDispatcher("/Registration.jsp").forward(request, response);
+				} else {
+					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+				}
+			} catch (Exception e) {
 			}
 			break;
-		case "update":
+		case "edit":
+			break;
+		case "home":
+			userId = request.getParameter("userId");
+			request.setAttribute("userId", userId);
+			getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			break;
+		case "message":
+			userId = request.getParameter("userId");
+			request.setAttribute("userId", userId);
+			getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			break;
+		case "follow":
+			userId = request.getParameter("userId");
+			request.setAttribute("userId", userId);
+			getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			break;
+		case "profile":
+			userId = request.getParameter("userId");
+			try {
+				User user = User_BO.getInstance().getUserById(userId);
+				request.setAttribute("user", user);
+				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			} catch (Exception e) {
+			}
 			break;
 		}
 	}
@@ -113,17 +135,21 @@ public class User_Controller extends HttpServlet {
 		if (password == "") {
 			password = null;
 		}
-		User user = new User(1, "user", username, firstname, lastname, gender, password, email, phone, null, dBirthday,
-				null, null, null, null, null, null, null, null, 0, 0, new Date(), new Date());
+		User user = new User(1, "user", username, firstname, lastname, gender, password, email, phone, "", dBirthday,
+				new byte[2048], "", "", "", "", "", "", "", 0, 0, 0, new Date(), new Date());
 		// call add_user() in User_DAO
 		User_BO.getInstance().addUser(user);
 	}
 
-	// login
-	public boolean login(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String username_phone_mail = request.getParameter("username_phone_mail");
-		String password = request.getParameter("password");
-		// call login() in User_DAO
-		return User_BO.getInstance().login(username_phone_mail, password);
+	// ---- functions ----
+	// check exist username or phone or mail
+	public boolean isExistUsername_phone_mail(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String username = request.getParameter("username");
+		String phone = request.getParameter("phone");
+		String email = request.getParameter("email");
+		return (User_BO.getInstance().isExistUsername_phone_mail(username)
+				|| User_BO.getInstance().isExistUsername_phone_mail(phone)
+				|| User_BO.getInstance().isExistUsername_phone_mail(email)) ? true : false;
 	}
 }
