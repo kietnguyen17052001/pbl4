@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%
-	String userId = (String) request.getAttribute("userId");
+	int userId = (int) request.getAttribute("userId");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -25,17 +25,20 @@
 			<div class="option">
 				<ul>
 					<li class="home"><a
-						href="User_Controller?type=home&userId=<%=userId%>"
-						><i class="fas fa-home"></i></a></li>
+						href="User_Controller?type=home&userId=<%=userId%>"><i
+							class="fas fa-home"></i></a></li>
 					<li class="message"><a
-						href="User_Controller?type=message&userId=<%=userId%>"
-						><i class="far fa-comments"></i></a></li>
+						href="User_Controller?type=message&userId=<%=userId%>"><i
+							class="far fa-comments"></i></a></li>
 					<li class="follow"><a
 						href="User_Controller?type=follow&userId=<%=userId%>"><i
 							class="far fa-heart"></i></a></li>
 					<li class="profile"><a
-						href="User_Controller?type=profile&userId=<%=userId%>"
-						><i class="far fa-user"></i></a></li>
+						href="User_Controller?type=profile&userId=<%=userId%>"><i
+							class="far fa-user"></i></a></li>
+					<li class="profile"><a
+						href="User_Controller?type=profile&logout=<%=userId%>"><i
+							class="fas fa-sign-out-alt"></i></a></li>
 				</ul>
 			</div>
 		</div>

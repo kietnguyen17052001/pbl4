@@ -13,7 +13,7 @@
 <body>
 	<%
 	User user = (User) request.getAttribute("user");
-	String userId = String.valueOf(user.getUser_id());
+	int userId = user.getUser_id();
 	String name = user.getLast_name() + " " + user.getFirst_name();
 	%>
 	<div class="top-page">
@@ -38,6 +38,9 @@
 					<li class="profile"><a
 						href="User_Controller?type=profile&userId=<%=userId%>"><i
 							class="far fa-user"></i></a></li>
+					<li class="profile"><a
+						href="User_Controller?type=logout&userId=<%=userId%>"><i
+							class="fas fa-sign-out-alt"></i></a></li>
 				</ul>
 			</div>
 		</div>
@@ -46,18 +49,23 @@
 		<div class="box-main">
 			<div class="user">
 				<div class="left">
-					<img alt="facebook.com" src="avatar">
+					<img class="avatar" alt="Avatar"
+						src="https://kenh14cdn.com/thumb_w/660/2016/3dcc66393deb9300b9998fa1-1463811400750.jpg">
 				</div>
 				<div class="right">
 					<table>
 						<tr>
-							<td><%=name%></td>
+							<td class="name-user"><%=name%></td>
 							<td>
 								<form action="" method="post">
 									<input class="edit-profile" type="submit" value="Edit profile">
 								</form>
 							</td>
-							<td></td>
+							<td>
+								<form action="" method="post">
+									<input class="up-post" type="submit" value="New post">
+								</form>
+							</td>
 						</tr>
 						<tr>
 							<td class="num-post"><strong><%=user.getPost()%></strong>
@@ -69,7 +77,34 @@
 							</td>
 						</tr>
 					</table>
-					<div class="about-user"></div>
+					<div class="about-user">
+						<%
+						if (!user.getAbout().equals("")) {
+						%>
+						<p>
+							<strong>About me: </strong><%=user.getAbout()%></p>
+						<%
+						}
+						%>
+						<%
+						if (!user.getFacebook().equals("")) {
+						%>
+						<p>
+							<strong>Facebook: </strong><a href="<%=user.getFacebook()%>"><%=user.getFacebook()%></a>
+						</p>
+						<%
+						}
+						%>
+						<%
+						if (!user.getInstagram().equals("")) {
+						%>
+						<p>
+							<strong>Instagram: </strong><a href="<%=user.getInstagram()%>"><%=user.getInstagram()%></a>
+						</p>
+						<%
+						}
+						%>
+					</div>
 				</div>
 			</div>
 			<div class="post-user"></div>
@@ -79,15 +114,20 @@
 		<div class="box-bottom">
 			<div class="team-member">
 				<ul>
-					<li><a href="#">Nguyen Dang Kiet</a></li>
-					<li><a href="#">Duong Dinh Thanh</a></li>
-					<li><a href="#">Nguyen Tan Sy</a></li>
+					<li><a href="https://www.facebook.com/user001111000101/">Nguyen
+							Dang Kiet</a></li>
+					<li><a href="https://www.facebook.com/thanh2931">Duong
+							Dinh Thanh</a></li>
+					<li><a
+						href="https://www.facebook.com/profile.php?id=100008118754465">Nguyen
+							Tan Sy</a></li>
 				</ul>
 			</div>
 			<div class="university">
 				<ul>
-					<li><a href="#">Da Nang University of Technology</a></li>
-					<li><a href="#">IT Falcuty</a></li>
+					<li><a href="http://dut.udn.vn/">Da Nang University of
+							Technology</a></li>
+					<li><a href="http://dut.udn.vn/KhoaCNTT">IT Falcuty</a></li>
 					<li><a href="#">PBL4</a></li>
 				</ul>
 			</div>

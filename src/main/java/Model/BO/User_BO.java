@@ -31,13 +31,18 @@ public class User_BO {
 		return User_DAO.getInstance().isExistUser(username_phone_mail, password);
 	}
 
+	// change user status
+	public void changeUserStatus(int userId, boolean isLogin) throws Exception {
+		User_DAO.getInstance().changeUserStatus(userId, isLogin);
+	}
+
 	// get id user
-	public String getIdUser(String username_phone_mail) throws Exception {
+	public int getIdUser(String username_phone_mail) throws Exception {
 		return User_DAO.getInstance().getUserId(username_phone_mail);
 	}
 
 	// get user
-	public User getUserById(String userId) throws Exception {
+	public User getUserById(int userId) throws Exception {
 		return User_DAO.getInstance().getUserById(userId);
 	}
 }

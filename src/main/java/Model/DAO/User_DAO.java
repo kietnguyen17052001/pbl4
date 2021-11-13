@@ -78,6 +78,17 @@ public class User_DAO {
 		ps.executeUpdate();
 	}
 
+	// change user status
+	public void changeUserStatus(int userId, boolean isLogin) throws Exception {
+		String query = "Update Users set userStatus = ? where userId = ?";
+		String status = isLogin ? "online" : "offline";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, status);
+		ps.setInt(2, userId);
+		ps.executeUpdate();
+	}
+
 	// login
 	public boolean isExistUser(String username_phone_mail, String password) throws Exception {
 		String query = querySelect + " where (userName = ? or mobilePhone = ? or email = ?) and password_sha = ?";
@@ -92,7 +103,7 @@ public class User_DAO {
 	}
 
 	// get id user
-	public String getUserId(String username_phone_mail) throws Exception {
+	public int getUserId(String username_phone_mail) throws Exception {
 		String query = querySelect + " where userName = ? or mobilePhone = ? or email = ?";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
@@ -101,15 +112,15 @@ public class User_DAO {
 		ps.setString(3, username_phone_mail);
 		rs = ps.executeQuery();
 		rs.next();
-		return rs.getString("userId");
+		return rs.getInt("userId");
 	}
 
 	// get user by id
-	public User getUserById(String id) throws Exception {
+	public User getUserById(int id) throws Exception {
 		String query = querySelect + " where userId = ?";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
-		ps.setString(1, id);
+		ps.setInt(1, id);
 		rs = ps.executeQuery();
 		rs.next();
 		User user = new User(rs.getInt("userId"), rs.getString("userType"), rs.getString("userName"),

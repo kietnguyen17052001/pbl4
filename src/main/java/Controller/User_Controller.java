@@ -40,7 +40,7 @@ public class User_Controller extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		// PrintWriter out = response.getWriter();
 		String type = request.getParameter("type");
-		String userId;
+		int userId;
 		switch (type) {
 		case "login":
 			String username = request.getParameter("username");
@@ -48,6 +48,7 @@ public class User_Controller extends HttpServlet {
 			try {
 				if (User_BO.getInstance().isExistUser(username, password)) {
 					userId = User_BO.getInstance().getIdUser(username);
+					User_BO.getInstance().changeUserStatus(userId, true); // true: status=online
 					request.setAttribute("userId", userId);
 					getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
 				} else {
@@ -70,26 +71,34 @@ public class User_Controller extends HttpServlet {
 		case "edit":
 			break;
 		case "home":
-			userId = request.getParameter("userId");
+			userId = Integer.parseInt(request.getParameter("userId"));
 			request.setAttribute("userId", userId);
 			getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
 			break;
 		case "message":
-			userId = request.getParameter("userId");
+			userId = Integer.parseInt(request.getParameter("userId"));
 			request.setAttribute("userId", userId);
 			getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
 			break;
 		case "follow":
-			userId = request.getParameter("userId");
+			userId = Integer.parseInt(request.getParameter("userId"));
 			request.setAttribute("userId", userId);
 			getServletContext().getRequestDispatcher("/FollowPage.jsp").forward(request, response);
 			break;
 		case "profile":
-			userId = request.getParameter("userId");
+			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
 				User user = User_BO.getInstance().getUserById(userId);
 				request.setAttribute("user", user);
 				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			} catch (Exception e) {
+			}
+			break;
+		case "logout":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			try {
+				User_BO.getInstance().changeUserStatus(userId, false);// false: status=offline
+				getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 			} catch (Exception e) {
 			}
 			break;
@@ -119,26 +128,8 @@ public class User_Controller extends HttpServlet {
 				+ request.getParameter("year");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dBirthday = sdf.parse(birthday);
-		if (username == "") {
-			username = null;
-		}
-		if (firstname == "") {
-			firstname = null;
-		}
-		if (lastname == "") {
-			lastname = null;
-		}
-		if (email == "") {
-			email = null;
-		}
-		if (phone == "") {
-			phone = null;
-		}
-		if (password == "") {
-			password = null;
-		}
 		User user = new User(1, "user", username, firstname, lastname, gender, password, email, phone, "", dBirthday,
-				new byte[2048], "", "", "", "", "", "", "", 0, 0, 0, new Date(), new Date());
+				new byte[2048], "", "", "", "", "", "", "offline", 0, 0, 0, new Date(), new Date());
 		// call add_user() in User_DAO
 		User_BO.getInstance().addUser(user);
 	}

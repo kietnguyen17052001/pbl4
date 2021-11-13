@@ -79,19 +79,34 @@ html {
 	flex-direction: column;
 }
 
-.user, .about-user {
+.user {
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-bottom: 1px solid silver;
+	padding: 30px 0 30px 0;
 }
 
-.user {
-	border-bottom: 1px solid silver;
+.about-user p {
+	padding: 10px;
+}
+
+.about-user a {
+	text-decoration: none;
+	color: #2980b9;
+	font-weight: bold;
 }
 
 .left {
-	margin-right: 100px;
+	margin-right: 50px;
+}
+
+.left .avatar {
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	color: white;
 }
 
 .right table tr td {
@@ -99,17 +114,27 @@ html {
 	text-align: center;
 }
 
-.edit-profile {
+.name-user {
+	font-size: 1.2rem;
+}
+
+.edit-profile, .up-post {
 	background-color: white;
 	border: 1px solid silver;
 	border-radius: 5px;
-	padding: 5px;
+	padding: 7px;
 	width: 200px;
 	font-weight: bold;
 }
 
-.edit-profile:hover {
+.up-post {
+	background-color: #eb4d4b;
+	color: white;
+}
+
+.edit-profile, .up-post:hover {
 	cursor: pointer;
+	opacity: 0.9;
 }
 
 .num-post, .num-follower, .num-following {
