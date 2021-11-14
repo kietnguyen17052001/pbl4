@@ -12,7 +12,7 @@ public class User {
 	private String phone;
 	private String city;
 	private Object birthday;
-	private byte[] photo;
+	private String photo;
 	private String about;
 	private String passion;
 	private String job;
@@ -27,7 +27,7 @@ public class User {
 	private Object updated_date;
 
 	public User(int user_id, String user_type, String user_name, String first_name, String last_name, int gender,
-			String password, String email, String phone, String city, Object birthday, byte[] photo, String about,
+			String password, String email, String phone, String city, Object birthday, String photo, String about,
 			String passion, String job, String company, String facebook, String instagram, String user_status, int post,
 			int following, int follower, Object registered_date, Object updated_date) {
 		this.user_id = user_id;
@@ -144,11 +144,11 @@ public class User {
 		this.birthday = birthday;
 	}
 
-	public byte[] getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte[] photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 

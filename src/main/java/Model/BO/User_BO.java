@@ -31,6 +31,11 @@ public class User_BO {
 		User_DAO.getInstance().editUser(user);
 	}
 
+	// change avatar
+	public void changeAvatar(int userId, String imageFileName) throws Exception {
+		User_DAO.getInstance().changeAvatar(userId, imageFileName);
+	}
+
 	// check old password
 	public boolean checkOldPassword(int userId, String oldPassword) throws Exception {
 		return User_DAO.getInstance().checkOldPassword(userId, oldPassword);

@@ -19,7 +19,8 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage&userId=<%=userId%>">Suger App</a>
+				<a href="User_Controller?type=homePage&userId=<%=userId%>">Suger
+					App</a>
 			</div>
 			<div class="search">
 				<input type="text" placeholder="Search">
@@ -49,8 +50,7 @@
 		<div class="box-main">
 			<div class="user">
 				<div class="left">
-					<img class="avatar" alt="Avatar"
-						src="https://scr.vn/wp-content/uploads/2020/11/avatar-instagram-trong.jpg">
+					<img class="avatar" alt="Avatar" src="image/<%=user.getPhoto()%>">
 				</div>
 				<div class="right">
 					<table>

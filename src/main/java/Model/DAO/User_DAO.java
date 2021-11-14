@@ -61,7 +61,7 @@ public class User_DAO {
 		ps.setString(8, user.getPhone());
 		ps.setString(9, user.getCity());
 		ps.setObject(10, user.getBirthday());
-		ps.setBytes(11, user.getPhoto());
+		ps.setString(11, user.getPhoto());
 		ps.setString(12, user.getAbout());
 		ps.setString(13, user.getPassion());
 		ps.setString(14, user.getJob());
@@ -95,6 +95,16 @@ public class User_DAO {
 		ps.setString(11, user.getInstagram());
 		ps.setObject(12, user.getUpdated_date());
 		ps.setInt(13, user.getUser_id());
+		ps.executeUpdate();
+	}
+
+	// change avatar
+	public void changeAvatar(int userId, String imageFileName) throws Exception {
+		String query = "Update Users set photo = ? where userId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, imageFileName);
+		ps.setInt(2, userId);
 		ps.executeUpdate();
 	}
 
@@ -167,7 +177,7 @@ public class User_DAO {
 		User user = new User(rs.getInt("userId"), rs.getString("userType"), rs.getString("userName"),
 				rs.getString("firstName"), rs.getString("lastName"), rs.getInt("gender"), rs.getString("password_sha"),
 				rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"), rs.getObject("birthday"),
-				rs.getString("photo").getBytes(), rs.getString("about"), rs.getString("passions"), rs.getString("job"),
+				rs.getString("photo"), rs.getString("about"), rs.getString("passions"), rs.getString("job"),
 				rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
 				rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
 				rs.getObject("registeredDate"), rs.getObject("updateDate"));

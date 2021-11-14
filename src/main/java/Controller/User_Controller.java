@@ -5,10 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import Model.BEAN.User;
 import Model.BO.User_BO;
@@ -17,6 +19,7 @@ import Model.DAO.User_DAO;
 /**
  * Servlet implementation class User_Controller
  */
+@MultipartConfig
 @WebServlet("/User_Controller")
 public class User_Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,7 +47,7 @@ public class User_Controller extends HttpServlet {
 		int userId;
 		User user;
 		switch (type) {
-		case "login":
+		case "login": // login APP
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			try {
@@ -58,7 +61,7 @@ public class User_Controller extends HttpServlet {
 				}
 			} catch (Exception e) {
 			}
-		case "create":
+		case "create": // create new user
 			try {
 				if (isExistUsername_phone_mail(request, response)) { // username or phone or email exist in db
 					getServletContext().getRequestDispatcher("/Registration.jsp").forward(request, response);
@@ -69,14 +72,15 @@ public class User_Controller extends HttpServlet {
 			} catch (Exception e) {
 			}
 			break;
-		case "edit":
+		case "edit": // edit profile
 			try {
+				changeAvatar(request, response);
 				editUser(request, response);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 			}
 			break;
-		case "changePassword":
+		case "changePassword": // change password
 			userId = Integer.parseInt(request.getParameter("userId"));
 			String oldPassword = request.getParameter("oldpassword");
 			try {
@@ -170,9 +174,24 @@ public class User_Controller extends HttpServlet {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dBirthday = sdf.parse(birthday);
 		User user = new User(1, "user", username, firstname, lastname, gender, password, email, phone, "", dBirthday,
-				new byte[2048], "", "", "", "", "", "", "offline", 0, 0, 0, new Date(), new Date());
+				"user.jpg", "", "", "", "", "", "", "offline", 0, 0, 0, new Date(), new Date());
 		// call add_user() in User_DAO
 		User_BO.getInstance().addUser(user);
+	}
+
+	// change avatar
+	public void changeAvatar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		Part file = request.getPart("image");
+		String imageFileName = file.getSubmittedFileName();
+		String uploadPath = "D:/Dropbox/Season3 - DUT/PBL4/Code/AppPBL4/src/main/webapp/image/" + imageFileName;
+		FileOutputStream fos = new FileOutputStream(uploadPath);
+		InputStream is = file.getInputStream();
+		byte[] data = new byte[is.available()];
+		is.read(data);
+		fos.write(data);
+		fos.close();
+		User_BO.getInstance().changeAvatar(userId, imageFileName);
 	}
 
 	// edit user

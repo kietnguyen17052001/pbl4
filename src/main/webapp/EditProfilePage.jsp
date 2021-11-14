@@ -17,6 +17,7 @@
 	String lastName = user.getLast_name();
 	String firstName = user.getFirst_name();
 	String city = user.getCity();
+	String photo = user.getPhoto();
 	String aboutMe = user.getAbout();
 	String job = user.getJob();
 	String company = user.getCompany();
@@ -69,16 +70,19 @@
 		</div>
 		<div class="right-main-page-edit-profile">
 			<form action="User_Controller?type=edit&userId=<%=userId%>"
-				method="post">
+				method="post" enctype="multipart/form-data">
 				<table>
 					<thead></thead>
 					<tbody>
 						<tr>
-							<td><img
-								src="https://scr.vn/wp-content/uploads/2020/11/avatar-instagram-trong.jpg"
-								alt=" " width="50" height="50"></td>
-							<td class="change-avatar "><a href="#"><strong>Change
-										avatar</strong></a></td>
+							<td><img src="image/<%=photo%>" alt="avatar" width="50"
+								height="50"></td>
+							<td>
+								<ul>
+									<li><strong>Change avatar</strong></li>
+									<li><input type="file" name="image" class="select-image"></li>
+								</ul>
+							</td>
 						</tr>
 						<tr>
 							<td><strong>Last name</strong></td>

@@ -126,14 +126,17 @@ html {
 	align-items: center;
 }
 
+.right-main-page-edit-profile tr:first-child ul li {
+	list-style: none;
+}
+
+.right-main-page-edit-profile tr:first-child ul li:first-child {
+	color: #eb4d4b;
+}
+
 .right-main-page-edit-profile img, .right-main-page-change-password img
 	{
 	border-radius: 50%;
-}
-
-.change-avatar a {
-	color: #eb4d4b;
-	text-decoration: none;
 }
 
 .right-main-page-edit-profile form, .right-main-page-change-password form
@@ -142,14 +145,15 @@ html {
 	padding-bottom: 50px;
 }
 
-.right-main-page-edit-profile input, textarea, .gender {
+.right-main-page-edit-profile input:not(.select-image), textarea,
+	.gender {
 	border-radius: 5px;
 	border: 1px solid silver;
 	margin-bottom: 10px;
 	padding: 8px;
 }
 
-.right-main-page-change-password input{
+.right-main-page-change-password input {
 	border-radius: 5px;
 	border: 1px solid silver;
 	margin-bottom: 10px;
@@ -161,7 +165,7 @@ html {
 	margin-right: 10px;
 }
 
-.right-main-page-edit-profile input:not(.submit-edit) {
+.right-main-page-edit-profile input:not(.submit-edit, .select-image) {
 	width: 350px;
 }
 
