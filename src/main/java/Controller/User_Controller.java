@@ -42,6 +42,7 @@ public class User_Controller extends HttpServlet {
 		// PrintWriter out = response.getWriter();
 		String type = request.getParameter("type");
 		int userId;
+		User user;
 		switch (type) {
 		case "login":
 			String username = request.getParameter("username");
@@ -66,55 +67,71 @@ public class User_Controller extends HttpServlet {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
 			}
 			break;
 		case "edit":
 			try {
 				editUser(request, response);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			break;
-		case "home":
-			userId = Integer.parseInt(request.getParameter("userId"));
-			request.setAttribute("userId", userId);
-			getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
-			break;
-		case "message":
-			userId = Integer.parseInt(request.getParameter("userId"));
-			request.setAttribute("userId", userId);
-			getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
-			break;
-		case "follow":
-			userId = Integer.parseInt(request.getParameter("userId"));
-			request.setAttribute("userId", userId);
-			getServletContext().getRequestDispatcher("/FollowPage.jsp").forward(request, response);
-			break;
-		case "profile":
-			userId = Integer.parseInt(request.getParameter("userId"));
-			try {
-				User user = User_BO.getInstance().getUserById(userId);
-				request.setAttribute("user", user);
-				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
-			} catch (Exception e) {
-			}
-			break;
-		case "editProfile":
-			userId = Integer.parseInt(request.getParameter("userId"));
-			try {
-				User user = User_BO.getInstance().getUserById(userId);
-				request.setAttribute("user", user);
-				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 			}
 			break;
 		case "changePassword":
 			userId = Integer.parseInt(request.getParameter("userId"));
+			String oldPassword = request.getParameter("oldpassword");
 			try {
-
+				user = User_BO.getInstance().getUserById(userId);
+				if (User_BO.getInstance().checkOldPassword(userId, oldPassword)) {
+					String newPassword = request.getParameter("newpassword");
+					User_BO.getInstance().changePassword(userId, newPassword);
+					request.setAttribute("user", user);
+					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
+				} else {
+					request.setAttribute("user", user);
+					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
+				}
+			} catch (Exception e) {
+			}
+			break;
+		case "homePage":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			request.setAttribute("userId", userId);
+			getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
+			break;
+		case "messagePage":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			request.setAttribute("userId", userId);
+			getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
+			break;
+		case "followPage":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			request.setAttribute("userId", userId);
+			getServletContext().getRequestDispatcher("/FollowPage.jsp").forward(request, response);
+			break;
+		case "profilePage":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			try {
+				user = User_BO.getInstance().getUserById(userId);
+				request.setAttribute("user", user);
+				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			} catch (Exception e) {
+			}
+			break;
+		case "changePasswordPage":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			try {
+				user = User_BO.getInstance().getUserById(userId);
+				request.setAttribute("user", user);
+				getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
+			} catch (Exception e) {
+			}
+			break;
+		case "editProfilePage":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			try {
+				user = User_BO.getInstance().getUserById(userId);
+				request.setAttribute("user", user);
+				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 			}
 			break;

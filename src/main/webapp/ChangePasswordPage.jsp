@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="Model.BEAN.User"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://kit.fontawesome.com/89a4fa0ef7.js"
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/Page.css" type="text/css">
-<title>Profile</title>
+<title>Sugar App</title>
 </head>
 <body>
 	<%
@@ -19,7 +19,8 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage&userId=<%=userId%>">Suger App</a>
+				<a href="User_Controller?type=home&userId=<%=userId%>"
+					target="top-main">Suger App</a>
 			</div>
 			<div class="search">
 				<input type="text" placeholder="Search">
@@ -45,71 +46,49 @@
 			</div>
 		</div>
 	</div>
-	<div class="main-page">
-		<div class="box-main">
-			<div class="user">
-				<div class="left">
-					<img class="avatar" alt="Avatar"
-						src="https://scr.vn/wp-content/uploads/2020/11/avatar-instagram-trong.jpg">
-				</div>
-				<div class="right">
-					<table>
+	<div class="main-page-change-password">
+		<div class="left-main-page-change-password">
+			<ul>
+				<li><a
+					href="User_Controller?type=editProfilePage&userId=<%=userId%>">Edit
+						profile</a></li>
+				<li><a
+					href="User_Controller?type=changePasswordPage&userId=<%=userId%>">Change
+						Password</a></li>
+			</ul>
+		</div>
+		<div class="right-main-page-change-password">
+			<form action="User_Controller?type=changePassword&userId=<%=userId%>"
+				method="post">
+				<table>
+					<thead></thead>
+					<tbody>
 						<tr>
-							<td class="name-user"><%=name%></td>
-							<td>
-								<form
-									action="User_Controller?type=editProfilePage&userId=<%=userId%>"
-									method="post">
-									<input class="edit-profile" type="submit" value="Edit profile">
-								</form>
-							</td>
-							<td>
-								<form action="" method="post">
-									<input class="up-post" type="submit" value="New post">
-								</form>
-							</td>
+							<td><img
+								src="https://scr.vn/wp-content/uploads/2020/11/avatar-instagram-trong.jpg"
+								alt=" " width="50" height="50"></td>
+							<td class="name-user"><strong><%=name%></strong></td>
 						</tr>
 						<tr>
-							<td class="num-post"><strong><%=user.getPost()%></strong>
-								post</td>
-							<td><a href="#" class="num-follower"><strong><%=user.getFollower()%></strong></a>
-								followers</td>
-							<td>Following <a href="#" class="num-following"><strong><%=user.getFollowing()%></strong></a>
-								users
-							</td>
+							<td><strong>Old password</strong></td>
+							<td><input type="password" name="oldpassword"></td>
 						</tr>
-					</table>
-					<div class="about-user">
-						<%
-						if (!user.getAbout().equals("")) {
-						%>
-						<p>
-							<strong>About me: </strong><%=user.getAbout()%></p>
-						<%
-						}
-						%>
-						<%
-						if (!user.getFacebook().equals("")) {
-						%>
-						<p>
-							<strong>Facebook: </strong><a href="<%=user.getFacebook()%>"><%=user.getFacebook()%></a>
-						</p>
-						<%
-						}
-						%>
-						<%
-						if (!user.getInstagram().equals("")) {
-						%>
-						<p>
-							<strong>Instagram: </strong><a href="<%=user.getInstagram()%>"><%=user.getInstagram()%></a>
-						</p>
-						<%
-						}
-						%>
-					</div>
-				</div>
-			</div>
-			<div class="post-user"></div>
+						<tr>
+							<td><strong>New password</strong></td>
+							<td><input type="password" name="newpassword"></td>
+						</tr>
+						<tr>
+							<td><strong>Confirm password</strong></td>
+							<td><input type="password" name="confirmpassword"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type="submit" value="Submit"
+								class="submit-change-password"></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</div>
 	<div class="bottom-page">

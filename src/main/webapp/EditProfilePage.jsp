@@ -29,7 +29,7 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=home&userId=<%=userId%>"
+				<a href="User_Controller?type=homePage&userId=<%=userId%>"
 					target="top-main">Suger App</a>
 			</div>
 			<div class="search">
@@ -38,16 +38,16 @@
 			<div class="option">
 				<ul>
 					<li class="home"><a
-						href="User_Controller?type=home&userId=<%=userId%>"><i
+						href="User_Controller?type=homePage&userId=<%=userId%>"><i
 							class="fas fa-home"></i></a></li>
 					<li class="message"><a
-						href="User_Controller?type=message&userId=<%=userId%>"><i
+						href="User_Controller?type=messagePage&userId=<%=userId%>"><i
 							class="far fa-comments"></i></a></li>
 					<li class="follow"><a
-						href="User_Controller?type=follow&userId=<%=userId%>"><i
+						href="User_Controller?type=followPage&userId=<%=userId%>"><i
 							class="far fa-heart"></i></a></li>
 					<li class="profile"><a
-						href="User_Controller?type=profile&userId=<%=userId%>"><i
+						href="User_Controller?type=profilePage&userId=<%=userId%>"><i
 							class="far fa-user"></i></a></li>
 					<li class="profile"><a
 						href="User_Controller?type=logout&userId=<%=userId%>"><i
@@ -60,10 +60,10 @@
 		<div class="left-main-page-edit-profile">
 			<ul>
 				<li><a
-					href="User_Controller?type=editProfile&userId=<%=userId%>">Edit
+					href="User_Controller?type=editProfilePage&userId=<%=userId%>">Edit
 						profile</a></li>
 				<li><a
-					href="User_Controller?type=changePassword&userId=<%=userId%>">Change
+					href="User_Controller?type=changePasswordPage&userId=<%=userId%>">Change
 						Password</a></li>
 			</ul>
 		</div>
@@ -75,8 +75,8 @@
 					<tbody>
 						<tr>
 							<td><img
-								src="https://scr.vn/wp-content/uploads/2020/11/avatar-instagram-trong.jpg "
-								alt=" " width="50 " height="50 "></td>
+								src="https://scr.vn/wp-content/uploads/2020/11/avatar-instagram-trong.jpg"
+								alt=" " width="50" height="50"></td>
 							<td class="change-avatar "><a href="#"><strong>Change
 										avatar</strong></a></td>
 						</tr>

@@ -2,9 +2,6 @@ package Model.DAO;
 
 import java.security.*;
 import java.sql.*;
-
-import org.apache.catalina.realm.UserDatabaseRealm.UserDatabasePrincipal;
-
 import Context.ConnectDB;
 import Model.BEAN.User;
 
@@ -98,6 +95,27 @@ public class User_DAO {
 		ps.setString(11, user.getInstagram());
 		ps.setObject(12, user.getUpdated_date());
 		ps.setInt(13, user.getUser_id());
+		ps.executeUpdate();
+	}
+
+	// check old password
+	public boolean checkOldPassword(int userId, String oldPassword) throws Exception {
+		String query = "Select password_sha from Users where userId = ? and password_sha = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, userId);
+		ps.setString(2, encrypt(oldPassword));
+		rs = ps.executeQuery();
+		return rs.next();
+	}
+
+	// change password
+	public void changePassword(int userId, String newPassword) throws Exception {
+		String query = "Update Users set password_sha = ? where userId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, encrypt(newPassword));
+		ps.setInt(2, userId);
 		ps.executeUpdate();
 	}
 

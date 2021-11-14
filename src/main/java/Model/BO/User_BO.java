@@ -31,6 +31,16 @@ public class User_BO {
 		User_DAO.getInstance().editUser(user);
 	}
 
+	// check old password
+	public boolean checkOldPassword(int userId, String oldPassword) throws Exception {
+		return User_DAO.getInstance().checkOldPassword(userId, oldPassword);
+	}
+
+	// change password
+	public void changePassword(int userId, String newPassword) throws Exception {
+		User_DAO.getInstance().changePassword(userId, newPassword);
+	}
+
 	// login
 	public boolean isExistUser(String username_phone_mail, String password) throws Exception {
 		return User_DAO.getInstance().isExistUser(username_phone_mail, password);
