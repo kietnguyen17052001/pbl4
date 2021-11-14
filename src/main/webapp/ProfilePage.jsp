@@ -19,7 +19,7 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="#">Suger App</a>
+				<a href="User_Controller?type=home&userId=<%=userId%>">Suger App</a>
 			</div>
 			<div class="search">
 				<input type="text" placeholder="Search">
@@ -50,14 +50,16 @@
 			<div class="user">
 				<div class="left">
 					<img class="avatar" alt="Avatar"
-						src="https://kenh14cdn.com/thumb_w/660/2016/3dcc66393deb9300b9998fa1-1463811400750.jpg">
+						src="https://scr.vn/wp-content/uploads/2020/11/avatar-instagram-trong.jpg">
 				</div>
 				<div class="right">
 					<table>
 						<tr>
 							<td class="name-user"><%=name%></td>
 							<td>
-								<form action="" method="post">
+								<form
+									action="User_Controller?type=editProfile&userId=<%=userId%>"
+									method="post">
 									<input class="edit-profile" type="submit" value="Edit profile">
 								</form>
 							</td>

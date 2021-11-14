@@ -13,7 +13,7 @@ html {
 	font-size: 15px;
 }
 
-.top-page, .main-page, bottom-page {
+.top-page, .main-page, .bottom-page {
 	width: 100%;
 }
 
@@ -26,6 +26,7 @@ html {
 }
 
 .box-top {
+	height: 100%;
 	background-color: white;
 }
 
@@ -79,6 +80,87 @@ html {
 	flex-direction: column;
 }
 
+.main-page-edit-profile {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 70%;
+	margin-left: 15%;
+	margin-top: 30px;
+	border: 1px solid silver;
+	background-color: white;
+}
+
+.left-main-page-edit-profile {
+	width: 25%;
+}
+
+.left-main-page-edit-profile ul li {
+	list-style: none;
+	padding: 15px;
+}
+
+.left-main-page-edit-profile ul li a {
+	text-decoration: none;
+	color: black;
+	font-size: 1.2rem;
+}
+
+.left-main-page-edit-profile ul li a:hover {
+	color: #eb4d4b;
+	font-weight: bold;
+}
+
+.right-main-page-edit-profile {
+	width: 75%;
+	border-left: 1px solid silver;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.right-main-page-edit-profile img {
+	border-radius: 50%;
+}
+
+.change-avatar a {
+	color: #eb4d4b;
+	text-decoration: none;
+}
+
+.right-main-page-edit-profile form {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.right-main-page-edit-profile input, textarea, .gender {
+	border-radius: 5px;
+	border: 1px solid silver;
+	margin-bottom: 10px;
+	padding: 8px;
+}
+
+.right-main-page-edit-profile tr td {
+	margin-right: 10px;
+}
+
+.right-main-page-edit-profile input:not(.submit-edit) {
+	width: 350px;
+}
+
+.submit-edit {
+	background-color: #eb4d4b;
+	color: white;
+	border: 1px solid #eb4d4b;
+	font-weight: bold;
+	width: 100px;
+}
+
+.submit-edit:hover {
+	opacity: 0.9;
+	cursor: pointer;
+}
+
 .user {
 	width: 100%;
 	display: flex;
@@ -95,7 +177,6 @@ html {
 .about-user a {
 	text-decoration: none;
 	color: #2980b9;
-	font-weight: bold;
 }
 
 .left {
@@ -104,8 +185,8 @@ html {
 
 .left .avatar {
 	border-radius: 50%;
-	width: 120px;
-	height: 120px;
+	width: 170px;
+	height: 170px;
 	color: white;
 }
 
@@ -140,6 +221,10 @@ html {
 .num-post, .num-follower, .num-following {
 	text-decoration: none;
 	color: black;
+}
+
+.bottom-page {
+	padding: 30px;
 }
 
 .box-bottom {

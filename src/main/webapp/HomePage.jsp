@@ -17,7 +17,8 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="#" target="top-main">Suger App</a>
+				<a href="User_Controller?type=home&userId=<%=userId%>"
+					target="top-main">Suger App</a>
 			</div>
 			<div class="search">
 				<input type="text" placeholder="Search">
@@ -43,6 +44,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="main-page"></div>
+	<div class="main-page-home"></div>
 </body>
 </html>

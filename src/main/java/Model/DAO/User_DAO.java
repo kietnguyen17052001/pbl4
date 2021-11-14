@@ -3,6 +3,8 @@ package Model.DAO;
 import java.security.*;
 import java.sql.*;
 
+import org.apache.catalina.realm.UserDatabaseRealm.UserDatabasePrincipal;
+
 import Context.ConnectDB;
 import Model.BEAN.User;
 
@@ -78,6 +80,27 @@ public class User_DAO {
 		ps.executeUpdate();
 	}
 
+	// edit user
+	public void editUser(User user) throws Exception {
+		String query = "Update Users set firstName = ?, lastName = ?, gender = ?, email = ?, mobilePhone = ?, city = ?, about = ?, job = ?, company = ?, facebook = ?, instagram = ?, updateDate = ? where userId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, user.getFirst_name());
+		ps.setString(2, user.getLast_name());
+		ps.setInt(3, user.getGender());
+		ps.setString(4, user.getEmail());
+		ps.setString(5, user.getPhone());
+		ps.setString(6, user.getCity());
+		ps.setString(7, user.getAbout());
+		ps.setString(8, user.getJob());
+		ps.setString(9, user.getCompany());
+		ps.setString(10, user.getFacebook());
+		ps.setString(11, user.getInstagram());
+		ps.setObject(12, user.getUpdated_date());
+		ps.setInt(13, user.getUser_id());
+		ps.executeUpdate();
+	}
+
 	// change user status
 	public void changeUserStatus(int userId, boolean isLogin) throws Exception {
 		String query = "Update Users set userStatus = ? where userId = ?";
@@ -127,7 +150,7 @@ public class User_DAO {
 				rs.getString("firstName"), rs.getString("lastName"), rs.getInt("gender"), rs.getString("password_sha"),
 				rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"), rs.getObject("birthday"),
 				rs.getString("photo").getBytes(), rs.getString("about"), rs.getString("passions"), rs.getString("job"),
-				rs.getString("company"), rs.getString("facebook"), rs.getString("instargram"),
+				rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
 				rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
 				rs.getObject("registeredDate"), rs.getObject("updateDate"));
 		return user;

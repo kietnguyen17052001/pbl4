@@ -74,6 +74,10 @@ body {
 	cursor: pointer;
 }
 
+.form-login input:focus {
+	border-color: #eb4d4b;
+}
+
 .forgot-password {
 	margin-top: 20px;
 }

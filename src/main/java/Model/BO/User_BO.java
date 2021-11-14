@@ -26,6 +26,11 @@ public class User_BO {
 		User_DAO.getInstance().addUser(user);
 	}
 
+	// edit user
+	public void editUser(User user) throws Exception {
+		User_DAO.getInstance().editUser(user);
+	}
+
 	// login
 	public boolean isExistUser(String username_phone_mail, String password) throws Exception {
 		return User_DAO.getInstance().isExistUser(username_phone_mail, password);

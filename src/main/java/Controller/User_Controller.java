@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Model.BEAN.User;
 import Model.BO.User_BO;
+import Model.DAO.User_DAO;
 
 /**
  * Servlet implementation class User_Controller
@@ -69,6 +70,13 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "edit":
+			try {
+				editUser(request, response);
+				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		case "home":
 			userId = Integer.parseInt(request.getParameter("userId"));
@@ -91,6 +99,22 @@ public class User_Controller extends HttpServlet {
 				User user = User_BO.getInstance().getUserById(userId);
 				request.setAttribute("user", user);
 				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+			} catch (Exception e) {
+			}
+			break;
+		case "editProfile":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			try {
+				User user = User_BO.getInstance().getUserById(userId);
+				request.setAttribute("user", user);
+				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
+			} catch (Exception e) {
+			}
+			break;
+		case "changePassword":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			try {
+
 			} catch (Exception e) {
 			}
 			break;
@@ -132,6 +156,38 @@ public class User_Controller extends HttpServlet {
 				new byte[2048], "", "", "", "", "", "", "offline", 0, 0, 0, new Date(), new Date());
 		// call add_user() in User_DAO
 		User_BO.getInstance().addUser(user);
+	}
+
+	// edit user
+	public void editUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		User user = User_DAO.getInstance().getUserById(userId);
+		request.setAttribute("user", user);
+		String lastName = request.getParameter("lastname");
+		String firstName = request.getParameter("firstname");
+		int gender = Integer.parseInt(request.getParameter("gender"));
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
+		String city = request.getParameter("city");
+		String about = request.getParameter("about");
+		String job = request.getParameter("job");
+		String company = request.getParameter("company");
+		String facebook = request.getParameter("facebook");
+		String instagram = request.getParameter("instagram");
+		Object updateDate = new Date();
+		user.setLast_name(lastName);
+		user.setFirst_name(firstName);
+		user.setGender(gender);
+		user.setEmail(email);
+		user.setPhone(phone);
+		user.setCity(city);
+		user.setAbout(about);
+		user.setJob(job);
+		user.setCompany(company);
+		user.setFacebook(facebook);
+		user.setInstagram(instagram);
+		user.setUpdated_date(updateDate);
+		User_DAO.getInstance().editUser(user);
 	}
 
 	// ---- functions ----
