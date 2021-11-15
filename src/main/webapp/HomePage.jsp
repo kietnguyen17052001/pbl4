@@ -21,7 +21,11 @@
 					target="top-main">Suger App</a>
 			</div>
 			<div class="search">
-				<input type="text" placeholder="Search">
+				<form action="User_Controller?type=search&userId=<%=userId%>"
+					method="post">
+					<input type="text" placeholder="Search" name="contentSearch">
+					<input type="submit" value="Search">
+				</form>
 			</div>
 			<div class="option">
 				<ul>

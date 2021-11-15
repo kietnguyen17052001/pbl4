@@ -89,6 +89,17 @@ public class User_Controller extends HttpServlet {
 				}
 			}
 			break;
+		case "search":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			String contentSearch = request.getParameter("contentSearch");
+			try {
+				List<User> listUser = User_BO.getInstance().listUserSearch(contentSearch);
+				request.setAttribute("userId", userId);
+				request.setAttribute("listUser", listUser);
+				getServletContext().getRequestDispatcher("/ResultSearchPage.jsp").forward(request, response);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		case "changePassword": // change password
 			userId = Integer.parseInt(request.getParameter("userId"));
 			String oldPassword = request.getParameter("oldpassword");

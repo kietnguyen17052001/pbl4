@@ -34,10 +34,10 @@ public class Post_Photo_DAO {
 		ps.setObject(5, postPhoto.getUpdate_date());
 		ps.executeUpdate();
 	}
-
+	
 	// edit post photo
 	public void editPostPhoto(Post_Photo postPhoto) throws Exception {
-
+		
 	}
 
 	// list post in user profile

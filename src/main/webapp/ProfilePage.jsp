@@ -10,7 +10,7 @@
 <script src="https://kit.fontawesome.com/89a4fa0ef7.js"
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/Page.css" type="text/css">
-<script src="js/Post_Photo.js"></script>
+<script src="js/Event_With_Form.js"></script>
 <title>Profile</title>
 </head>
 <body>
@@ -27,7 +27,11 @@
 					App</a>
 			</div>
 			<div class="search">
-				<input type="text" placeholder="Search">
+				<form action="User_Controller?type=search&userId=<%=userId%>"
+					method="post">
+					<input type="text" placeholder="Search" name="contentSearch">
+					<input type="submit" value="Search">
+				</form>
 			</div>
 			<div class="option">
 				<ul>
@@ -115,7 +119,8 @@
 				for (int i = listPost.size() - 1; i >= 0; i--) {
 				%>
 				<div>
-					<img src="image/<%=listPost.get(i).getPhoto()%>" alt="image-post">
+					<a href="#"><img src="image/<%=listPost.get(i).getPhoto()%>"
+						alt="image-post"></a>
 				</div>
 				<%
 				}

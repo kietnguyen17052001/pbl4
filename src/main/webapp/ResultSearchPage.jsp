@@ -1,26 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
 <%@ page import="Model.BEAN.User"%>
+<%@ page import="Model.BEAN.Post_Photo"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://kit.fontawesome.com/89a4fa0ef7.js"
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/Page.css" type="text/css">
-<title>Sugar App</title>
+<script src="js/Event_With_Form.js"></script>
+<title>Profile</title>
 </head>
 <body>
 	<%
-	User user = (User) request.getAttribute("user");
-	int userId = user.getUser_id();
-	String name = user.getLast_name() + " " + user.getFirst_name();
+	int userId = (int) request.getAttribute("userId");
+	List<User> listUser = (ArrayList<User>) request.getAttribute("listUser");
 	%>
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=home&userId=<%=userId%>"
-					target="top-main">Suger App</a>
+				<a href="User_Controller?type=homePage&userId=<%=userId%>">Sugar
+					App</a>
 			</div>
 			<div class="search">
 				<form action="User_Controller?type=search&userId=<%=userId%>"
@@ -29,6 +31,7 @@
 					<input type="submit" value="Search">
 				</form>
 			</div>
+			<div class="form-list-user"></div>
 			<div class="option">
 				<ul>
 					<li class="home"><a
@@ -50,49 +53,32 @@
 			</div>
 		</div>
 	</div>
-	<div class="main-page-change-password">
-		<div class="left-main-page-change-password">
-			<ul>
-				<li><a
-					href="User_Controller?type=editProfilePage&userId=<%=userId%>">Edit
-						profile</a></li>
-				<li><a
-					href="User_Controller?type=changePasswordPage&userId=<%=userId%>">Change
-						Password</a></li>
-			</ul>
-		</div>
-		<div class="right-main-page-change-password">
-			<form action="User_Controller?type=changePassword&userId=<%=userId%>"
-				method="post">
-				<table>
-					<thead></thead>
-					<tbody>
-						<tr>
-							<td><img src="image/<%=user.getPhoto()%>" alt=" " width="50"
-								height="50"></td>
-							<td class="name-user"><strong><%=name%></strong></td>
-						</tr>
-						<tr>
-							<td><strong>Old password</strong></td>
-							<td><input type="password" name="oldpassword"></td>
-						</tr>
-						<tr>
-							<td><strong>New password</strong></td>
-							<td><input type="password" name="newpassword"></td>
-						</tr>
-						<tr>
-							<td><strong>Confirm password</strong></td>
-							<td><input type="password" name="confirmpassword"></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><input type="submit" value="Submit"
-								class="submit-change-password"></td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
-		</div>
+	<div class="main-page-search">
+		<%
+		for (User user : listUser) {
+			String name = user.getLast_name() + " " + user.getFirst_name();
+		%>
+		<form
+			action="Follow_Controller?type=follow&userId=<%=userId%>&targetId=<%=user.getUser_id()%>"
+			method="post">
+			<div class="main-page-search-user">
+				<div class="main-page-search-user-avatar">
+					<a href="#"><img src="image/<%=user.getPhoto()%>" alt="avatar"
+						width="70" height="70"></a>
+				</div>
+				<div class="main-page-search-user-information">
+					<ul>
+						<li><a href="#"><strong><%=name%></strong></a></li>
+					</ul>
+				</div>
+				<div class="main-page-search-user-follow">
+					<input type="submit" value="Follow">
+				</div>
+			</div>
+		</form>
+		<%
+		}
+		%>
 	</div>
 	<div class="bottom-page">
 		<div class="box-bottom">

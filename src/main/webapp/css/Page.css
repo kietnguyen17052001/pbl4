@@ -38,6 +38,8 @@ html {
 	background-color: white;
 	height: 10vh;
 	border-bottom: 1px solid silver;
+	background-color: white;
+	background-color: white;
 }
 
 .name-app a {
@@ -48,12 +50,21 @@ html {
 		'Lucida Sans', Arial, sans-serif;
 }
 
-.search input {
-	display: block;
+.search input[type=text] {
 	padding: 5px;
 	width: 250px;
 	border-radius: 5px;
 	border: 1px solid silver;
+	padding: 5px;
+}
+
+.search input[type=submit], .main-page-search-user-follow input {
+	color: white;
+	background-color: #eb4d4b;
+	padding: 5px;
+	border: 1px solid #eb4d4b;
+	border-radius: 5px;
+	width: 100px;
 }
 
 .option ul li, .box-bottom ul li {
@@ -80,11 +91,11 @@ html {
 	border-bottom: 1px solid silver;
 }
 
-.main-page {
+.main-page, .main-page-search {
 	flex-direction: column;
 }
 
-.main-page-edit-profile, .main-page-change-password {
+.main-page-search, .main-page-edit-profile, .main-page-change-password {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -94,7 +105,47 @@ html {
 	border: 1px solid silver;
 	background-color: white;
 }
+/* search user */
+.main-page-search form {
+	width: 100%;
+}
 
+.main-page-search .main-page-search-user {
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 100px;
+	border: 2px solid #eb4d4b;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main-page-search-user-avatar, .main-page-search-user-follow {
+	width: 15%;
+}
+
+.main-page-search-user a {
+	text-decoration: none;
+	color: black;
+}
+
+.main-page-search-user li {
+	list-style: none;
+}
+
+.main-page-search-user-avatar a img {
+	border-radius: 50%;
+	background-color: black;
+}
+
+.main-page-search-user-information {
+	width: 70%;
+}
+
+/* end */
 .left-main-page-edit-profile, .left-main-page-change-password {
 	width: 25%;
 }
@@ -193,12 +244,9 @@ html {
 	width: 100px;
 }
 
-.submit-edit:hover {
-	opacity: 0.9;
-	cursor: pointer;
-}
-
-.submit-edit, .submit-change-password, .post-photo-submit input:hover {
+.search input[type=submit]:hover, .main-page-search-user-follow input:hover,
+	.submit-edit:hover, .submit-change-password:hover, .post-photo-submit input:hover
+	{
 	opacity: 0.9;
 	cursor: pointer;
 }
@@ -279,7 +327,6 @@ html {
 	height: 350px;
 	background-color: white;
 	border-radius: 10px;
-	position: absolute;
 }
 
 .post-photo .post-photo-title {
@@ -297,7 +344,7 @@ html {
 	font-size: 1.5rem;
 }
 
-.post-photo .post-photo-title button:hover {
+.post-photo:hover, .post-photo-title button:hover {
 	cursor: pointer;
 }
 
@@ -339,7 +386,7 @@ html {
 }
 
 /* end  */
-.edit-profile, .up-post:hover {
+.edit-profile:hover, .up-post:hover {
 	cursor: pointer;
 	opacity: 0.9;
 }

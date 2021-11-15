@@ -1,5 +1,6 @@
 package Model.BO;
 
+import java.util.*;
 import Model.BEAN.User;
 import Model.DAO.User_DAO;
 
@@ -36,6 +37,11 @@ public class User_BO {
 		User_DAO.getInstance().changeAvatar(userId, imageFileName);
 	}
 
+	// update number of post
+	public void updateNumberOfPost(int userId) throws Exception {
+		User_DAO.getInstance().updateNumberOfPosts(userId);
+	}
+
 	// check old password
 	public boolean checkOldPassword(int userId, String oldPassword) throws Exception {
 		return User_DAO.getInstance().checkOldPassword(userId, oldPassword);
@@ -64,5 +70,10 @@ public class User_BO {
 	// get user
 	public User getUserById(int userId) throws Exception {
 		return User_DAO.getInstance().getUserById(userId);
+	}
+
+	// get list user when search
+	public List<User> listUserSearch(String contentSearch) throws Exception {
+		return User_DAO.getInstance().listUserSearch(contentSearch);
 	}
 }
