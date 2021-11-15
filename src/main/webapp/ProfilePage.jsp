@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
 <%@ page import="Model.BEAN.User"%>
+<%@ page import="Model.BEAN.Post_Photo"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +10,7 @@
 <script src="https://kit.fontawesome.com/89a4fa0ef7.js"
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/Page.css" type="text/css">
+<script src="js/Post_Photo.js"></script>
 <title>Profile</title>
 </head>
 <body>
@@ -15,11 +18,12 @@
 	User user = (User) request.getAttribute("user");
 	int userId = user.getUser_id();
 	String name = user.getLast_name() + " " + user.getFirst_name();
+	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	%>
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage&userId=<%=userId%>">Suger
+				<a href="User_Controller?type=homePage&userId=<%=userId%>">Sugar
 					App</a>
 			</div>
 			<div class="search">
@@ -63,11 +67,8 @@
 									<input class="edit-profile" type="submit" value="Edit profile">
 								</form>
 							</td>
-							<td>
-								<form action="" method="post">
-									<input class="up-post" type="submit" value="New post">
-								</form>
-							</td>
+							<td><button type="button" class="up-post"
+									onclick="openFormPostPhoto()">New post</button></td>
 						</tr>
 						<tr>
 							<td class="num-post"><strong><%=user.getPost()%></strong>
@@ -109,7 +110,17 @@
 					</div>
 				</div>
 			</div>
-			<div class="post-user"></div>
+			<div class="list-post-in-profile">
+				<%
+				for (int i = listPost.size() - 1; i >= 0; i--) {
+				%>
+				<div>
+					<img src="image/<%=listPost.get(i).getPhoto()%>" alt="image-post">
+				</div>
+				<%
+				}
+				%>
+			</div>
 		</div>
 	</div>
 	<div class="bottom-page">
@@ -134,6 +145,47 @@
 				</ul>
 			</div>
 		</div>
+	</div>
+	<div id="form-post" class="post-photo">
+		<div class="post-photo-title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			<div>
+				<p>Create new post</p>
+			</div>
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle" onclick="closeFormPostPhoto()"></i>
+				</button>
+			</div>
+		</div>
+		<form action="Post_Photo_Controller?type=add&userId=<%=userId%>"
+			method="post" enctype="multipart/form-data">
+			<div class="post-photo-box">
+				<div class="post-photo-main">
+					<div class="post-photo-user">
+						<img src="image/<%=user.getPhoto()%>" alt="avatar" width="50"
+							height="50">
+						<p>
+							<strong><%=name%></strong>
+						</p>
+					</div>
+					<div class="post-photo-content">
+						<textarea name="photo-content" id="" cols="30" rows="5"
+							placeholder="Write your content ..."></textarea>
+					</div>
+				</div>
+				<div class="post-photo-image">
+					<input type="file" name="image">
+				</div>
+				<div class="post-photo-submit">
+					<input type="submit" value="Up post">
+				</div>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

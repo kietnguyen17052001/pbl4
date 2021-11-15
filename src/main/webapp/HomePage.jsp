@@ -17,7 +17,7 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=home&userId=<%=userId%>"
+				<a href="User_Controller?type=homePage&userId=<%=userId%>"
 					target="top-main">Suger App</a>
 			</div>
 			<div class="search">

@@ -3,6 +3,7 @@ package Controller;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import Model.BEAN.Post_Photo;
 import Model.BEAN.User;
+import Model.BO.Post_Photo_BO;
 import Model.BO.User_BO;
 import Model.DAO.User_DAO;
 
@@ -78,6 +81,12 @@ public class User_Controller extends HttpServlet {
 				editUser(request, response);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				try {
+					editUser(request, response);
+					getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
+				} catch (Exception e1) {
+				}
 			}
 			break;
 		case "changePassword": // change password
@@ -116,7 +125,9 @@ public class User_Controller extends HttpServlet {
 			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
 				user = User_BO.getInstance().getUserById(userId);
+				List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
 				request.setAttribute("user", user);
+				request.setAttribute("listPost", listPost);
 				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 			}
@@ -137,6 +148,7 @@ public class User_Controller extends HttpServlet {
 				request.setAttribute("user", user);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		case "logout":

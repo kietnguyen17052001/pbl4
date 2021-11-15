@@ -4,11 +4,11 @@ public class Post_Photo {
 	private int post_id;
 	private int user_id;
 	private String content;
-	private byte[] photo;
+	private String photo;
 	private Object create_date;
 	private Object update_date;
 
-	public Post_Photo(int post_id, int user_id, String content, byte[] photo, Object create_date, Object update_date) {
+	public Post_Photo(int post_id, int user_id, String content, String photo, Object create_date, Object update_date) {
 		this.post_id = post_id;
 		this.user_id = user_id;
 		this.content = content;
@@ -41,11 +41,11 @@ public class Post_Photo {
 		this.content = content;
 	}
 
-	public byte[] getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte[] photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 

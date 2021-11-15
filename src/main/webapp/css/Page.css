@@ -25,6 +25,10 @@ html {
 	align-items: center;
 }
 
+.box-main {
+	flex-direction: column;
+}
+
 .box-top {
 	height: 100%;
 	background-color: white;
@@ -194,7 +198,7 @@ html {
 	cursor: pointer;
 }
 
-.submit-change-password:hover {
+.submit-edit, .submit-change-password, .post-photo-submit input:hover {
 	opacity: 0.9;
 	cursor: pointer;
 }
@@ -250,7 +254,91 @@ html {
 	background-color: #eb4d4b;
 	color: white;
 }
+/* list posts */
+.list-post-in-profile {
+	margin-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	display: flex;
+}
 
+.list-post-in-profile img {
+	width: 320px;
+	height: 320px;
+	padding: 5px;
+}
+/* css for post photo in profile */
+.post-photo {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 500px;
+	height: 350px;
+	background-color: white;
+	border-radius: 10px;
+	position: absolute;
+}
+
+.post-photo .post-photo-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: bold;
+	padding: 10px;
+	border-bottom: 1px solid silver;
+}
+
+.post-photo .post-photo-title button {
+	background-color: white;
+	border: none;
+	font-size: 1.5rem;
+}
+
+.post-photo .post-photo-title button:hover {
+	cursor: pointer;
+}
+
+.post-photo .post-photo-box {
+	padding: 10px;
+}
+
+.post-photo-main, .post-photo-main div, .post-photo-image,
+	.post-photo-submit {
+	padding: 5px;
+}
+
+.post-photo-user {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+}
+
+.post-photo-user img {
+	border-radius: 50%;
+}
+
+.post-photo-content textarea {
+	width: 100%;
+}
+
+.post-photo-image input, .post-photo-submit input {
+	width: 90%;
+	margin-left: 5%;
+}
+
+.post-photo-submit input {
+	padding: 7px;
+	color: white;
+	background-color: #eb4d4b;
+	font-weight: bold;
+	border-radius: 5px;
+	border: 1px solid #eb4d4b;
+}
+
+/* end  */
 .edit-profile, .up-post:hover {
 	cursor: pointer;
 	opacity: 0.9;
