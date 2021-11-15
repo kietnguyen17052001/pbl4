@@ -3,7 +3,7 @@ package Controller;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -15,6 +15,7 @@ import javax.servlet.http.Part;
 
 import Model.BEAN.Post_Photo;
 import Model.BEAN.User;
+import Model.BO.Follow_BO;
 import Model.BO.Post_Photo_BO;
 import Model.BO.User_BO;
 import Model.DAO.User_DAO;
@@ -94,8 +95,20 @@ public class User_Controller extends HttpServlet {
 			String contentSearch = request.getParameter("contentSearch");
 			try {
 				List<User> listUser = User_BO.getInstance().listUserSearch(contentSearch);
+				HashMap<User, Boolean> hashMap = new HashMap<User, Boolean>();
+				for (User u : listUser) {
+					// remove user has id == userId
+					if (u.getUser_id() == userId) {
+						listUser.remove(u);
+					}
+					if (Follow_BO.getInstance().isFollowed(userId, u.getUser_id())) {
+						hashMap.put(u, true); // user is following target
+					} else {
+						hashMap.put(u, false); // user isn't following target
+					}
+				}
 				request.setAttribute("userId", userId);
-				request.setAttribute("listUser", listUser);
+				request.setAttribute("hashMap", hashMap);
 				getServletContext().getRequestDispatcher("/ResultSearchPage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

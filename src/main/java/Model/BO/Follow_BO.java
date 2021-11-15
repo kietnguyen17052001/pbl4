@@ -15,8 +15,18 @@ public class Follow_BO {
 	private Follow_BO() {
 	}
 
+	// check is followed?
+	public boolean isFollowed(int userId, int targetId) throws Exception {
+		return Follow_DAO.getInstance().isFollowed(userId, targetId);
+	}
+
 	// add new follow
 	public void addNewFollow(int userId, int targetId) throws Exception {
 		Follow_DAO.getInstance().addNewFollow(userId, targetId);
+	}
+
+	// unfollow
+	public void unFollow(int userId, int targetId) throws Exception {
+		Follow_DAO.getInstance().unFollow(userId, targetId);
 	}
 }

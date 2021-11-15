@@ -60,6 +60,21 @@ public class Follow_Controller extends HttpServlet {
 			}
 			break;
 		case "unfollow":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			targetId = Integer.parseInt(request.getParameter("targetId"));
+			try {
+				Follow_BO.getInstance().unFollow(userId, targetId);
+				try {
+					User user = User_BO.getInstance().getUserById(userId);
+					List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
+					request.setAttribute("user", user);
+					request.setAttribute("listPost", listPost);
+					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+				} catch (Exception e) {
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 			break;
 		}
 	}

@@ -23,6 +23,17 @@ public class Follow_DAO {
 	private Follow_DAO() {
 	}
 
+	// check is followed?
+	public boolean isFollowed(int userId, int targetId) throws Exception {
+		String query = "Select * from Follow where userId = ? and targetId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, userId);
+		ps.setInt(2, targetId);
+		rs = ps.executeQuery();
+		return rs.next();
+	}
+
 	// add new follow
 	public void addNewFollow(int userId, int targetId) throws Exception {
 		// insert object for table follow
@@ -36,6 +47,18 @@ public class Follow_DAO {
 		// update follow for user and target
 		// for new follow
 		updateFollow(userId, targetId, true);
+	}
+
+	// unfollow
+	public void unFollow(int userId, int targetId) throws Exception {
+		// delete object for table follow
+		String query = "Delete from Follow where userId = ? and targetId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, userId);
+		ps.setInt(2, targetId);
+		ps.executeUpdate();
+		updateFollow(userId, targetId, false);
 	}
 
 	// update follow

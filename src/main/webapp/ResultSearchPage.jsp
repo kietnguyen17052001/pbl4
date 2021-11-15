@@ -16,7 +16,7 @@
 <body>
 	<%
 	int userId = (int) request.getAttribute("userId");
-	List<User> listUser = (ArrayList<User>) request.getAttribute("listUser");
+	HashMap<User, Boolean> hashMap = (HashMap<User, Boolean>) request.getAttribute("hashMap");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -55,11 +55,14 @@
 	</div>
 	<div class="main-page-search">
 		<%
-		for (User user : listUser) {
+		String type;
+		for (User user : hashMap.keySet()) {
 			String name = user.getLast_name() + " " + user.getFirst_name();
+			// hashMap.get(user) == true: user is following target
+			type = hashMap.get(user) ? "unfollow" : "follow";
 		%>
 		<form
-			action="Follow_Controller?type=follow&userId=<%=userId%>&targetId=<%=user.getUser_id()%>"
+			action="Follow_Controller?type=<%=type%>&userId=<%=userId%>&targetId=<%=user.getUser_id()%>"
 			method="post">
 			<div class="main-page-search-user">
 				<div class="main-page-search-user-avatar">
@@ -71,8 +74,8 @@
 						<li><a href="#"><strong><%=name%></strong></a></li>
 					</ul>
 				</div>
-				<div class="main-page-search-user-follow">
-					<input type="submit" value="Follow">
+				<div class="main-page-search-user-<%=type%>">
+					<input type="submit" value=<%=type%>>
 				</div>
 			</div>
 		</form>

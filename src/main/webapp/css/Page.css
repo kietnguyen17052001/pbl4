@@ -58,13 +58,22 @@ html {
 	padding: 5px;
 }
 
-.search input[type=submit], .main-page-search-user-follow input {
+.search input[type=submit], .main-page-search-user-follow input,
+	.main-page-search-user-unfollow input {
 	color: white;
-	background-color: #eb4d4b;
 	padding: 5px;
-	border: 1px solid #eb4d4b;
 	border-radius: 5px;
 	width: 100px;
+}
+
+.search input[type=submit], .main-page-search-user-follow input {
+	background-color: #eb4d4b;
+	border: 1px solid #eb4d4b;
+}
+
+.main-page-search-user-unfollow input {
+	background-color: #3498db;
+	border: 1px solid #3498db;
 }
 
 .option ul li, .box-bottom ul li {
@@ -245,8 +254,8 @@ html {
 }
 
 .search input[type=submit]:hover, .main-page-search-user-follow input:hover,
-	.submit-edit:hover, .submit-change-password:hover, .post-photo-submit input:hover
-	{
+	.main-page-search-user-unfollow input:hover, .submit-edit:hover,
+	.submit-change-password:hover, .post-photo-submit input:hover {
 	opacity: 0.9;
 	cursor: pointer;
 }
