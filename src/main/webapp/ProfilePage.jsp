@@ -19,6 +19,8 @@
 	int userId = user.getUser_id();
 	String name = user.getLast_name() + " " + user.getFirst_name();
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
+	List<User> listFollowing = (ArrayList<User>) request.getAttribute("listFollowing");
+	List<User> listFollower = (ArrayList<User>) request.getAttribute("listFollower");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -77,11 +79,14 @@
 						<tr>
 							<td class="num-post"><strong><%=user.getPost()%></strong>
 								post</td>
-							<td><a href="#" class="num-follower"><strong><%=user.getFollower()%></strong></a>
-								followers</td>
-							<td>Following <a href="#" class="num-following"><strong><%=user.getFollowing()%></strong></a>
-								users
-							</td>
+							<td><button class="btn-show-follower"
+									onclick="openFormListFollower()">
+									<strong><%=user.getFollower()%></strong> followers
+								</button></td>
+							<td><button class="btn-show-following"
+									onclick="openFormListFollowing()">
+									Following <strong><%=user.getFollowing()%></strong> users
+								</button></td>
 						</tr>
 					</table>
 					<div class="about-user">
@@ -191,6 +196,78 @@
 				</div>
 			</div>
 		</form>
+	</div>
+	<div id="form-following" class="form-list-following">
+		<div class="form-list-following-title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			<div>
+				<p>Following</p>
+			</div>
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle" onclick="closeFormListFollowing()"></i>
+				</button>
+			</div>
+		</div>
+		<%
+		for (User userFollowing : listFollowing) {
+			String nameUserFollowing = userFollowing.getLast_name() + " " + userFollowing.getFirst_name();
+		%>
+		<form action="Follow_Controller?type=delete" method="post">
+			<div class="list-following">
+				<div class="list-following-user-avatar">
+					<a href=""><img src="image/<%=userFollowing.getPhoto()%>"
+						alt="avatar" height="50" width="50"></a>
+				</div>
+				<div class="list-following-user-name"><%=nameUserFollowing%></div>
+				<div class="list-following-user-unfollow">
+					<input type="submit" value="Unfollow">
+				</div>
+			</div>
+		</form>
+		<%
+		}
+		%>
+	</div>
+	<div id="form-follower" class="form-list-follower">
+		<div class="form-list-follower-title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			<div>
+				<p>Followers</p>
+			</div>
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle" onclick="closeFormListFollower()"></i>
+				</button>
+			</div>
+		</div>
+		<%
+		for (User userFollower : listFollower) {
+			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
+		%>
+		<form action="Follow_Controller?type=follow">
+			<div class="list-follower">
+				<div class="list-follower-user-avatar">
+					<a href=""><img src="image/<%=userFollower.getPhoto()%>"
+						alt="avatar" height="50" width="50"></a>
+				</div>
+				<div class="list-follower-user-name"><%=nameUserFollower%></div>
+				<div class="list-follower-user-delete">
+					<input type="submit" value="Delete">
+				</div>
+			</div>
+		</form>
+		<%
+		}
+		%>
 	</div>
 </body>
 </html>

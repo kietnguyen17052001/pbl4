@@ -63,6 +63,9 @@ html {
 	color: white;
 	padding: 5px;
 	border-radius: 5px;
+}
+
+.search input[type=submit] {
 	width: 100px;
 }
 
@@ -74,6 +77,13 @@ html {
 .main-page-search-user-unfollow input {
 	background-color: #3498db;
 	border: 1px solid #3498db;
+}
+
+.main-page-search-user-follow input, .main-page-search-user-unfollow input
+	{
+	width: 100%;
+	font-weight: bold;
+	padding: 7px;
 }
 
 .option ul li, .box-bottom ul li {
@@ -114,6 +124,7 @@ html {
 	border: 1px solid silver;
 	background-color: white;
 }
+
 /* search user */
 .main-page-search form {
 	width: 100%;
@@ -311,6 +322,7 @@ html {
 	background-color: #eb4d4b;
 	color: white;
 }
+
 /* list posts */
 .list-post-in-profile {
 	margin-top: 10px;
@@ -325,8 +337,9 @@ html {
 	height: 320px;
 	padding: 5px;
 }
-/* css for post photo in profile */
-.post-photo {
+
+/* css for form post photo, form following, form followers in profile */
+.post-photo, .form-list-following, .form-list-follower {
 	display: none;
 	position: absolute;
 	top: 50%;
@@ -338,7 +351,12 @@ html {
 	border-radius: 10px;
 }
 
-.post-photo .post-photo-title {
+.form-list-following, .form-list-follower {
+	width: 450px;
+}
+
+.post-photo .post-photo-title, .form-list-following-title,
+	.form-list-follower-title {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -347,13 +365,15 @@ html {
 	border-bottom: 1px solid silver;
 }
 
-.post-photo .post-photo-title button {
+.post-photo .post-photo-title button, .form-list-following-title button,
+	.form-list-follower-title button {
 	background-color: white;
 	border: none;
 	font-size: 1.5rem;
 }
 
-.post-photo:hover, .post-photo-title button:hover {
+.post-photo .post-photo-title button:hover, .form-list-following-title button:hover,
+	.form-list-follower-title button:hover {
 	cursor: pointer;
 }
 
@@ -394,15 +414,79 @@ html {
 	border: 1px solid #eb4d4b;
 }
 
+/* form following and form follower */
+.form-list-following form, .form-list-follower form {
+	max-height: 100%;
+	overflow: auto;
+}
+
+.list-following, .list-follower {
+	width: 100%;
+	height: 70px;
+	padding: 7px;
+	background-color: white;
+	color: black;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+}
+
+.list-following-user-avatar, .list-follower-user-avatar {
+	width: 15%;
+}
+
+.list-following-user-avatar img, .list-follower-user-avatar img {
+	border-radius: 50%;
+	background-color: white;
+}
+
+.list-following-user-name, .list-follower-user-name {
+	width: 70%;
+}
+
+.list-following-user-unfollow, .list-follower-user-delete {
+	width: 15%;
+}
+
+.list-following-user-unfollow input, .list-follower-user-delete input {
+	color: white;
+	border-radius: 3px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.list-following-user-unfollow input {
+	background-color: #3498db;
+	border: 1px solid #3498db;
+}
+
+.list-follower-user-delete input {
+	background-color: #eb4d4b;
+	border: 1px solid #eb4d4b;
+}
+
+.list-following-user-unfollow input:hover, .list-follower-user-delete input:hover
+	{
+	opacity: 0.9;
+	cursor: pointer;
+}
+
 /* end  */
 .edit-profile:hover, .up-post:hover {
 	cursor: pointer;
 	opacity: 0.9;
 }
 
-.num-post, .num-follower, .num-following {
+.num-post {
 	text-decoration: none;
 	color: black;
+}
+
+.btn-show-follower, .btn-show-following {
+	border: none;
+	cursor: pointer;
+	font-size: 1rem;
+	background-color: #f5f6fa;
 }
 
 .bottom-page {

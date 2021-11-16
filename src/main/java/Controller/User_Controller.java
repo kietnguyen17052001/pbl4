@@ -150,7 +150,11 @@ public class User_Controller extends HttpServlet {
 			try {
 				user = User_BO.getInstance().getUserById(userId);
 				List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
+				List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
+				List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
 				request.setAttribute("user", user);
+				request.setAttribute("listFollowing", listFollowing);
+				request.setAttribute("listFollower", listFollower);
 				request.setAttribute("listPost", listPost);
 				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {

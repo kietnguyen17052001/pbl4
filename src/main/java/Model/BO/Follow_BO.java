@@ -1,5 +1,8 @@
 package Model.BO;
 
+import java.util.List;
+
+import Model.BEAN.User;
 import Model.DAO.Follow_DAO;
 
 public class Follow_BO {
@@ -13,6 +16,11 @@ public class Follow_BO {
 	}
 
 	private Follow_BO() {
+	}
+
+	// list following, follower
+	public List<User> listFollowingOrFollowerInProfile(int userId, boolean isFollowing) throws Exception {
+		return Follow_DAO.getInstance().listFollowingOrFollowerInProfile(userId, isFollowing);
 	}
 
 	// check is followed?

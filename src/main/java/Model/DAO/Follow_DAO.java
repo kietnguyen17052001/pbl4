@@ -1,11 +1,11 @@
 package Model.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.*;
 import java.util.Date;
 
 import Context.ConnectDB;
+import Model.BEAN.User;
 
 public class Follow_DAO {
 	Connection conn = null;
@@ -21,6 +21,23 @@ public class Follow_DAO {
 	}
 
 	private Follow_DAO() {
+	}
+
+	// list following, follower
+	public List<User> listFollowingOrFollowerInProfile(int userId, boolean isFollowing) throws Exception {
+		List<User> listUser = new ArrayList<User>();
+		User user = null;
+		String query = isFollowing ? "Select targetId from Follow where userId = ?"
+				: "Select userId from Follow where targetId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, userId);
+		rs = ps.executeQuery();
+		while (rs.next()) {
+			user = User_DAO.getInstance().getUserById(rs.getInt(1));
+			listUser.add(user);
+		}
+		return listUser;
 	}
 
 	// check is followed?
