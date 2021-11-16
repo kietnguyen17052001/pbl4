@@ -15,9 +15,10 @@
 </head>
 <body>
 	<%
-	User user = (User) request.getAttribute("user");
-	int userId = user.getUser_id();
-	String name = user.getLast_name() + " " + user.getFirst_name();
+	User anotherUser = (User) request.getAttribute("anotherUser");
+	int userId = (int) request.getAttribute("userId");
+	boolean isFollowed = (boolean) request.getAttribute("isFollowed");
+	String nameAnotherUser = anotherUser.getLast_name() + " " + anotherUser.getFirst_name();
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	List<User> listFollowing = (ArrayList<User>) request.getAttribute("listFollowing");
 	List<User> listFollower = (ArrayList<User>) request.getAttribute("listFollower");
@@ -60,58 +61,84 @@
 		<div class="box-main">
 			<div class="user">
 				<div class="left">
-					<img class="avatar" alt="Avatar" src="image/<%=user.getPhoto()%>">
+					<img class="avatar" alt="Avatar"
+						src="image/<%=anotherUser.getPhoto()%>">
 				</div>
 				<div class="right">
 					<table>
 						<tr>
-							<td class="name-user"><%=name%></td>
+							<td class="name-user"><%=nameAnotherUser%></td>
 							<td>
+								<%
+								if (isFollowed) {
+								%>
 								<form
-									action="User_Controller?type=editProfilePage&userId=<%=userId%>"
+									action="User_Controller?type=messagePage&userId=<%=userId%>"
 									method="post">
-									<input class="edit-profile" type="submit" value="Edit profile">
-								</form>
+									<input class="message-another" type="submit" value="Message">
+								</form> <%
+ } else {
+ %>
+								<form
+									action="Follow_Controller?type=follow&pageFollow=anotherProfilePage&userId=<%=userId%>&targetId=<%=anotherUser.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
+									method="post">
+									<input class="follow-another" type="submit" value="Follow">
+								</form> <%
+ }
+ %>
 							</td>
-							<td><button type="button" class="up-post"
-									onclick="openFormPostPhoto()">New post</button></td>
+							<td>
+								<%
+								if (isFollowed) {
+								%>
+								<form
+									action="Follow_Controller?type=unfollow&pageFollow=anotherProfilePage&userId=<%=userId%>&targetId=<%=anotherUser.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
+									method="post">
+									<input class="unfollow-another" type="submit" value="Unfollow">
+								</form> <%
+ }
+ %>
+							</td>
 						</tr>
 						<tr>
-							<td class="num-post"><strong><%=user.getPost()%></strong>
+							<td class="num-post"><strong><%=anotherUser.getPost()%></strong>
 								post</td>
 							<td><button class="btn-show-follower"
 									onclick="openFormListFollower()">
-									<strong><%=user.getFollower()%></strong> followers
+									<strong><%=anotherUser.getFollower()%></strong> followers
 								</button></td>
 							<td><button class="btn-show-following"
 									onclick="openFormListFollowing()">
-									Following <strong><%=user.getFollowing()%></strong> users
+									Following <strong><%=anotherUser.getFollowing()%></strong>
+									users
 								</button></td>
 						</tr>
 					</table>
 					<div class="about-user">
 						<%
-						if (!user.getAbout().equals("")) {
+						if (!anotherUser.getAbout().equals("")) {
 						%>
 						<p>
-							<strong>About me: </strong><%=user.getAbout()%></p>
+							<strong>About me: </strong><%=anotherUser.getAbout()%></p>
 						<%
 						}
 						%>
 						<%
-						if (!user.getFacebook().equals("")) {
+						if (!anotherUser.getFacebook().equals("")) {
 						%>
 						<p>
-							<strong>Facebook: </strong><a href="<%=user.getFacebook()%>"><%=user.getFacebook()%></a>
+							<strong>Facebook: </strong><a
+								href="<%=anotherUser.getFacebook()%>"><%=anotherUser.getFacebook()%></a>
 						</p>
 						<%
 						}
 						%>
 						<%
-						if (!user.getInstagram().equals("")) {
+						if (!anotherUser.getInstagram().equals("")) {
 						%>
 						<p>
-							<strong>Instagram: </strong><a href="<%=user.getInstagram()%>"><%=user.getInstagram()%></a>
+							<strong>Instagram: </strong><a
+								href="<%=anotherUser.getInstagram()%>"><%=anotherUser.getInstagram()%></a>
 						</p>
 						<%
 						}
@@ -156,47 +183,6 @@
 			</div>
 		</div>
 	</div>
-	<div id="form-post" class="post-photo">
-		<div class="post-photo-title">
-			<div>
-				<button type="button">
-					<i class="far fa-question-circle"></i>
-				</button>
-			</div>
-			<div>
-				<p>Create new post</p>
-			</div>
-			<div>
-				<button type="button">
-					<i class="far fa-times-circle" onclick="closeFormPostPhoto()"></i>
-				</button>
-			</div>
-		</div>
-		<form action="Post_Photo_Controller?type=add&userId=<%=userId%>"
-			method="post" enctype="multipart/form-data">
-			<div class="post-photo-box">
-				<div class="post-photo-main">
-					<div class="post-photo-user">
-						<img src="image/<%=user.getPhoto()%>" alt="avatar" width="50"
-							height="50">
-						<p>
-							<strong><%=name%></strong>
-						</p>
-					</div>
-					<div class="post-photo-content">
-						<textarea name="photo-content" id="" cols="30" rows="5"
-							placeholder="Write your content ..."></textarea>
-					</div>
-				</div>
-				<div class="post-photo-image">
-					<input type="file" name="image">
-				</div>
-				<div class="post-photo-submit">
-					<input type="submit" value="Up post">
-				</div>
-			</div>
-		</form>
-	</div>
 	<div id="form-following" class="form-list-following">
 		<div class="form-list-following-title">
 			<div>
@@ -217,20 +203,13 @@
 		for (User userFollowing : listFollowing) {
 			String nameUserFollowing = userFollowing.getLast_name() + " " + userFollowing.getFirst_name();
 		%>
-		<form
-			action="Follow_Controller?type=unfollow&pageFollow=profilePage&userId=<%=userId%>&targetId=<%=userFollowing.getUser_id()%>"
-			method="post">
+		<form action="" method="post">
 			<div class="list-following">
 				<div class="list-following-user-avatar">
-					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollowing.getUser_id()%>"><img
-						src="image/<%=userFollowing.getPhoto()%>" alt="avatar" height="50"
-						width="50"></a>
+					<a href=""><img src="image/<%=userFollowing.getPhoto()%>"
+						alt="avatar" height="50" width="50"></a>
 				</div>
-				<div class="list-following-user-name">
-					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollowing.getUser_id()%>"><%=nameUserFollowing%></a>
-				</div>
+				<div class="list-following-user-name"><%=nameUserFollowing%></div>
 				<div class="list-following-user-unfollow">
 					<input type="submit" value="Unfollow">
 				</div>
@@ -260,20 +239,13 @@
 		for (User userFollower : listFollower) {
 			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
 		%>
-		<form
-			action="Follow_Controller?type=delete&pageFollow=profilePage&userId=<%=userFollower.getUser_id()%>&targetId=<%=userId%>"
-			method="post">
+		<form action="" method="post">
 			<div class="list-follower">
 				<div class="list-follower-user-avatar">
-					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>"><img
-						src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
-						width="50"></a>
+					<a href=""><img src="image/<%=userFollower.getPhoto()%>"
+						alt="avatar" height="50" width="50"></a>
 				</div>
-				<div class="list-follower-user-name">
-					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>"><%=nameUserFollower%></a>
-				</div>
+				<div class="list-follower-user-name"><%=nameUserFollower%></div>
 				<div class="list-follower-user-delete">
 					<input type="submit" value="Delete">
 				</div>

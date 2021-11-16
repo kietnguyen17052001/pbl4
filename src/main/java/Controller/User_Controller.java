@@ -145,6 +145,28 @@ public class User_Controller extends HttpServlet {
 			request.setAttribute("userId", userId);
 			getServletContext().getRequestDispatcher("/FollowPage.jsp").forward(request, response);
 			break;
+		case "anotherProfilePage":
+			userId = Integer.parseInt(request.getParameter("userId"));
+			int anotherUserId = Integer.parseInt(request.getParameter("anotherUserId"));
+			try {
+				User anotherUser = User_BO.getInstance().getUserById(anotherUserId);
+				List<Post_Photo> listPostOfAnotherUser = Post_Photo_BO.getInstance().listPost(anotherUserId);
+				List<User> listFollowingOfAnotherUser = Follow_BO.getInstance()
+						.listFollowingOrFollowerInProfile(anotherUserId, true);
+				List<User> listFollowerOfAnotherUser = Follow_BO.getInstance()
+						.listFollowingOrFollowerInProfile(anotherUserId, false);
+				boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
+																								// following anotherUser
+				request.setAttribute("userId", userId);
+				request.setAttribute("anotherUser", anotherUser);
+				request.setAttribute("isFollowed", isFollowed);
+				request.setAttribute("listFollowing", listFollowingOfAnotherUser);
+				request.setAttribute("listFollower", listFollowerOfAnotherUser);
+				request.setAttribute("listPost", listPostOfAnotherUser);
+				getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
+			} catch (Exception e) {
+			}
+			break;
 		case "profilePage":
 			userId = Integer.parseInt(request.getParameter("userId"));
 			try {

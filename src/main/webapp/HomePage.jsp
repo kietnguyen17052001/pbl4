@@ -41,7 +41,7 @@
 					<li class="profile"><a
 						href="User_Controller?type=profilePage&userId=<%=userId%>"><i
 							class="far fa-user"></i></a></li>
-					<li class="profile"><a
+					<li class="logout"><a
 						href="User_Controller?type=logout&userId=<%=userId%>"><i
 							class="fas fa-sign-out-alt"></i></a></li>
 				</ul>

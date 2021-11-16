@@ -39,52 +39,8 @@ public class Follow_Controller extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String type = request.getParameter("type");
-		int userId;
-		int targetId;
-		switch (type) {
-		case "follow":
-			userId = Integer.parseInt(request.getParameter("userId"));
-			targetId = Integer.parseInt(request.getParameter("targetId"));
-			try {
-				Follow_BO.getInstance().addNewFollow(userId, targetId);
-				try {
-					User user = User_BO.getInstance().getUserById(userId);
-					List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
-					List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
-					List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-					request.setAttribute("listFollowing", listFollowing);
-					request.setAttribute("listFollower", listFollower);
-					request.setAttribute("user", user);
-					request.setAttribute("listPost", listPost);
-					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
-				} catch (Exception e) {
-				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-			break;
-		case "unfollow":
-			userId = Integer.parseInt(request.getParameter("userId"));
-			targetId = Integer.parseInt(request.getParameter("targetId"));
-			try {
-				Follow_BO.getInstance().unFollow(userId, targetId);
-				try {
-					User user = User_BO.getInstance().getUserById(userId);
-					List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
-					List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
-					List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-					request.setAttribute("user", user);
-					request.setAttribute("listFollowing", listFollowing);
-					request.setAttribute("listFollower", listFollower);
-					request.setAttribute("listPost", listPost);
-					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
-				} catch (Exception e) {
-				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-			break;
-		}
+		String pageFollow = request.getParameter("pageFollow");
+		getAndSendData(request, response, type, pageFollow);
 	}
 
 	/**
@@ -97,4 +53,58 @@ public class Follow_Controller extends HttpServlet {
 		doGet(request, response);
 	}
 
+	// send data and open profile page
+	public void getAndSendData(HttpServletRequest request, HttpServletResponse response, String type,
+			String pageFollow) {
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		int targetId = Integer.parseInt(request.getParameter("targetId"));
+		try {
+			// add new follow
+			if (type.equals("follow")) {
+				Follow_BO.getInstance().addNewFollow(userId, targetId);
+			} else if (type.equals("unfollow") || type.equals("delete")) { // unfollow
+				Follow_BO.getInstance().unFollow(userId, targetId);
+			}
+			try {
+				if (type.equals("delete")) {
+					userId = targetId;
+				}
+
+				List<Post_Photo> listPost = null;
+				List<User> listFollowing = null;
+				List<User> listFollower = null;
+
+				if (pageFollow.equals("anotherProfilePage")) {
+					int anotherUserId = Integer.parseInt(request.getParameter("anotherUserId"));
+					User anotherUser = User_BO.getInstance().getUserById(anotherUserId);
+					listPost = Post_Photo_BO.getInstance().listPost(anotherUserId);
+					listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(anotherUserId, true);
+					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(anotherUserId, false);
+					boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
+																									// following
+																									// anotherUser
+					request.setAttribute("userId", userId);
+					request.setAttribute("anotherUser", anotherUser);
+					request.setAttribute("isFollowed", isFollowed);
+					request.setAttribute("listFollowing", listFollowing);
+					request.setAttribute("listFollower", listFollower);
+					request.setAttribute("listPost", listPost);
+					getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
+				} else {
+					User user = User_BO.getInstance().getUserById(userId);
+					listPost = Post_Photo_BO.getInstance().listPost(userId);
+					listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
+					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
+					request.setAttribute("user", user);
+					request.setAttribute("listFollowing", listFollowing);
+					request.setAttribute("listFollower", listFollower);
+					request.setAttribute("listPost", listPost);
+					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+				}
+			} catch (Exception e) {
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

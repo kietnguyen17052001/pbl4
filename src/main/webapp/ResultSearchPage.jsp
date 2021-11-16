@@ -62,16 +62,19 @@
 			type = hashMap.get(user) ? "unfollow" : "follow";
 		%>
 		<form
-			action="Follow_Controller?type=<%=type%>&userId=<%=userId%>&targetId=<%=user.getUser_id()%>"
+			action="Follow_Controller?type=<%=type%>&pageFollow=profilePageuserId=<%=userId%>&targetId=<%=user.getUser_id()%>"
 			method="post">
 			<div class="main-page-search-user">
 				<div class="main-page-search-user-avatar">
-					<a href="#"><img src="image/<%=user.getPhoto()%>" alt="avatar"
-						width="70" height="70"></a>
+					<a
+						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=user.getUser_id()%>"><img
+						src="image/<%=user.getPhoto()%>" alt="avatar" width="70"
+						height="70"></a>
 				</div>
 				<div class="main-page-search-user-information">
 					<ul>
-						<li><a href="#"><strong><%=name%></strong></a></li>
+						<li><a
+							href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=user.getUser_id()%>"><strong><%=name%></strong></a></li>
 					</ul>
 				</div>
 				<div class="main-page-search-user-<%=type%>">

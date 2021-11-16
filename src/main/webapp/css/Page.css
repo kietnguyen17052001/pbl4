@@ -309,7 +309,8 @@ html {
 	font-size: 1.2rem;
 }
 
-.edit-profile, .up-post {
+.edit-profile, .message-another, .up-post, .follow-another,
+	.unfollow-another {
 	background-color: white;
 	border: 1px solid silver;
 	border-radius: 5px;
@@ -318,7 +319,7 @@ html {
 	font-weight: bold;
 }
 
-.up-post {
+.up-post, .follow-another, .unfollow-another {
 	background-color: #eb4d4b;
 	color: white;
 }
@@ -444,6 +445,11 @@ html {
 	width: 70%;
 }
 
+.list-following-user-name a, .list-follower-user-name a {
+	text-decoration: none;
+	color: black;
+}
+
 .list-following-user-unfollow, .list-follower-user-delete {
 	width: 15%;
 }
@@ -472,7 +478,8 @@ html {
 }
 
 /* end  */
-.edit-profile:hover, .up-post:hover {
+.edit-profile:hover, .up-post:hover, .message-another, .follow-another,
+	.unfollow-another {
 	cursor: pointer;
 	opacity: 0.9;
 }
