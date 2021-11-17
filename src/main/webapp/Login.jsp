@@ -17,11 +17,12 @@
 			<div class="top-form">
 				<p class="name-app">SUGAR APP</p>
 				<div class="form-login">
-					<form action="User_Controller?type=login" method="post">
+					<form name="formLogin" action="User_Controller?type=login"
+						method="post">
 						<input type="text" name="username"
 							placeholder="Username, phone number or email"> <input
 							type="password" name="password" placeholder="Password"> <input
-							type="submit" value="Log in">
+							type="submit" value="Log in" onclick="checkLogin()">
 					</form>
 				</div>
 				<div class="forgot-password">

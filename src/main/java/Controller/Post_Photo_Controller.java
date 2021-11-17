@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -69,26 +70,10 @@ public class Post_Photo_Controller extends HttpServlet {
 				// update number of posts
 				User_BO.getInstance().updateNumberOfPost(userId);
 				//
-				List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
-				List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
-				List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				user = User_BO.getInstance().getUserById(userId);
-				request.setAttribute("user", user);
-				request.setAttribute("listFollowing", listFollowing);
-				request.setAttribute("listFollower", listFollower);
-				request.setAttribute("listPost", listPost);
-				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+				loadPageWhenPostPhoto(request, response, userId);
 			} catch (Exception e) {
 				try {
-					List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
-					List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
-					List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-					user = User_BO.getInstance().getUserById(userId);
-					request.setAttribute("user", user);
-					request.setAttribute("listFollowing", listFollowing);
-					request.setAttribute("listFollower", listFollower);
-					request.setAttribute("listPost", listPost);
-					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+					loadPageWhenPostPhoto(request, response, userId);
 				} catch (Exception e1) {
 					System.out.println(e1.getMessage());
 				}
@@ -109,4 +94,21 @@ public class Post_Photo_Controller extends HttpServlet {
 		doGet(request, response);
 	}
 
+	public void loadPageWhenPostPhoto(HttpServletRequest request, HttpServletResponse response, int userId)
+			throws Exception {
+		User user = User_BO.getInstance().getUserById(userId);
+		List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
+		List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
+		List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
+		HashMap<User, String> hashMap = new HashMap<User, String>();
+		for (User follower : listFollower) {
+			hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
+		}
+		request.setAttribute("user", user);
+		request.setAttribute("listFollowing", listFollowing);
+		request.setAttribute("listFollower", listFollower);
+		request.setAttribute("listPost", listPost);
+		request.setAttribute("hashMap", hashMap);
+		getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
+	}
 }

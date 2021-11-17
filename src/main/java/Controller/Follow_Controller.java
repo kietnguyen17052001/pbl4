@@ -74,8 +74,12 @@ public class Follow_Controller extends HttpServlet {
 				List<Post_Photo> listPost = null;
 				List<User> listFollowing = null;
 				List<User> listFollower = null;
-
 				if (pageFollow.equals("anotherProfilePage")) {
+					List<User> listFollowerr = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
+					HashMap<User, String> hashMap = new HashMap<User, String>();
+					for (User follower : listFollowerr) {
+						hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
+					}
 					int anotherUserId = Integer.parseInt(request.getParameter("anotherUserId"));
 					User anotherUser = User_BO.getInstance().getUserById(anotherUserId);
 					listPost = Post_Photo_BO.getInstance().listPost(anotherUserId);
@@ -92,16 +96,22 @@ public class Follow_Controller extends HttpServlet {
 					request.setAttribute("listPost", listPost);
 					request.setAttribute("hashMapListFollowing", hashMapListFollowingOfAnotherUser);
 					request.setAttribute("hashMapListFollower", hashMapListFollowerOfAnotherUser);
+					request.setAttribute("hashMap", hashMap);
 					getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
 				} else {
 					User user = User_BO.getInstance().getUserById(userId);
 					listPost = Post_Photo_BO.getInstance().listPost(userId);
 					listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
 					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
+					HashMap<User, String> hashMap = new HashMap<User, String>();
+					for (User follower : listFollower) {
+						hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
+					}
 					request.setAttribute("user", user);
 					request.setAttribute("listFollowing", listFollowing);
 					request.setAttribute("listFollower", listFollower);
 					request.setAttribute("listPost", listPost);
+					request.setAttribute("hashMap", hashMap);
 					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 				}
 			} catch (Exception e) {

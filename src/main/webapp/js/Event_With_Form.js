@@ -18,3 +18,10 @@ function openFormListFollower() {
 function closeFormListFollower() {
 	document.getElementById("form-follower").style.display = "none";
 }
+// event open-close form list follower history
+function openFormListFollowerHistory() {
+	document.getElementById("form-follow-history").style.display = "block";
+}
+function closeFormListFollowerHistory() {
+	document.getElementById("form-follow-history").style.display = "none";
+}

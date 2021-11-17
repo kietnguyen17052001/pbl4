@@ -1,6 +1,7 @@
 package Model.DAO;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
@@ -108,5 +109,18 @@ public class Follow_DAO {
 		ps.setInt(1, currentFollowerOfTarget);
 		ps.setInt(2, targetId);
 		ps.executeUpdate();
+	}
+
+	// get date follow
+	public String getDateFollow(int userId, int targetId) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String query = "Select followDate from Follow where userId = ? and targetId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, userId);
+		ps.setInt(2, targetId);
+		rs = ps.executeQuery();
+		rs.next();
+		return sdf.format(rs.getObject("followDate"));
 	}
 }

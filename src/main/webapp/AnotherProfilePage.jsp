@@ -21,6 +21,7 @@
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	HashMap<User, Boolean> hashMapListFollowing = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollowing");
 	HashMap<User, Boolean> hashMapListFollower = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollower");
+	HashMap<User, String> hashMap = (HashMap<User, String>) request.getAttribute("hashMap");
 	String nameAnotherUser = anotherUser.getLast_name() + " " + anotherUser.getFirst_name();
 	%>
 	<div class="top-page">
@@ -44,8 +45,7 @@
 					<li class="message"><a
 						href="User_Controller?type=messagePage&userId=<%=userId%>"><i
 							class="far fa-comments"></i></a></li>
-					<li class="follow"><a
-						href="User_Controller?type=followPage&userId=<%=userId%>"><i
+					<li class="follow" onclick="openFormListFollowerHistory()"><a><i
 							class="far fa-heart"></i></a></li>
 					<li class="profile"><a
 						href="User_Controller?type=profilePage&userId=<%=userId%>"><i
@@ -288,6 +288,46 @@
 				%>
 			</div>
 		</form>
+		<%
+		}
+		%>
+	</div>
+	<div id="form-follow-history" class="form-list-follower-history">
+		<div class="form-list-follower-history-title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			<div>
+				<p>Followers</p>
+			</div>
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle"
+						onclick="closeFormListFollowerHistory()"></i>
+				</button>
+			</div>
+		</div>
+		<%
+		for (User userFollower : hashMap.keySet()) {
+			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
+		%>
+		<div class="list-follower">
+
+			<div class="list-follower-user-avatar">
+				<a
+					href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>"><img
+					src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
+					width="50"></a>
+			</div>
+			<div class="list-follower-history-user-name">
+				<a
+					href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>">
+					<strong><%=nameUserFollower%></strong> started following you. <%=hashMap.get(userFollower)%>
+				</a>
+			</div>
+		</div>
 		<%
 		}
 		%>

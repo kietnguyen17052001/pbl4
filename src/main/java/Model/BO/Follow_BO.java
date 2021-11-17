@@ -37,4 +37,9 @@ public class Follow_BO {
 	public void unFollow(int userId, int targetId) throws Exception {
 		Follow_DAO.getInstance().unFollow(userId, targetId);
 	}
+
+	// get date follow
+	public String getDateFollow(int userId, int targetId) throws Exception {
+		return Follow_DAO.getInstance().getDateFollow(userId, targetId);
+	}
 }

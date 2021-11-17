@@ -101,6 +101,10 @@ html {
 	font-size: 2rem;
 }
 
+.option ul li a:hover {
+	cursor: pointer;
+}
+
 .box-bottom ul li a {
 	font-size: 0.8rem;
 	color: silver;
@@ -340,7 +344,8 @@ html {
 }
 
 /* css for form post photo, form following, form followers in profile */
-.post-photo, .form-list-following, .form-list-follower {
+.post-photo, .form-list-following, .form-list-follower,
+	.form-list-follower-history {
 	display: none;
 	position: absolute;
 	top: 50%;
@@ -352,12 +357,18 @@ html {
 	border-radius: 10px;
 }
 
-.form-list-following, .form-list-follower {
+.form-list-follower-history {
+	top: 50%;
+	left: 50%;
+	transform: translateY(-75%);
+}
+
+.form-list-following, .form-list-follower, .form-list-follower-history {
 	width: 450px;
 }
 
 .post-photo .post-photo-title, .form-list-following-title,
-	.form-list-follower-title {
+	.form-list-follower-title, .form-list-follower-history-title {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -367,14 +378,16 @@ html {
 }
 
 .post-photo .post-photo-title button, .form-list-following-title button,
-	.form-list-follower-title button {
+	.form-list-follower-title button, .form-list-follower-history-title button
+	{
 	background-color: white;
 	border: none;
 	font-size: 1.5rem;
 }
 
 .post-photo .post-photo-title button:hover, .form-list-following-title button:hover,
-	.form-list-follower-title button:hover {
+	.form-list-follower-title button:hover,
+	.form-list-follower-history-title button:hover {
 	cursor: pointer;
 }
 
@@ -445,11 +458,17 @@ html {
 	width: 70%;
 }
 
-.list-following-user-name a:hover, .list-follower-user-name a:hover {
+.list-follower-history-user-name {
+	width: 85%;
+}
+
+.list-following-user-name a:hover, .list-follower-user-name a:hover,
+	.list-follower-history-user-name a:hover {
 	border-bottom: 1px solid black;
 }
 
-.list-following-user-name a, .list-follower-user-name a {
+.list-following-user-name a, .list-follower-user-name a,
+	.list-follower-history-user-name a {
 	text-decoration: none;
 	color: black;
 }
