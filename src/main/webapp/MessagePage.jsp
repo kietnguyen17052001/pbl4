@@ -10,7 +10,7 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/Page.css" type="text/css">
 <script src="js/Event_With_Form.js"></script>
-<title>Sugar App</title>
+<title>Message</title>
 </head>
 <body>
 	<%
