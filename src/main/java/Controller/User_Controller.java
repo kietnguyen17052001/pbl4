@@ -64,6 +64,7 @@ public class User_Controller extends HttpServlet {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 		case "create": // create new user
 			try {
@@ -74,6 +75,7 @@ public class User_Controller extends HttpServlet {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		case "edit": // edit profile
@@ -87,6 +89,7 @@ public class User_Controller extends HttpServlet {
 					editUser(request, response);
 					getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 				} catch (Exception e1) {
+					System.out.println(e.getMessage());
 				}
 			}
 			break;
@@ -95,18 +98,7 @@ public class User_Controller extends HttpServlet {
 			String contentSearch = request.getParameter("contentSearch");
 			try {
 				List<User> listUser = User_BO.getInstance().listUserSearch(contentSearch);
-				HashMap<User, Boolean> hashMap = new HashMap<User, Boolean>();
-				for (User u : listUser) {
-					// remove user has id == userId
-					if (u.getUser_id() == userId) {
-						listUser.remove(u);
-					}
-					if (Follow_BO.getInstance().isFollowed(userId, u.getUser_id())) {
-						hashMap.put(u, true); // user is following target
-					} else {
-						hashMap.put(u, false); // user isn't following target
-					}
-				}
+				HashMap<User, Boolean> hashMap = hashMap(listUser, userId, true);
 				request.setAttribute("userId", userId);
 				request.setAttribute("hashMap", hashMap);
 				getServletContext().getRequestDispatcher("/ResultSearchPage.jsp").forward(request, response);
@@ -128,6 +120,7 @@ public class User_Controller extends HttpServlet {
 					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		case "homePage":
@@ -155,16 +148,21 @@ public class User_Controller extends HttpServlet {
 						.listFollowingOrFollowerInProfile(anotherUserId, true);
 				List<User> listFollowerOfAnotherUser = Follow_BO.getInstance()
 						.listFollowingOrFollowerInProfile(anotherUserId, false);
+				HashMap<User, Boolean> hashMapListFollowingOfAnotherUser = hashMap(listFollowingOfAnotherUser, userId,
+						false);
+				HashMap<User, Boolean> hashMapListFollowerOfAnotherUser = hashMap(listFollowerOfAnotherUser, userId,
+						false);
 				boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
 																								// following anotherUser
 				request.setAttribute("userId", userId);
 				request.setAttribute("anotherUser", anotherUser);
 				request.setAttribute("isFollowed", isFollowed);
-				request.setAttribute("listFollowing", listFollowingOfAnotherUser);
-				request.setAttribute("listFollower", listFollowerOfAnotherUser);
 				request.setAttribute("listPost", listPostOfAnotherUser);
+				request.setAttribute("hashMapListFollowing", hashMapListFollowingOfAnotherUser);
+				request.setAttribute("hashMapListFollower", hashMapListFollowerOfAnotherUser);
 				getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		case "profilePage":
@@ -180,6 +178,7 @@ public class User_Controller extends HttpServlet {
 				request.setAttribute("listPost", listPost);
 				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		case "changePasswordPage":
@@ -189,6 +188,7 @@ public class User_Controller extends HttpServlet {
 				request.setAttribute("user", user);
 				getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		case "editProfilePage":
@@ -207,6 +207,7 @@ public class User_Controller extends HttpServlet {
 				User_BO.getInstance().changeUserStatus(userId, false);// false: status=offline
 				getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		}
@@ -298,5 +299,25 @@ public class User_Controller extends HttpServlet {
 		return (User_BO.getInstance().isExistUsername_phone_mail(username)
 				|| User_BO.getInstance().isExistUsername_phone_mail(phone)
 				|| User_BO.getInstance().isExistUsername_phone_mail(email)) ? true : false;
+	}
+
+	// hashMap get user following and user not following in form list user following
+	// and form list user follower
+	public HashMap<User, Boolean> hashMap(List<User> listUser, int userId, boolean isProfilePage) throws Exception {
+		HashMap<User, Boolean> hashMap = new HashMap<User, Boolean>();
+		for (User u : listUser) {
+			// remove user has id == userId
+			if (isProfilePage) {
+				if (u.getUser_id() == userId) {
+					listUser.remove(u);
+				}
+			}
+			if (Follow_BO.getInstance().isFollowed(userId, u.getUser_id())) {
+				hashMap.put(u, true); // user is following target
+			} else {
+				hashMap.put(u, false); // user isn't following target
+			}
+		}
+		return hashMap;
 	}
 }

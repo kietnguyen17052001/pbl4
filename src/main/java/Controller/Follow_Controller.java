@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -80,15 +81,17 @@ public class Follow_Controller extends HttpServlet {
 					listPost = Post_Photo_BO.getInstance().listPost(anotherUserId);
 					listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(anotherUserId, true);
 					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(anotherUserId, false);
+					HashMap<User, Boolean> hashMapListFollowingOfAnotherUser = hashMap(listFollowing, userId, false);
+					HashMap<User, Boolean> hashMapListFollowerOfAnotherUser = hashMap(listFollower, userId, false);
 					boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
 																									// following
 																									// anotherUser
 					request.setAttribute("userId", userId);
 					request.setAttribute("anotherUser", anotherUser);
 					request.setAttribute("isFollowed", isFollowed);
-					request.setAttribute("listFollowing", listFollowing);
-					request.setAttribute("listFollower", listFollower);
 					request.setAttribute("listPost", listPost);
+					request.setAttribute("hashMapListFollowing", hashMapListFollowingOfAnotherUser);
+					request.setAttribute("hashMapListFollower", hashMapListFollowerOfAnotherUser);
 					getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
 				} else {
 					User user = User_BO.getInstance().getUserById(userId);
@@ -102,9 +105,30 @@ public class Follow_Controller extends HttpServlet {
 					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	// hashMap get user following and user not following in form list user following
+	// and form list user follower
+	public HashMap<User, Boolean> hashMap(List<User> listUser, int userId, boolean isProfilePage) throws Exception {
+		HashMap<User, Boolean> hashMap = new HashMap<User, Boolean>();
+		for (User u : listUser) {
+			// remove user has id == userId
+			if (isProfilePage) {
+				if (u.getUser_id() == userId) {
+					listUser.remove(u);
+				}
+			}
+			if (Follow_BO.getInstance().isFollowed(userId, u.getUser_id())) {
+				hashMap.put(u, true); // user is following target
+			} else {
+				hashMap.put(u, false); // user isn't following target
+			}
+		}
+		return hashMap;
 	}
 }

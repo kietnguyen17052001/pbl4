@@ -62,7 +62,7 @@
 			type = hashMap.get(user) ? "unfollow" : "follow";
 		%>
 		<form
-			action="Follow_Controller?type=<%=type%>&pageFollow=profilePageuserId=<%=userId%>&targetId=<%=user.getUser_id()%>"
+			action="Follow_Controller?type=<%=type%>&pageFollow=profilePage&userId=<%=userId%>&targetId=<%=user.getUser_id()%>"
 			method="post">
 			<div class="main-page-search-user">
 				<div class="main-page-search-user-avatar">

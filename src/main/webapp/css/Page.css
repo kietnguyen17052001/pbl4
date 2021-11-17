@@ -445,34 +445,45 @@ html {
 	width: 70%;
 }
 
+.list-following-user-name a:hover, .list-follower-user-name a:hover {
+	border-bottom: 1px solid black;
+}
+
 .list-following-user-name a, .list-follower-user-name a {
 	text-decoration: none;
 	color: black;
 }
 
-.list-following-user-unfollow, .list-follower-user-delete {
+.list-following-user-unfollow, .list-following-user-follow,
+	.list-follower-user-unfollow, .list-follower-user-follow,
+	.list-follower-user-delete {
 	width: 15%;
 }
 
-.list-following-user-unfollow input, .list-follower-user-delete input {
+.list-following-user-unfollow input, .list-following-user-follow input,
+	.list-follower-user-unfollow input, .list-follower-user-follow input,
+	.list-follower-user-delete input {
 	color: white;
 	border-radius: 3px;
 	padding: 5px;
 	font-weight: bold;
 }
 
-.list-following-user-unfollow input {
+.list-following-user-unfollow input, .list-follower-user-unfollow input
+	{
 	background-color: #3498db;
 	border: 1px solid #3498db;
 }
 
-.list-follower-user-delete input {
+.list-follower-user-delete input, .list-following-user-follow input,
+	.list-follower-user-follow input {
 	background-color: #eb4d4b;
 	border: 1px solid #eb4d4b;
 }
 
-.list-following-user-unfollow input:hover, .list-follower-user-delete input:hover
-	{
+.list-following-user-unfollow input:hover, .list-following-user-follow input:hover,
+	.list-follower-user-unfollow input:hover, .list-follower-user-follow input:hover,
+	.list-follower-user-delete input:hover {
 	opacity: 0.9;
 	cursor: pointer;
 }

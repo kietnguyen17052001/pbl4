@@ -18,10 +18,10 @@
 	User anotherUser = (User) request.getAttribute("anotherUser");
 	int userId = (int) request.getAttribute("userId");
 	boolean isFollowed = (boolean) request.getAttribute("isFollowed");
-	String nameAnotherUser = anotherUser.getLast_name() + " " + anotherUser.getFirst_name();
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
-	List<User> listFollowing = (ArrayList<User>) request.getAttribute("listFollowing");
-	List<User> listFollower = (ArrayList<User>) request.getAttribute("listFollower");
+	HashMap<User, Boolean> hashMapListFollowing = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollowing");
+	HashMap<User, Boolean> hashMapListFollower = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollower");
+	String nameAnotherUser = anotherUser.getLast_name() + " " + anotherUser.getFirst_name();
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -200,19 +200,38 @@
 			</div>
 		</div>
 		<%
-		for (User userFollowing : listFollowing) {
+		String typeUserFollowing;
+		for (User userFollowing : hashMapListFollowing.keySet()) {
 			String nameUserFollowing = userFollowing.getLast_name() + " " + userFollowing.getFirst_name();
+			// hashMap.get(user) == true: user is following target
+			typeUserFollowing = hashMapListFollowing.get(userFollowing) ? "unfollow" : "follow";
 		%>
-		<form action="" method="post">
+		<form
+			action="Follow_Controller?type=<%=typeUserFollowing%>&pageFollow=anotherProfilePage&userId=<%=userId%>&targetId=<%=userFollowing.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
+			method="post">
 			<div class="list-following">
+				<%
+				boolean isUser = (userFollowing.getUser_id() == userId) ? true : false;
+				String href = (isUser) ? "User_Controller?type=profilePage&userId=" + userId
+						: "User_Controller?type=anotherProfilePage&userId=" + userId + "&anotherUserId=" + userFollowing.getUser_id();
+				%>
 				<div class="list-following-user-avatar">
-					<a href=""><img src="image/<%=userFollowing.getPhoto()%>"
-						alt="avatar" height="50" width="50"></a>
+					<a href="<%=href%>"><img
+						src="image/<%=userFollowing.getPhoto()%>" alt="avatar" height="50"
+						width="50"></a>
 				</div>
-				<div class="list-following-user-name"><%=nameUserFollowing%></div>
-				<div class="list-following-user-unfollow">
-					<input type="submit" value="Unfollow">
+				<div class="list-following-user-name">
+					<a href="<%=href%>"><%=nameUserFollowing%></a>
 				</div>
+				<%
+				if (!isUser) {
+				%>
+				<div class="list-following-user-<%=typeUserFollowing%>">
+					<input type="submit" value="<%=typeUserFollowing%>">
+				</div>
+				<%
+				}
+				%>
 			</div>
 		</form>
 		<%
@@ -236,19 +255,37 @@
 			</div>
 		</div>
 		<%
-		for (User userFollower : listFollower) {
+		String typeUserFollower;
+		for (User userFollower : hashMapListFollower.keySet()) {
 			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
+			typeUserFollower = hashMapListFollower.get(userFollower) ? "unfollow" : "follow";
 		%>
-		<form action="" method="post">
+		<form
+			action="Follow_Controller?type=<%=typeUserFollower%>&pageFollow=anotherProfilePage&userId=<%=userId%>&targetId=<%=userFollower.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
+			method="post">
 			<div class="list-follower">
+				<%
+				boolean isUser = (userFollower.getUser_id() == userId) ? true : false;
+				String href = (isUser) ? "User_Controller?type=profilePage&userId=" + userId
+						: "User_Controller?type=anotherProfilePage&userId=" + userId + "&anotherUserId=" + userFollower.getUser_id();
+				%>
 				<div class="list-follower-user-avatar">
-					<a href=""><img src="image/<%=userFollower.getPhoto()%>"
-						alt="avatar" height="50" width="50"></a>
+					<a href="<%=href%>"><img
+						src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
+						width="50"></a>
 				</div>
-				<div class="list-follower-user-name"><%=nameUserFollower%></div>
-				<div class="list-follower-user-delete">
-					<input type="submit" value="Delete">
+				<div class="list-follower-user-name">
+					<a href="<%=href%>"><%=nameUserFollower%></a>
 				</div>
+				<%
+				if (!isUser) {
+				%>
+				<div class="list-follower-user-<%=typeUserFollower%>">
+					<input type="submit" value="<%=typeUserFollower%>">
+				</div>
+				<%
+				}
+				%>
 			</div>
 		</form>
 		<%
