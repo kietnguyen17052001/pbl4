@@ -1,3 +1,5 @@
+<%@page import="Model.BEAN.Following_Post"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="Model.BEAN.User"%>
@@ -12,7 +14,10 @@
 </head>
 <body>
 	<%
-	int userId = (int) request.getAttribute("userId");
+		int userId = (int) request.getAttribute("userId");
+	List<User> listFollowing = (List<User>) request.getAttribute("listFollowing");
+	ArrayList<Following_Post> listFollowingPost = (ArrayList<Following_Post>) request.getAttribute("listFollowingPost");
+	User user = (User) request.getAttribute("user");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -44,6 +49,69 @@
 			</div>
 		</div>
 	</div>
-	<div class="main-page-home"></div>
+	<div class="main-page-home">
+		<div class="container">
+			<div class="left-home">
+				<div class="following">
+					<%
+						for (User item : listFollowing) {
+					%>
+					<a class="frame-following" href="#">
+						<div class="img-following">
+							<img class="avatar-following" alt="Avatar"
+								src="image/<%=item.getPhoto()%>"><br>
+						</div> <strong class="name-following"><%=item.getFirst_name()%></strong>
+					</a>
+					<%
+						}
+					%>
+				</div>
+				<div class="post">
+					<div class="frame-post">
+						<%
+							for (Following_Post item : listFollowingPost) {
+						%>
+						<div class="frame-one-post">
+							<div class="top-post">
+								<img class="avatar-post" alt="Avatar"
+									src="image/<%=item.getAvatar()%>">
+								<div class="name-date">
+									<a class="name-post" href="#"><strong><%=item.getlastName() + " " + item.getfirstName()%></strong></a>
+									<p class="date-post"><%=item.getcreateDate()%></p>
+								</div>
+							</div>
+							<p class="content-post"><%=item.getContent()%></p>
+							<img class="photo-post" alt="Post"
+								src="image/<%=item.getPhoto()%>">
+						</div>
+
+						<%
+							}
+						%>
+					</div>
+				</div>
+			</div>
+			<div class="right-home">
+				<div class="user-login">
+					<img class="avatar-user" alt="Avatar"
+						src="image/<%=user.getPhoto()%>">
+					<div class="userId-name">
+						<a class="name-user-home"
+							href="User_Controller?type=profilePage&userId=<%=userId%>"><strong><%=user.getLast_name() + " " + user.getFirst_name()%></strong></a>
+					</div>
+				</div>
+				<div class="hint">
+					<div class="hint-header">
+						<p class="text-hint">Suggestions for you</p>
+						<a class="show-all-hint" href="#">Show all</a>
+					</div>
+					<div class = "hint-content">
+						
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 </body>
 </html>

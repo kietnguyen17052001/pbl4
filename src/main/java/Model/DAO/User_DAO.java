@@ -2,8 +2,12 @@ package Model.DAO;
 
 import java.security.*;
 import java.sql.*;
+import java.util.*;
+
+
 import Context.ConnectDB;
 import Model.BEAN.User;
+
 
 public class User_DAO {
 	Connection conn = null;
@@ -18,6 +22,7 @@ public class User_DAO {
 		}
 		return instance;
 	}
+	
 
 	private User_DAO() throws Exception {
 	}
@@ -183,4 +188,24 @@ public class User_DAO {
 				rs.getObject("registeredDate"), rs.getObject("updateDate"));
 		return user;
 	}
+	
+	/*public ArrayList<User> getOtherUser(int id) throws Exception{
+		ArrayList<User> listOtherUser = new ArrayList<User>();
+		String query = querySelect + " where userId != ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, id);
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			listOtherUser.add(new User(rs.getInt("userId"), rs.getString("userType"), rs.getString("userName"),
+					rs.getString("firstName"), rs.getString("lastName"), rs.getInt("gender"), rs.getString("password_sha"),
+					rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"), rs.getObject("birthday"),
+					rs.getString("photo"), rs.getString("about"), rs.getString("passions"), rs.getString("job"),
+					rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
+					rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
+					rs.getObject("registeredDate"), rs.getObject("updateDate")));
+		}
+		return listOtherUser;
+	}*/
+	
 }

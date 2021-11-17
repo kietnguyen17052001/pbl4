@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import Model.BEAN.Following_Post;
 import Model.BEAN.User;
+import Model.BO.Follow_BO;
 import Model.BO.User_BO;
 import Model.DAO.User_DAO;
 
@@ -46,13 +49,22 @@ public class User_Controller extends HttpServlet {
 		String type = request.getParameter("type");
 		int userId;
 		User user;
+		Date date1, date2;
+		Object temp;
 		switch (type) {
 		case "login": // login APP
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
 			try {
+				String username = request.getParameter("username");
+				String password = request.getParameter("password");
 				if (User_BO.getInstance().isExistUser(username, password)) {
 					userId = User_BO.getInstance().getIdUser(username);
+					user = User_BO.getInstance().getUserById(userId);
+					List<User> listFollowing = Follow_BO.getInstance().getFollowing(userId);
+					ArrayList<Integer> listIdFollowing = Follow_BO.getInstance().getIdFollowing(userId);
+					ArrayList<Following_Post> listFollowingPost = Follow_BO.getInstance().getFollowingPost(listIdFollowing);
+					request.setAttribute("user", user);
+					request.setAttribute("listFollowingPost", listFollowingPost);
+					request.setAttribute("listFollowing", listFollowing);
 					User_BO.getInstance().changeUserStatus(userId, true); // true: status=online
 					request.setAttribute("userId", userId);
 					getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
@@ -78,6 +90,12 @@ public class User_Controller extends HttpServlet {
 				editUser(request, response);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				try {
+					editUser(request, response);
+					getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
+				} catch (Exception e1) {
+				}
 			}
 			break;
 		case "changePassword": // change password
@@ -98,9 +116,21 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "homePage":
-			userId = Integer.parseInt(request.getParameter("userId"));
-			request.setAttribute("userId", userId);
-			getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
+			try {
+				userId = Integer.parseInt(request.getParameter("userId"));
+				user = User_BO.getInstance().getUserById(userId);
+				List<User> listFollowing = Follow_BO.getInstance().getFollowing(userId);
+				ArrayList<Integer> listIdFollowing = Follow_BO.getInstance().getIdFollowing(userId);
+				ArrayList<Following_Post> listFollowingPost = Follow_BO.getInstance().getFollowingPost(listIdFollowing);
+				request.setAttribute("user", user);
+				request.setAttribute("listFollowingPost", listFollowingPost);
+				request.setAttribute("userId", userId);
+				request.setAttribute("listFollowing", listFollowing);
+				getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				//e1.printStackTrace();
+			}
 			break;
 		case "messagePage":
 			userId = Integer.parseInt(request.getParameter("userId"));
@@ -184,7 +214,7 @@ public class User_Controller extends HttpServlet {
 		int userId = Integer.parseInt(request.getParameter("userId"));
 		Part file = request.getPart("image");
 		String imageFileName = file.getSubmittedFileName();
-		String uploadPath = "D:/Dropbox/Season3 - DUT/PBL4/Code/AppPBL4/src/main/webapp/image/" + imageFileName;
+		String uploadPath = "E:/DUT/HK5/PBL4/PBL4-Sugar-App/src/main/webapp/image" + imageFileName;
 		FileOutputStream fos = new FileOutputStream(uploadPath);
 		InputStream is = file.getInputStream();
 		byte[] data = new byte[is.available()];

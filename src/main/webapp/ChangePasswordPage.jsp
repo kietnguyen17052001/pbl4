@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%
-	User user = (User) request.getAttribute("user");
+		User user = (User) request.getAttribute("user");
 	int userId = user.getUser_id();
 	String name = user.getLast_name() + " " + user.getFirst_name();
 	%>
@@ -64,9 +64,8 @@
 					<thead></thead>
 					<tbody>
 						<tr>
-							<td><img
-								src="https://scr.vn/wp-content/uploads/2020/11/avatar-instagram-trong.jpg"
-								alt=" " width="50" height="50"></td>
+							<td><img src="image/<%=user.getPhoto()%>" alt=" "
+								width="50" height="50"></td>
 							<td class="name-user"><strong><%=name%></strong></td>
 						</tr>
 						<tr>

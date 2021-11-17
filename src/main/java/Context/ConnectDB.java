@@ -3,9 +3,9 @@ package Context;
 import java.sql.*;
 
 public class ConnectDB {
-	private String url = "jdbc:sqlserver://DANGKIET\\SQLEXPRESS; databaseName=PBL4";
-	private String username = "kiet";
-	private String password = "5071";
+	private String url = "jdbc:sqlserver://THANHDUONG\\SQLEXPRESS; databaseName=PBL4";
+	private String username = "sa";
+	private String password = "29032001";
 
 	public ConnectDB() {
 

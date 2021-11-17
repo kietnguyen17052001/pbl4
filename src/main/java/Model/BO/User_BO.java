@@ -1,5 +1,7 @@
 package Model.BO;
 
+import java.util.*;
+
 import Model.BEAN.User;
 import Model.DAO.User_DAO;
 
@@ -65,4 +67,10 @@ public class User_BO {
 	public User getUserById(int userId) throws Exception {
 		return User_DAO.getInstance().getUserById(userId);
 	}
+	
+	//get Other User
+	/*public ArrayList<User> getOtherUser(int id) throws Exception{
+		return User_DAO.getInstance().getOtherUser(id);
+	}*/
+	
 }
