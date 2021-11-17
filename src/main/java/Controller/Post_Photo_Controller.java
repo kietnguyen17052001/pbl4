@@ -70,8 +70,12 @@ public class Post_Photo_Controller extends HttpServlet {
 				User_BO.getInstance().updateNumberOfPost(userId);
 				//
 				List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
+				List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
+				List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
 				user = User_BO.getInstance().getUserById(userId);
 				request.setAttribute("user", user);
+				request.setAttribute("listFollowing", listFollowing);
+				request.setAttribute("listFollower", listFollower);
 				request.setAttribute("listPost", listPost);
 				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
@@ -86,6 +90,7 @@ public class Post_Photo_Controller extends HttpServlet {
 					request.setAttribute("listPost", listPost);
 					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 				} catch (Exception e1) {
+					System.out.println(e1.getMessage());
 				}
 			}
 			break;
