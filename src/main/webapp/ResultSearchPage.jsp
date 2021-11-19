@@ -16,8 +16,8 @@
 <body>
 	<%
 	int userId = (int) request.getAttribute("userId");
-	HashMap<User, Boolean> hashMap = (HashMap<User, Boolean>) request.getAttribute("hashMap");
-	HashMap<User, String> hashMapListFollower = (HashMap<User, String>) request.getAttribute("hashMapListFollower");
+	HashMap<User, Boolean> hashMap = (HashMap<User, Boolean>) request.getAttribute("hashMapp");
+	HashMap<User, String> hashMapListFollower = (HashMap<User, String>) request.getAttribute("hashMap");
 	%>
 	<div class="top-page">
 		<div class="box-top">

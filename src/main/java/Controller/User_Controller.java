@@ -50,8 +50,6 @@ public class User_Controller extends HttpServlet {
 		String type = request.getParameter("type");
 		int userId;
 		User user;
-		List<User> listFollower;
-		HashMap<User, String> hashMap;
 		switch (type) {
 		case "login": // login APP
 			String username = request.getParameter("username");
@@ -60,13 +58,8 @@ public class User_Controller extends HttpServlet {
 				if (User_BO.getInstance().isExistUser(username, password)) {
 					userId = User_BO.getInstance().getIdUser(username);
 					User_BO.getInstance().changeUserStatus(userId, true); // true: status=online
-					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-					hashMap = new HashMap<User, String>();
-					for (User follower : listFollower) {
-						hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-					}
 					request.setAttribute("userId", userId);
-					request.setAttribute("hashMap", hashMap);
+					sendDataListFollowerHistory(request, response, userId);
 					getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
 				} else {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
@@ -89,25 +82,15 @@ public class User_Controller extends HttpServlet {
 		case "edit": // edit profile
 			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
-				listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				hashMap = new HashMap<User, String>();
-				for (User follower : listFollower) {
-					hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-				}
 				changeAvatar(request, response);
 				editUser(request, response, userId);
-				request.setAttribute("hashMap", hashMap);
+				sendDataListFollowerHistory(request, response, userId);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				try {
-					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-					hashMap = new HashMap<User, String>();
-					for (User follower : listFollower) {
-						hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-					}
 					editUser(request, response, userId);
-					request.setAttribute("hashMap", hashMap);
+					sendDataListFollowerHistory(request, response, userId);
 					getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 				} catch (Exception e1) {
 					System.out.println(e.getMessage());
@@ -118,16 +101,11 @@ public class User_Controller extends HttpServlet {
 			userId = Integer.parseInt(request.getParameter("userId"));
 			String contentSearch = request.getParameter("contentSearch");
 			try {
-				listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				hashMap = new HashMap<User, String>();
-				for (User follower : listFollower) {
-					hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-				}
 				List<User> listUser = User_BO.getInstance().listUserSearch(contentSearch);
 				HashMap<User, Boolean> hashMapp = hashMap(listUser, userId, true);
 				request.setAttribute("userId", userId);
-				request.setAttribute("hashMap", hashMapp);
-				request.setAttribute("hashMapListFollower", hashMap);
+				sendDataListFollowerHistory(request, response, userId);
+				request.setAttribute("hashMapp", hashMapp);
 				getServletContext().getRequestDispatcher("/ResultSearchPage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -140,13 +118,8 @@ public class User_Controller extends HttpServlet {
 				if (User_BO.getInstance().checkOldPassword(userId, oldPassword)) {
 					String newPassword = request.getParameter("newpassword");
 					User_BO.getInstance().changePassword(userId, newPassword);
-					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-					hashMap = new HashMap<User, String>();
-					for (User follower : listFollower) {
-						hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-					}
 					request.setAttribute("user", user);
-					request.setAttribute("hashMap", hashMap);
+					sendDataListFollowerHistory(request, response, userId);
 					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
 				} else {
 					request.setAttribute("user", user);
@@ -159,13 +132,8 @@ public class User_Controller extends HttpServlet {
 		case "homePage":
 			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
-				listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				hashMap = new HashMap<User, String>();
-				for (User follower : listFollower) {
-					hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-				}
 				request.setAttribute("userId", userId);
-				request.setAttribute("hashMap", hashMap);
+				sendDataListFollowerHistory(request, response, userId);
 				getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -174,13 +142,8 @@ public class User_Controller extends HttpServlet {
 		case "messagePage":
 			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
-				listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				hashMap = new HashMap<User, String>();
-				for (User follower : listFollower) {
-					hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-				}
 				request.setAttribute("userId", userId);
-				request.setAttribute("hashMap", hashMap);
+				sendDataListFollowerHistory(request, response, userId);
 				getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -192,11 +155,6 @@ public class User_Controller extends HttpServlet {
 			try {
 				User anotherUser = User_BO.getInstance().getUserById(anotherUserId);
 				List<Post_Photo> listPostOfAnotherUser = Post_Photo_BO.getInstance().listPost(anotherUserId);
-				listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				HashMap<User, String> hashMapp = new HashMap<User, String>();
-				for (User follower : listFollower) {
-					hashMapp.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-				}
 				List<User> listFollowingOfAnotherUser = Follow_BO.getInstance()
 						.listFollowingOrFollowerInProfile(anotherUserId, true);
 				List<User> listFollowerOfAnotherUser = Follow_BO.getInstance()
@@ -207,11 +165,11 @@ public class User_Controller extends HttpServlet {
 						false);
 				boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
 																								// following anotherUser
+				sendDataListFollowerHistory(request, response, userId);
 				request.setAttribute("userId", userId);
 				request.setAttribute("anotherUser", anotherUser);
 				request.setAttribute("isFollowed", isFollowed);
 				request.setAttribute("listPost", listPostOfAnotherUser);
-				request.setAttribute("hashMap", hashMapp);
 				request.setAttribute("hashMapListFollowing", hashMapListFollowingOfAnotherUser);
 				request.setAttribute("hashMapListFollower", hashMapListFollowerOfAnotherUser);
 				getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
@@ -244,13 +202,8 @@ public class User_Controller extends HttpServlet {
 			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
 				user = User_BO.getInstance().getUserById(userId);
-				listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				hashMap = new HashMap<User, String>();
-				for (User follower : listFollower) {
-					hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-				}
 				request.setAttribute("user", user);
-				request.setAttribute("hashMap", hashMap);
+				sendDataListFollowerHistory(request, response, userId);
 				getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -260,13 +213,8 @@ public class User_Controller extends HttpServlet {
 			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
 				user = User_BO.getInstance().getUserById(userId);
-				listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				hashMap = new HashMap<User, String>();
-				for (User follower : listFollower) {
-					hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
-				}
 				request.setAttribute("user", user);
-				request.setAttribute("hashMap", hashMap);
+				sendDataListFollowerHistory(request, response, userId);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -360,6 +308,15 @@ public class User_Controller extends HttpServlet {
 	}
 
 	// ---- functions ----
+	// send data list follower history to form notification
+	public void sendDataListFollowerHistory(HttpServletRequest request, HttpServletResponse response, int userId) throws Exception {
+		List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
+		HashMap<User, String> hashMap = new HashMap<User, String>();
+		for (User follower : listFollower) {
+			hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
+		}
+		request.setAttribute("hashMap", hashMap);
+	}
 	// check exist username or phone or mail
 	public boolean isExistUsername_phone_mail(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {

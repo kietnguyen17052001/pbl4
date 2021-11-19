@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.*"%>
 <%@ page import="Model.BEAN.User"%>
 <%@ page import="Model.BEAN.Post_Photo"%>
@@ -148,11 +149,14 @@
 			</div>
 			<div class="list-post-in-profile">
 				<%
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				String formatDate;
 				for (int i = listPost.size() - 1; i >= 0; i--) {
+					formatDate = sdf.format(listPost.get(i).getCreate_date());
 				%>
-				<div>
-					<a href="#"><img src="image/<%=listPost.get(i).getPhoto()%>"
-						alt="image-post"></a>
+				<div
+					onclick="openFormPostPhotoContent('<%=listPost.get(i).getContent()%>','<%=listPost.get(i).getPhoto()%>','<%=formatDate%>')">
+					<img src="image/<%=listPost.get(i).getPhoto()%>" alt="image-post">
 				</div>
 				<%
 				}
@@ -331,6 +335,43 @@
 		<%
 		}
 		%>
+	</div>
+	<div id="form-post-photo-content" class="post-photo-content">
+		<div class="post-photo-content-title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			Post
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle"
+						onclick="closeFormPostPhotoContent()"></i>
+				</button>
+			</div>
+		</div>
+		<div class="box-post-photo-content">
+			<div class="post-photo-content-user">
+				<div class="avatar">
+					<a
+						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=anotherUser.getUser_id()%>">
+						<img src="image/<%=anotherUser.getPhoto()%>" alt="avatar-user"
+						width="70" height="70">
+					</a>
+				</div>
+				<div class="name-user">
+					<a
+						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=anotherUser.getUser_id()%>"><strong><%=nameAnotherUser%></strong></a>
+					<p id="create-date"></p>
+				</div>
+			</div>
+			<div id="post-photo-content-content"
+				class="post-photo-content-content"></div>
+			<div class="post-photo-content-photo">
+				<img id="photo" src="" alt="image-post">
+			</div>
+		</div>
 	</div>
 </body>
 </html>
