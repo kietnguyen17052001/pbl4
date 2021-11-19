@@ -38,8 +38,8 @@ public class User_BO {
 	}
 
 	// update number of post
-	public void updateNumberOfPost(int userId) throws Exception {
-		User_DAO.getInstance().updateNumberOfPosts(userId);
+	public void updateNumberOfPost(int userId, boolean isAddPost) throws Exception {
+		User_DAO.getInstance().updateNumberOfPosts(userId, isAddPost);
 	}
 
 	// check old password

@@ -356,7 +356,6 @@ html {
 	position: fixed;
 	width: 600px;
 	height: 600px;
-	width: 600px;
 }
 
 .post-photo-content .post-photo-content-title {
@@ -375,6 +374,7 @@ html {
 
 .box-post-photo-content .post-photo-content-photo {
 	height: 70%;
+	background-color: black;
 	text-align: center;
 }
 
@@ -403,8 +403,9 @@ html {
 	justify-content: flex-end;
 }
 
-.box-post-photo-content .post-photo-content-user div:last-child input {
-	display: inline-block;
+.box-post-photo-content .post-photo-content-user .submit-edit-delete #submit-edit-post
+	{
+	margin-right: 5px;
 }
 /* end */
 .form-list-follower-history {
@@ -451,13 +452,13 @@ html {
 	padding: 5px;
 }
 
-.post-photo-user {
+.post-photo-box .post-photo-user {
 	display: flex;
 	justify-content: left;
 	align-items: center;
 }
 
-.post-photo-content textarea {
+.post-photo-box .post-photo-content-textarea textarea {
 	width: 100%;
 }
 
@@ -522,7 +523,8 @@ html {
 .list-following-user-unfollow input, .list-following-user-follow input,
 	.list-follower-user-unfollow input, .list-follower-user-follow input,
 	.list-follower-user-delete input, .box-post-photo-content .post-photo-content-user div:first-child input,
-	.box-post-photo-content .post-photo-content-user div:last-child input {
+	.box-post-photo-content .post-photo-content-user .submit-edit-delete input
+	{
 	color: white;
 	border-radius: 3px;
 	padding: 5px;
@@ -530,14 +532,14 @@ html {
 }
 
 .list-following-user-unfollow input, .list-follower-user-unfollow input,
-	.box-post-photo-content .post-photo-content-user div:last-child input:last-child
+	.box-post-photo-content .post-photo-content-user .submit-edit-delete #submit-edit-post input
 	{
 	background-color: #3498db;
 	border: 1px solid #3498db;
 }
 
 .list-follower-user-delete input, .list-following-user-follow input,
-	.list-follower-user-follow input, .box-post-photo-content .post-photo-content-user div:last-child input:first-child
+	.list-follower-user-follow input, .box-post-photo-content .post-photo-content-user .submit-edit-delete #submit-delete-post input
 	{
 	background-color: #eb4d4b;
 	border: 1px solid #eb4d4b;
@@ -545,8 +547,7 @@ html {
 
 .list-following-user-unfollow input:hover, .list-following-user-follow input:hover,
 	.list-follower-user-unfollow input:hover, .list-follower-user-follow input:hover,
-	.list-follower-user-delete input:hover, .box-post-photo-content .post-photo-content-user div:first-child input:hover,
-	.box-post-photo-content .post-photo-content-user div:last-child input:hover
+	.list-follower-user-delete input:hover, .box-post-photo-content .post-photo-content-user .submit-edit-delete input:hover
 	{
 	opacity: 0.9;
 	cursor: pointer;

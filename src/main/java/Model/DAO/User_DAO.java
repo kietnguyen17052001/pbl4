@@ -110,7 +110,7 @@ public class User_DAO {
 	}
 
 	// update number of posts
-	public void updateNumberOfPosts(int userId) throws Exception {
+	public void updateNumberOfPosts(int userId, boolean isAddPost) throws Exception {
 		String query_select = "Select post from Users where userId = ?";
 		String query_update = "Update Users set post = ? where userId = ?";
 		conn = new ConnectDB().getConnection();
@@ -118,7 +118,7 @@ public class User_DAO {
 		ps.setInt(1, userId);
 		rs = ps.executeQuery();
 		rs.next();
-		int currentPostOfUser = rs.getInt("post") + 1;
+		int currentPostOfUser = isAddPost ? rs.getInt("post") + 1 : rs.getInt("post") - 1;
 		ps = conn.prepareStatement(query_update);
 		ps.setInt(1, currentPostOfUser);
 		ps.setInt(2, userId);

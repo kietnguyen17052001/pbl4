@@ -128,7 +128,7 @@
 					formatDate = sdf.format(listPost.get(i).getCreate_date());
 				%>
 				<div
-					onclick="openFormPostPhotoContent('<%=listPost.get(i).getContent()%>','<%=listPost.get(i).getPhoto()%>', '<%=formatDate%>')">
+					onclick="openFormPostPhotoContent('user','<%=userId%>','<%=listPost.get(i).getPost_id()%>','<%=listPost.get(i).getContent()%>','<%=listPost.get(i).getPhoto()%>','<%=formatDate%>')">
 					<img src="image/<%=listPost.get(i).getPhoto()%>" alt="image-post">
 				</div>
 				<%
@@ -187,7 +187,7 @@
 							<strong><%=name%></strong>
 						</p>
 					</div>
-					<div class="post-photo-content">
+					<div class="post-photo-content-textarea">
 						<textarea name="photo-content" id="" cols="30" rows="5"
 							placeholder="Write your content ..."></textarea>
 					</div>
@@ -356,9 +356,11 @@
 					<p id="create-date"></p>
 				</div>
 				<div class="submit-edit-delete">
-					<form>
-						<input type="submit" value="Edit post"> <input
-							type="submit" value="Delete post">
+					<form id="submit-edit-post" action="" method="post">
+						<input type="submit" value="Edit post">
+					</form>
+					<form id="submit-delete-post" action="" method="post">
+						<input type="submit" value="Delete post">
 					</form>
 				</div>
 			</div>

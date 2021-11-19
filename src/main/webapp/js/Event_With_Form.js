@@ -6,10 +6,13 @@ function closeFormPostPhoto() {
 	document.getElementById("form-post").style.display = "none";
 }
 // event open-close form post photo content
-function openFormPostPhotoContent(contentPost, linkImage, createDate) {
+function openFormPostPhotoContent(type, userId, postId, contentPost, linkImage, createDate) {
 	document.getElementById("post-photo-content-content").innerHTML = contentPost;
 	document.getElementById("create-date").innerHTML = createDate;
 	document.getElementById("photo").src = "image/" + linkImage;
+	if (type == "user") {
+		document.getElementById("submit-delete-post").action = "Post_Photo_Controller?type=delete&postId=" + postId + "&userId=" + userId;
+	}
 	document.getElementById("form-post-photo-content").style.display = "block";
 }
 function closeFormPostPhotoContent() {

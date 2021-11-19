@@ -34,10 +34,19 @@ public class Post_Photo_DAO {
 		ps.setObject(5, postPhoto.getUpdate_date());
 		ps.executeUpdate();
 	}
-	
+
 	// edit post photo
 	public void editPostPhoto(Post_Photo postPhoto) throws Exception {
-		
+
+	}
+
+	// delete post photo
+	public void deletePostPhoto(int postId) throws Exception {
+		String query = "Delete from User_Post_Photo where postId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, postId);
+		ps.executeUpdate();
 	}
 
 	// list post in user profile

@@ -155,7 +155,7 @@
 					formatDate = sdf.format(listPost.get(i).getCreate_date());
 				%>
 				<div
-					onclick="openFormPostPhotoContent('<%=listPost.get(i).getContent()%>','<%=listPost.get(i).getPhoto()%>','<%=formatDate%>')">
+					onclick="openFormPostPhotoContent('another','<%=userId%>','<%=listPost.get(i).getPost_id()%>','<%=listPost.get(i).getContent()%>','<%=listPost.get(i).getPhoto()%>','<%=formatDate%>')">
 					<img src="image/<%=listPost.get(i).getPhoto()%>" alt="image-post">
 				</div>
 				<%

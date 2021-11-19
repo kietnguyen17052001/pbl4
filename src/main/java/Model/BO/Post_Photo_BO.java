@@ -28,6 +28,11 @@ public class Post_Photo_BO {
 		Post_Photo_DAO.getInstance().editPostPhoto(postPhoto);
 	}
 
+	// delete post
+	public void deletePostPhoto(int postId) throws Exception {
+		Post_Photo_DAO.getInstance().deletePostPhoto(postId);
+	}
+
 	// list post in user profile
 	public List<Post_Photo> listPost(int userId) throws Exception {
 		return Post_Photo_DAO.getInstance().listPost(userId);

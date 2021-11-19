@@ -46,11 +46,10 @@ public class Post_Photo_Controller extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String type = request.getParameter("type");
-		int userId;
-		User user;
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		int postId;
 		switch (type) {
 		case "add":
-			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
 				Part file = request.getPart("image");
 				String imageFileName = file.getSubmittedFileName();
@@ -68,18 +67,32 @@ public class Post_Photo_Controller extends HttpServlet {
 				// add new post
 				Post_Photo_BO.getInstance().postPhoto(postPhoto);
 				// update number of posts
-				User_BO.getInstance().updateNumberOfPost(userId);
-				//
-				loadPageWhenPostPhoto(request, response, userId);
+				User_BO.getInstance().updateNumberOfPost(userId, true); // true is up new post, false is delete post
+				// reload page when post new photo
+				loadPageWhenPostOrDeletePhoto(request, response, userId);
 			} catch (Exception e) {
 				try {
-					loadPageWhenPostPhoto(request, response, userId);
+					loadPageWhenPostOrDeletePhoto(request, response, userId);
 				} catch (Exception e1) {
 					System.out.println(e1.getMessage());
 				}
 			}
 			break;
 		case "edit":
+			postId = Integer.parseInt(request.getParameter("postId"));
+			break;
+		case "delete":
+			postId = Integer.parseInt(request.getParameter("postId"));
+			try {
+				// delete post
+				Post_Photo_BO.getInstance().deletePostPhoto(postId);
+				// update number of post when delete
+				User_BO.getInstance().updateNumberOfPost(userId, false);
+				// reload ProfilePage
+				loadPageWhenPostOrDeletePhoto(request, response, userId);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 			break;
 		}
 	}
@@ -94,7 +107,7 @@ public class Post_Photo_Controller extends HttpServlet {
 		doGet(request, response);
 	}
 
-	public void loadPageWhenPostPhoto(HttpServletRequest request, HttpServletResponse response, int userId)
+	public void loadPageWhenPostOrDeletePhoto(HttpServletRequest request, HttpServletResponse response, int userId)
 			throws Exception {
 		User user = User_BO.getInstance().getUserById(userId);
 		List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
