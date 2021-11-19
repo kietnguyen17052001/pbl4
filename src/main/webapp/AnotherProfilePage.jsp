@@ -16,8 +16,9 @@
 </head>
 <body>
 	<%
+	User user = (User) session.getAttribute("user");
+	int userId = user.getUser_id();
 	User anotherUser = (User) request.getAttribute("anotherUser");
-	int userId = (int) request.getAttribute("userId");
 	boolean isFollowed = (boolean) request.getAttribute("isFollowed");
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	HashMap<User, Boolean> hashMapListFollowing = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollowing");
@@ -28,31 +29,25 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage&userId=<%=userId%>">Sugar
-					App</a>
+				<a href="User_Controller?type=homePage">Sugar App</a>
 			</div>
 			<div class="search">
-				<form action="User_Controller?type=search&userId=<%=userId%>"
-					method="post">
+				<form action="User_Controller?type=search" method="post">
 					<input type="text" placeholder="Search" name="contentSearch">
 					<input type="submit" value="Search">
 				</form>
 			</div>
 			<div class="option">
 				<ul>
-					<li class="home"><a
-						href="User_Controller?type=homePage&userId=<%=userId%>"><i
+					<li class="home"><a href="User_Controller?type=homePage"><i
 							class="fas fa-home"></i></a></li>
-					<li class="message"><a
-						href="User_Controller?type=messagePage&userId=<%=userId%>"><i
+					<li class="message"><a href="User_Controller?type=messagePage"><i
 							class="far fa-comments"></i></a></li>
 					<li class="follow" onclick="openFormListFollowerHistory()"><a><i
 							class="far fa-heart"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=profilePage&userId=<%=userId%>"><i
+					<li class="profile"><a href="User_Controller?type=profilePage"><i
 							class="far fa-user"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=logout&userId=<%=userId%>"><i
+					<li class="profile"><a href="User_Controller?type=logout"><i
 							class="fas fa-sign-out-alt"></i></a></li>
 				</ul>
 			</div>
@@ -74,14 +69,14 @@
 								if (isFollowed) {
 								%>
 								<form
-									action="User_Controller?type=messagePage&userId=<%=userId%>"
+									action="User_Controller?type=messagePage"
 									method="post">
 									<input class="message-another" type="submit" value="Message">
 								</form> <%
  } else {
  %>
 								<form
-									action="Follow_Controller?type=follow&pageFollow=anotherProfilePage&userId=<%=userId%>&targetId=<%=anotherUser.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
+									action="Follow_Controller?type=follow&pageFollow=anotherProfilePage&targetId=<%=anotherUser.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
 									method="post">
 									<input class="follow-another" type="submit" value="Follow">
 								</form> <%
@@ -93,7 +88,7 @@
 								if (isFollowed) {
 								%>
 								<form
-									action="Follow_Controller?type=unfollow&pageFollow=anotherProfilePage&userId=<%=userId%>&targetId=<%=anotherUser.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
+									action="Follow_Controller?type=unfollow&pageFollow=anotherProfilePage&targetId=<%=anotherUser.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
 									method="post">
 									<input class="unfollow-another" type="submit" value="Unfollow">
 								</form> <%
@@ -211,13 +206,13 @@
 			typeUserFollowing = hashMapListFollowing.get(userFollowing) ? "unfollow" : "follow";
 		%>
 		<form
-			action="Follow_Controller?type=<%=typeUserFollowing%>&pageFollow=anotherProfilePage&userId=<%=userId%>&targetId=<%=userFollowing.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
+			action="Follow_Controller?type=<%=typeUserFollowing%>&pageFollow=anotherProfilePage&targetId=<%=userFollowing.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
 			method="post">
 			<div class="list-following">
 				<%
 				boolean isUser = (userFollowing.getUser_id() == userId) ? true : false;
-				String href = (isUser) ? "User_Controller?type=profilePage&userId=" + userId
-						: "User_Controller?type=anotherProfilePage&userId=" + userId + "&anotherUserId=" + userFollowing.getUser_id();
+				String href = (isUser) ? "User_Controller?type=profilePage"
+						: "User_Controller?type=anotherProfilePage&anotherUserId=" + userFollowing.getUser_id();
 				%>
 				<div class="list-following-user-avatar">
 					<a href="<%=href%>"><img
@@ -265,13 +260,13 @@
 			typeUserFollower = hashMapListFollower.get(userFollower) ? "unfollow" : "follow";
 		%>
 		<form
-			action="Follow_Controller?type=<%=typeUserFollower%>&pageFollow=anotherProfilePage&userId=<%=userId%>&targetId=<%=userFollower.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
+			action="Follow_Controller?type=<%=typeUserFollower%>&pageFollow=anotherProfilePage&targetId=<%=userFollower.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
 			method="post">
 			<div class="list-follower">
 				<%
 				boolean isUser = (userFollower.getUser_id() == userId) ? true : false;
-				String href = (isUser) ? "User_Controller?type=profilePage&userId=" + userId
-						: "User_Controller?type=anotherProfilePage&userId=" + userId + "&anotherUserId=" + userFollower.getUser_id();
+				String href = (isUser) ? "User_Controller?type=profilePage"
+						: "User_Controller?type=anotherProfilePage&anotherUserId=" + userFollower.getUser_id();
 				%>
 				<div class="list-follower-user-avatar">
 					<a href="<%=href%>"><img
@@ -321,13 +316,13 @@
 
 			<div class="list-follower-user-avatar">
 				<a
-					href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>"><img
+					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
 					src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
 					width="50"></a>
 			</div>
 			<div class="list-follower-history-user-name">
 				<a
-					href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>">
+					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
 					<strong><%=nameUserFollower%></strong> started following you. <%=hashMap.get(userFollower)%>
 				</a>
 			</div>
@@ -355,14 +350,14 @@
 			<div class="post-photo-content-user">
 				<div class="avatar">
 					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=anotherUser.getUser_id()%>">
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=anotherUser.getUser_id()%>">
 						<img src="image/<%=anotherUser.getPhoto()%>" alt="avatar-user"
 						width="70" height="70">
 					</a>
 				</div>
 				<div class="name-user">
 					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=anotherUser.getUser_id()%>"><strong><%=nameAnotherUser%></strong></a>
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=anotherUser.getUser_id()%>"><strong><%=nameAnotherUser%></strong></a>
 					<p id="create-date"></p>
 				</div>
 			</div>

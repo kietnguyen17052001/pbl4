@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Model.BEAN.Post_Photo;
 import Model.BEAN.User;
@@ -57,20 +58,22 @@ public class Follow_Controller extends HttpServlet {
 	// send data and open profile page
 	public void getAndSendData(HttpServletRequest request, HttpServletResponse response, String type,
 			String pageFollow) {
-		int userId = Integer.parseInt(request.getParameter("userId"));
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		int userId = user.getUser_id();
 		int targetId = Integer.parseInt(request.getParameter("targetId"));
 		try {
 			// add new follow
 			if (type.equals("follow")) {
 				Follow_BO.getInstance().addNewFollow(userId, targetId);
 			} else if (type.equals("unfollow") || type.equals("delete")) { // unfollow
-				Follow_BO.getInstance().unFollow(userId, targetId);
+				if (type.equals("unfollow")) {
+					Follow_BO.getInstance().unFollow(userId, targetId);
+				} else {
+					Follow_BO.getInstance().unFollow(targetId, userId);
+				}
 			}
 			try {
-				if (type.equals("delete")) {
-					userId = targetId;
-				}
-
 				List<Post_Photo> listPost = null;
 				List<User> listFollowing = null;
 				List<User> listFollower = null;
@@ -89,8 +92,8 @@ public class Follow_Controller extends HttpServlet {
 					HashMap<User, Boolean> hashMapListFollowerOfAnotherUser = hashMap(listFollower, userId, false);
 					boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
 																									// following
-																									// anotherUser
-					request.setAttribute("userId", userId);
+					user = User_BO.getInstance().getUserById(userId);																				// anotherUser
+					session.setAttribute("user", user);
 					request.setAttribute("anotherUser", anotherUser);
 					request.setAttribute("isFollowed", isFollowed);
 					request.setAttribute("listPost", listPost);
@@ -99,7 +102,6 @@ public class Follow_Controller extends HttpServlet {
 					request.setAttribute("hashMap", hashMap);
 					getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
 				} else {
-					User user = User_BO.getInstance().getUserById(userId);
 					listPost = Post_Photo_BO.getInstance().listPost(userId);
 					listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
 					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
@@ -107,7 +109,8 @@ public class Follow_Controller extends HttpServlet {
 					for (User follower : listFollower) {
 						hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
 					}
-					request.setAttribute("user", user);
+					user = User_BO.getInstance().getUserById(userId);																				// anotherUser
+					session.setAttribute("user", user);
 					request.setAttribute("listFollowing", listFollowing);
 					request.setAttribute("listFollower", listFollower);
 					request.setAttribute("listPost", listPost);

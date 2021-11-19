@@ -57,14 +57,14 @@ public class User_BO {
 		return User_DAO.getInstance().isExistUser(username_phone_mail, password);
 	}
 
+	// get user by username and password
+	public User getUser(String username_phone_mail, String password) throws Exception {
+		return User_DAO.getInstance().getUser(username_phone_mail, password);
+	}
+
 	// change user status
 	public void changeUserStatus(int userId, boolean isLogin) throws Exception {
 		User_DAO.getInstance().changeUserStatus(userId, isLogin);
-	}
-
-	// get id user
-	public int getIdUser(String username_phone_mail) throws Exception {
-		return User_DAO.getInstance().getUserId(username_phone_mail);
 	}
 
 	// get user

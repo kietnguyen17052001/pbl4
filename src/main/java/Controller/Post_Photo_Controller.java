@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import Model.BEAN.Post_Photo;
@@ -46,7 +47,9 @@ public class Post_Photo_Controller extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String type = request.getParameter("type");
-		int userId = Integer.parseInt(request.getParameter("userId"));
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		int userId = user.getUser_id();
 		int postId;
 		switch (type) {
 		case "add":
@@ -109,7 +112,6 @@ public class Post_Photo_Controller extends HttpServlet {
 
 	public void loadPageWhenPostOrDeletePhoto(HttpServletRequest request, HttpServletResponse response, int userId)
 			throws Exception {
-		User user = User_BO.getInstance().getUserById(userId);
 		List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
 		List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
 		List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
@@ -117,7 +119,6 @@ public class Post_Photo_Controller extends HttpServlet {
 		for (User follower : listFollower) {
 			hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
 		}
-		request.setAttribute("user", user);
 		request.setAttribute("listFollowing", listFollowing);
 		request.setAttribute("listFollower", listFollower);
 		request.setAttribute("listPost", listPost);

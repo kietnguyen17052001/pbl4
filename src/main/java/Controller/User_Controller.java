@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import Model.BEAN.Post_Photo;
@@ -50,15 +51,19 @@ public class User_Controller extends HttpServlet {
 		String type = request.getParameter("type");
 		int userId;
 		User user;
+		HttpSession session = request.getSession();
 		switch (type) {
 		case "login": // login APP
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			try {
 				if (User_BO.getInstance().isExistUser(username, password)) {
-					userId = User_BO.getInstance().getIdUser(username);
+					user = User_BO.getInstance().getUser(username, password);
+					// create and push user up session
+					session.setAttribute("user", user);
+					//userId = User_BO.getInstance().getIdUser(username);
+					userId = user.getUser_id();
 					User_BO.getInstance().changeUserStatus(userId, true); // true: status=online
-					request.setAttribute("userId", userId);
 					sendDataListFollowerHistory(request, response, userId);
 					getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
 				} else {
@@ -80,7 +85,8 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "edit": // edit profile
-			userId = Integer.parseInt(request.getParameter("userId"));
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
 			try {
 				changeAvatar(request, response);
 				editUser(request, response, userId);
@@ -98,31 +104,30 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "search":
-			userId = Integer.parseInt(request.getParameter("userId"));
 			String contentSearch = request.getParameter("contentSearch");
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
 			try {
 				List<User> listUser = User_BO.getInstance().listUserSearch(contentSearch);
-				HashMap<User, Boolean> hashMapp = hashMap(listUser, userId, true);
-				request.setAttribute("userId", userId);
+				HashMap<User, Boolean> hashMap = hashMap(listUser, userId, true);
 				sendDataListFollowerHistory(request, response, userId);
-				request.setAttribute("hashMapp", hashMapp);
+				request.setAttribute("hashMapp", hashMap);
 				getServletContext().getRequestDispatcher("/ResultSearchPage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 		case "changePassword": // change password
-			userId = Integer.parseInt(request.getParameter("userId"));
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
 			String oldPassword = request.getParameter("oldpassword");
 			try {
 				user = User_BO.getInstance().getUserById(userId);
 				if (User_BO.getInstance().checkOldPassword(userId, oldPassword)) {
 					String newPassword = request.getParameter("newpassword");
 					User_BO.getInstance().changePassword(userId, newPassword);
-					request.setAttribute("user", user);
 					sendDataListFollowerHistory(request, response, userId);
 					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
 				} else {
-					request.setAttribute("user", user);
 					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
@@ -130,27 +135,26 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "homePage":
-			userId = Integer.parseInt(request.getParameter("userId"));
 			try {
-				request.setAttribute("userId", userId);
-				sendDataListFollowerHistory(request, response, userId);
+				user = (User) session.getAttribute("user");
+				sendDataListFollowerHistory(request, response, user.getUser_id());
 				getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 			break;
 		case "messagePage":
-			userId = Integer.parseInt(request.getParameter("userId"));
+			user = (User) session.getAttribute("user");
 			try {
-				request.setAttribute("userId", userId);
-				sendDataListFollowerHistory(request, response, userId);
+				sendDataListFollowerHistory(request, response, user.getUser_id());
 				getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 			break;
 		case "anotherProfilePage":
-			userId = Integer.parseInt(request.getParameter("userId"));
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
 			int anotherUserId = Integer.parseInt(request.getParameter("anotherUserId"));
 			try {
 				User anotherUser = User_BO.getInstance().getUserById(anotherUserId);
@@ -166,7 +170,6 @@ public class User_Controller extends HttpServlet {
 				boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
 																								// following anotherUser
 				sendDataListFollowerHistory(request, response, userId);
-				request.setAttribute("userId", userId);
 				request.setAttribute("anotherUser", anotherUser);
 				request.setAttribute("isFollowed", isFollowed);
 				request.setAttribute("listPost", listPostOfAnotherUser);
@@ -178,17 +181,16 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "profilePage":
-			userId = Integer.parseInt(request.getParameter("userId"));
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
 			try {
-				user = User_BO.getInstance().getUserById(userId);
 				List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
 				List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
 				List<User> listFollowerr = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
 				HashMap<User, String> hashMapp = new HashMap<User, String>();
 				for (User follower : listFollowerr) {
-					hashMapp.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
+					hashMapp.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), user.getUser_id()));
 				}
-				request.setAttribute("user", user);
 				request.setAttribute("listFollowing", listFollowing);
 				request.setAttribute("listFollower", listFollowerr);
 				request.setAttribute("listPost", listPost);
@@ -199,10 +201,9 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "changePasswordPage":
-			userId = Integer.parseInt(request.getParameter("userId"));
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
 			try {
-				user = User_BO.getInstance().getUserById(userId);
-				request.setAttribute("user", user);
 				sendDataListFollowerHistory(request, response, userId);
 				getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
 			} catch (Exception e) {
@@ -210,9 +211,9 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "editProfilePage":
-			userId = Integer.parseInt(request.getParameter("userId"));
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
 			try {
-				user = User_BO.getInstance().getUserById(userId);
 				request.setAttribute("user", user);
 				sendDataListFollowerHistory(request, response, userId);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
@@ -221,9 +222,11 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "logout":
-			userId = Integer.parseInt(request.getParameter("userId"));
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
 			try {
 				User_BO.getInstance().changeUserStatus(userId, false);// false: status=offline
+				session.removeAttribute("user");
 				getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -309,7 +312,8 @@ public class User_Controller extends HttpServlet {
 
 	// ---- functions ----
 	// send data list follower history to form notification
-	public void sendDataListFollowerHistory(HttpServletRequest request, HttpServletResponse response, int userId) throws Exception {
+	public void sendDataListFollowerHistory(HttpServletRequest request, HttpServletResponse response, int userId)
+			throws Exception {
 		List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
 		HashMap<User, String> hashMap = new HashMap<User, String>();
 		for (User follower : listFollower) {
@@ -317,6 +321,7 @@ public class User_Controller extends HttpServlet {
 		}
 		request.setAttribute("hashMap", hashMap);
 	}
+
 	// check exist username or phone or mail
 	public boolean isExistUsername_phone_mail(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {

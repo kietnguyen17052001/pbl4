@@ -16,7 +16,7 @@
 </head>
 <body>
 	<%
-	User user = (User) request.getAttribute("user");
+	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
 	String name = user.getLast_name() + " " + user.getFirst_name();
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
@@ -27,31 +27,25 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage&userId=<%=userId%>">Sugar
-					App</a>
+				<a href="User_Controller?type=homePage">Sugar App</a>
 			</div>
 			<div class="search">
-				<form action="User_Controller?type=search&userId=<%=userId%>"
-					method="post">
+				<form action="User_Controller?type=search" method="post">
 					<input type="text" placeholder="Search" name="contentSearch">
 					<input type="submit" value="Search">
 				</form>
 			</div>
 			<div class="option">
 				<ul>
-					<li class="home"><a
-						href="User_Controller?type=homePage&userId=<%=userId%>"><i
+					<li class="home"><a href="User_Controller?type=homePage"><i
 							class="fas fa-home"></i></a></li>
-					<li class="message"><a
-						href="User_Controller?type=messagePage&userId=<%=userId%>"><i
+					<li class="message"><a href="User_Controller?type=messagePage"><i
 							class="far fa-comments"></i></a></li>
 					<li class="follow" onclick="openFormListFollowerHistory()"><a><i
 							class="far fa-heart"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=profilePage&userId=<%=userId%>"><i
+					<li class="profile"><a href="User_Controller?type=profilePage"><i
 							class="far fa-user"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=logout&userId=<%=userId%>"><i
+					<li class="profile"><a href="User_Controller?type=logout"><i
 							class="fas fa-sign-out-alt"></i></a></li>
 				</ul>
 			</div>
@@ -68,8 +62,7 @@
 						<tr>
 							<td class="name-user"><%=name%></td>
 							<td>
-								<form
-									action="User_Controller?type=editProfilePage&userId=<%=userId%>"
+								<form action="User_Controller?type=editProfilePage"
 									method="post">
 									<input class="edit-profile" type="submit" value="Edit profile">
 								</form>
@@ -176,8 +169,8 @@
 				</button>
 			</div>
 		</div>
-		<form action="Post_Photo_Controller?type=add&userId=<%=userId%>"
-			method="post" enctype="multipart/form-data">
+		<form action="Post_Photo_Controller?type=add" method="post"
+			enctype="multipart/form-data">
 			<div class="post-photo-box">
 				<div class="post-photo-main">
 					<div class="post-photo-user">
@@ -222,18 +215,18 @@
 			String nameUserFollowing = userFollowing.getLast_name() + " " + userFollowing.getFirst_name();
 		%>
 		<form
-			action="Follow_Controller?type=unfollow&pageFollow=profilePage&userId=<%=userId%>&targetId=<%=userFollowing.getUser_id()%>"
+			action="Follow_Controller?type=unfollow&pageFollow=profilePage&targetId=<%=userFollowing.getUser_id()%>"
 			method="post">
 			<div class="list-following">
 				<div class="list-following-user-avatar">
 					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollowing.getUser_id()%>"><img
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><img
 						src="image/<%=userFollowing.getPhoto()%>" alt="avatar" height="50"
 						width="50"></a>
 				</div>
 				<div class="list-following-user-name">
 					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollowing.getUser_id()%>"><%=nameUserFollowing%></a>
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><%=nameUserFollowing%></a>
 				</div>
 				<div class="list-following-user-unfollow">
 					<input type="submit" value="Unfollow">
@@ -265,18 +258,18 @@
 			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
 		%>
 		<form
-			action="Follow_Controller?type=delete&pageFollow=profilePage&userId=<%=userFollower.getUser_id()%>&targetId=<%=userId%>"
+			action="Follow_Controller?type=delete&pageFollow=profilePage&targetId=<%=userFollower.getUser_id()%>"
 			method="post">
 			<div class="list-follower">
 				<div class="list-follower-user-avatar">
 					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>"><img
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
 						src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
 						width="50"></a>
 				</div>
 				<div class="list-follower-user-name">
 					<a
-						href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>"><%=nameUserFollower%></a>
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><%=nameUserFollower%></a>
 				</div>
 				<div class="list-follower-user-delete">
 					<input type="submit" value="Delete">
@@ -313,13 +306,13 @@
 
 			<div class="list-follower-user-avatar">
 				<a
-					href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>"><img
+					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
 					src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
 					width="50"></a>
 			</div>
 			<div class="list-follower-history-user-name">
 				<a
-					href="User_Controller?type=anotherProfilePage&userId=<%=userId%>&anotherUserId=<%=userFollower.getUser_id()%>">
+					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
 					<strong><%=nameUserFollower%></strong> started following you. <%=hashMap.get(userFollower)%>
 				</a>
 			</div>
@@ -346,13 +339,13 @@
 		<div class="box-post-photo-content">
 			<div class="post-photo-content-user">
 				<div class="avatar">
-					<a href="User_Controller?type=profilePage&userId=<%=userId%>">
-						<img src="image/<%=user.getPhoto()%>" alt="avatar-user" width="70"
+					<a href="User_Controller?type=profilePage"> <img
+						src="image/<%=user.getPhoto()%>" alt="avatar-user" width="70"
 						height="70">
 					</a>
 				</div>
 				<div class="name-user">
-					<a href="User_Controller?type=profilePage&userId=<%=userId%>"><strong><%=name%></strong></a>
+					<a href="User_Controller?type=profilePage"><strong><%=name%></strong></a>
 					<p id="create-date"></p>
 				</div>
 				<div class="submit-edit-delete">

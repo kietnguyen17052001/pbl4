@@ -190,17 +190,17 @@ public class User_DAO {
 		return rs.next();
 	}
 
-	// get id user
-	public int getUserId(String username_phone_mail) throws Exception {
-		String query = querySelect + " where userName = ? or mobilePhone = ? or email = ?";
-		conn = new ConnectDB().getConnection();
-		ps = conn.prepareStatement(query);
-		ps.setString(1, encrypt(username_phone_mail));
-		ps.setString(2, username_phone_mail);
-		ps.setString(3, username_phone_mail);
-		rs = ps.executeQuery();
-		rs.next();
-		return rs.getInt("userId");
+	// get user by username and password
+	public User getUser(String username_phone_mail, String password) throws Exception {
+		isExistUser(username_phone_mail, password);
+		User user = new User(rs.getInt("userId"), rs.getString("userType"), rs.getString("userName"),
+				rs.getString("firstName"), rs.getString("lastName"), rs.getInt("gender"), rs.getString("password_sha"),
+				rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"), rs.getObject("birthday"),
+				rs.getString("photo"), rs.getString("about"), rs.getString("passions"), rs.getString("job"),
+				rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
+				rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
+				rs.getObject("registeredDate"), rs.getObject("updateDate"));
+		return user;
 	}
 
 	// get user by id
