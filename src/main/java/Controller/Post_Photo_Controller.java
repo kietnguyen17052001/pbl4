@@ -123,6 +123,9 @@ public class Post_Photo_Controller extends HttpServlet {
 		request.setAttribute("listFollower", listFollower);
 		request.setAttribute("listPost", listPost);
 		request.setAttribute("hashMap", hashMap);
+		HttpSession session = request.getSession();
+		User user = User_BO.getInstance().getUserById(userId);
+		session.setAttribute("user", user);
 		getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 	}
 }

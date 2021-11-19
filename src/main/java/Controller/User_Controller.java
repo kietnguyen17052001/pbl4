@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.*;
+import java.lang.ProcessBuilder.Redirect;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
@@ -61,7 +62,7 @@ public class User_Controller extends HttpServlet {
 					user = User_BO.getInstance().getUser(username, password);
 					// create and push user up session
 					session.setAttribute("user", user);
-					//userId = User_BO.getInstance().getIdUser(username);
+					// userId = User_BO.getInstance().getIdUser(username);
 					userId = user.getUser_id();
 					User_BO.getInstance().changeUserStatus(userId, true); // true: status=online
 					sendDataListFollowerHistory(request, response, userId);
@@ -86,20 +87,21 @@ public class User_Controller extends HttpServlet {
 			break;
 		case "edit": // edit profile
 			user = (User) session.getAttribute("user");
-			userId = user.getUser_id();
 			try {
 				changeAvatar(request, response);
-				editUser(request, response, userId);
-				sendDataListFollowerHistory(request, response, userId);
+				editUser(request, response, user);
+				sendDataListFollowerHistory(request, response, user.getUser_id());
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				try {
-					editUser(request, response, userId);
-					sendDataListFollowerHistory(request, response, userId);
+					editUser(request, response, user);
+					sendDataListFollowerHistory(request, response, user.getUser_id());
+					user = User_BO.getInstance().getUserById(user.getUser_id());
+					session.setAttribute("user", user);
 					getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 				} catch (Exception e1) {
-					System.out.println(e.getMessage());
+					System.out.println(e1.getMessage());
 				}
 			}
 			break;
@@ -189,7 +191,8 @@ public class User_Controller extends HttpServlet {
 				List<User> listFollowerr = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
 				HashMap<User, String> hashMapp = new HashMap<User, String>();
 				for (User follower : listFollowerr) {
-					hashMapp.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), user.getUser_id()));
+					hashMapp.put(follower,
+							Follow_BO.getInstance().getDateFollow(follower.getUser_id(), user.getUser_id()));
 				}
 				request.setAttribute("listFollowing", listFollowing);
 				request.setAttribute("listFollower", listFollowerr);
@@ -280,9 +283,7 @@ public class User_Controller extends HttpServlet {
 	}
 
 	// edit user
-	public void editUser(HttpServletRequest request, HttpServletResponse response, int userId) throws Exception {
-		User user = User_DAO.getInstance().getUserById(userId);
-		request.setAttribute("user", user);
+	public void editUser(HttpServletRequest request, HttpServletResponse response, User user) throws Exception {
 		String lastName = request.getParameter("lastname");
 		String firstName = request.getParameter("firstname");
 		int gender = Integer.parseInt(request.getParameter("gender"));

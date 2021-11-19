@@ -22,7 +22,7 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=home"
+				<a href="User_Controller?type=homePage"
 					target="top-main">Suger App</a>
 			</div>
 			<div class="search">

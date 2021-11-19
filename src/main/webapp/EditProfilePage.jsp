@@ -33,11 +33,11 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage&"
+				<a href="User_Controller?type=homePage"
 					target="top-main">Suger App</a>
 			</div>
 			<div class="search">
-				<form action="User_Controller?type=search&"
+				<form action="User_Controller?type=search"
 					method="post">
 					<input type="text" placeholder="Search" name="contentSearch">
 					<input type="submit" value="Search">
