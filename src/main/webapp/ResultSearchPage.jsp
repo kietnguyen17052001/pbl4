@@ -17,18 +17,16 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
-	HashMap<User, Boolean> hashMap = (HashMap<User, Boolean>) request.getAttribute("hashMapp");
+	HashMap<User, Boolean> hashMapListSearch = (HashMap<User, Boolean>) request.getAttribute("hashMapp");
 	HashMap<User, String> hashMapListFollower = (HashMap<User, String>) request.getAttribute("hashMap");
 	%>
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage">Sugar
-					App</a>
+				<a href="User_Controller?type=homePage">Sugar App</a>
 			</div>
 			<div class="search">
-				<form action="User_Controller?type=search"
-					method="post">
+				<form action="User_Controller?type=search" method="post">
 					<input type="text" placeholder="Search" name="contentSearch">
 					<input type="submit" value="Search">
 				</form>
@@ -36,19 +34,15 @@
 			<div class="form-list-user"></div>
 			<div class="option">
 				<ul>
-					<li class="home"><a
-						href="User_Controller?type=homePage"><i
+					<li class="home"><a href="User_Controller?type=homePage"><i
 							class="fas fa-home"></i></a></li>
-					<li class="message"><a
-						href="User_Controller?type=messagePage"><i
+					<li class="message"><a href="User_Controller?type=messagePage"><i
 							class="far fa-comments"></i></a></li>
 					<li class="follow" onclick="openFormListFollowerHistory()"><a><i
 							class="far fa-heart"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=profilePage"><i
+					<li class="profile"><a href="User_Controller?type=profilePage"><i
 							class="far fa-user"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=logout"><i
+					<li class="profile"><a href="User_Controller?type=logout"><i
 							class="fas fa-sign-out-alt"></i></a></li>
 				</ul>
 			</div>
@@ -57,10 +51,10 @@
 	<div class="main-page-search">
 		<%
 		String type;
-		for (User another : hashMap.keySet()) {
+		for (User another : hashMapListSearch.keySet()) {
 			String name = another.getLast_name() + " " + another.getFirst_name();
 			// hashMap.get(user) == true: user is following target
-			type = hashMap.get(another) ? "unfollow" : "follow";
+			type = hashMapListSearch.get(another) ? "unfollow" : "follow";
 		%>
 		<form
 			action="Follow_Controller?type=<%=type%>&pageFollow=profilePage&targetId=<%=another.getUser_id()%>"
@@ -69,7 +63,7 @@
 				<div class="main-page-search-user-avatar">
 					<a
 						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=another.getUser_id()%>"><img
-						src="image/<%=user.getPhoto()%>" alt="avatar" width="70"
+						src="image/<%=another.getPhoto()%>" alt="avatar" width="70"
 						height="70"></a>
 				</div>
 				<div class="main-page-search-user-information">

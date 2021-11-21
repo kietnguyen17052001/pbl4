@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 import Context.ConnectDB;
-import Model.BEAN.Post_Photo;
+import Model.BEAN.*;
 
 public class Post_Photo_DAO {
 	Connection conn = null;
@@ -20,6 +20,18 @@ public class Post_Photo_DAO {
 	}
 
 	private Post_Photo_DAO() {
+	}
+
+	// get post_photo by postId
+	public Post_Photo getPostPhoto(int postId) throws Exception {
+		String query = "Select * from User_Post_Photo where postId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, postId);
+		rs = ps.executeQuery();
+		rs.next();
+		return new Post_Photo(postId, rs.getInt("userId"), rs.getString("content"), rs.getString("photo"),
+				rs.getObject("createDate"), rs.getObject("updateDate"));
 	}
 
 	// post photo

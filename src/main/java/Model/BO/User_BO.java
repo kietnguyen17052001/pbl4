@@ -1,6 +1,5 @@
 package Model.BO;
 
-import java.util.*;
 import Model.BEAN.User;
 import Model.DAO.User_DAO;
 
@@ -70,10 +69,5 @@ public class User_BO {
 	// get user
 	public User getUserById(int userId) throws Exception {
 		return User_DAO.getInstance().getUserById(userId);
-	}
-
-	// get list user when search
-	public List<User> listUserSearch(String contentSearch) throws Exception {
-		return User_DAO.getInstance().listUserSearch(contentSearch);
 	}
 }

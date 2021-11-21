@@ -2,7 +2,7 @@ package Model.BO;
 
 import java.util.*;
 
-import Model.BEAN.Post_Photo;
+import Model.BEAN.*;
 import Model.DAO.Post_Photo_DAO;
 
 public class Post_Photo_BO {
@@ -37,4 +37,5 @@ public class Post_Photo_BO {
 	public List<Post_Photo> listPost(int userId) throws Exception {
 		return Post_Photo_DAO.getInstance().listPost(userId);
 	}
+
 }

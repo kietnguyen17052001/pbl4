@@ -17,6 +17,7 @@ import javax.servlet.http.Part;
 
 import Model.BEAN.Post_Photo;
 import Model.BEAN.User;
+import Model.BO.Another_BO;
 import Model.BO.Follow_BO;
 import Model.BO.Post_Photo_BO;
 import Model.BO.User_BO;
@@ -62,11 +63,8 @@ public class User_Controller extends HttpServlet {
 					user = User_BO.getInstance().getUser(username, password);
 					// create and push user up session
 					session.setAttribute("user", user);
-					// userId = User_BO.getInstance().getIdUser(username);
 					userId = user.getUser_id();
-					User_BO.getInstance().changeUserStatus(userId, true); // true: status=online
-					sendDataListFollowerHistory(request, response, userId);
-					getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
+					directHomePage(request, response, userId);
 				} else {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				}
@@ -110,24 +108,28 @@ public class User_Controller extends HttpServlet {
 			user = (User) session.getAttribute("user");
 			userId = user.getUser_id();
 			try {
-				List<User> listUser = User_BO.getInstance().listUserSearch(contentSearch);
+				List<User> listUser = Another_BO.getInstance().listUserSearch(contentSearch);
 				HashMap<User, Boolean> hashMap = hashMap(listUser, userId, true);
 				sendDataListFollowerHistory(request, response, userId);
 				request.setAttribute("hashMapp", hashMap);
 				getServletContext().getRequestDispatcher("/ResultSearchPage.jsp").forward(request, response);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				try {
+					directHomePage(request, response, user.getUser_id());
+				} catch (Exception e1) {
+					System.out.println(e1.getMessage());
+				}
 			}
 		case "changePassword": // change password
 			user = (User) session.getAttribute("user");
 			userId = user.getUser_id();
 			String oldPassword = request.getParameter("oldpassword");
 			try {
-				user = User_BO.getInstance().getUserById(userId);
-				if (User_BO.getInstance().checkOldPassword(userId, oldPassword)) {
+				if (User_BO.getInstance().checkOldPassword(userId, oldPassword)) { // invalid ole password
 					String newPassword = request.getParameter("newpassword");
 					User_BO.getInstance().changePassword(userId, newPassword);
 					sendDataListFollowerHistory(request, response, userId);
+					session.setAttribute("user", User_BO.getInstance().getUserById(userId));
 					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
 				} else {
 					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
@@ -139,8 +141,7 @@ public class User_Controller extends HttpServlet {
 		case "homePage":
 			try {
 				user = (User) session.getAttribute("user");
-				sendDataListFollowerHistory(request, response, user.getUser_id());
-				getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
+				directHomePage(request, response, user.getUser_id());
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -312,6 +313,22 @@ public class User_Controller extends HttpServlet {
 	}
 
 	// ---- functions ----
+
+	// direct to homepage
+	public void directHomePage(HttpServletRequest request, HttpServletResponse response, int userId) throws Exception {
+		// hashMap: list post photo and user when direct to home page
+		HashMap<Post_Photo, User> hashMapPostPhoto_User = Another_BO.getInstance().listPostPhotoOfFollowing(userId);
+		request.setAttribute("hashMapPostPhoto_User", hashMapPostPhoto_User);
+		List<User> listUserFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
+		request.setAttribute("listUserFollowing", listUserFollowing);
+		// list top explore
+		List<User> listTopExplore = Another_BO.getInstance().listTopExplore(userId);
+		request.setAttribute("listTopExplore", listTopExplore);
+		User_BO.getInstance().changeUserStatus(userId, true); // true: status=online
+		sendDataListFollowerHistory(request, response, userId);
+		getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
+	}
+
 	// send data list follower history to form notification
 	public void sendDataListFollowerHistory(HttpServletRequest request, HttpServletResponse response, int userId)
 			throws Exception {
