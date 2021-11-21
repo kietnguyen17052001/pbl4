@@ -68,9 +68,7 @@
 								<%
 								if (isFollowed) {
 								%>
-								<form
-									action="User_Controller?type=messagePage"
-									method="post">
+								<form action="User_Controller?type=messagePage" method="post">
 									<input class="message-another" type="submit" value="Message">
 								</form> <%
  } else {
@@ -331,7 +329,8 @@
 		}
 		%>
 	</div>
-	<div id="form-post-photo-content" class="post-photo-content">
+	<div id="form-post-photo-content"
+		class="post-photo-content-profile-page">
 		<div class="post-photo-content-title">
 			<div>
 				<button type="button">

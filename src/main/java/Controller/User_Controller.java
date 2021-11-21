@@ -86,9 +86,11 @@ public class User_Controller extends HttpServlet {
 		case "edit": // edit profile
 			user = (User) session.getAttribute("user");
 			try {
-				changeAvatar(request, response);
+				changeAvatar(request, response, user.getUser_id());
 				editUser(request, response, user);
 				sendDataListFollowerHistory(request, response, user.getUser_id());
+				user = User_BO.getInstance().getUserById(user.getUser_id());
+				session.setAttribute("user", user);
 				getServletContext().getRequestDispatcher("/EditProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -269,8 +271,7 @@ public class User_Controller extends HttpServlet {
 	}
 
 	// change avatar
-	public void changeAvatar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		int userId = Integer.parseInt(request.getParameter("userId"));
+	public void changeAvatar(HttpServletRequest request, HttpServletResponse response, int userId) throws Exception {
 		Part file = request.getPart("image");
 		String imageFileName = file.getSubmittedFileName();
 		String uploadPath = "D:/Dropbox/Season3 - DUT/PBL4/Code/AppPBL4/src/main/webapp/image/" + imageFileName;

@@ -166,7 +166,7 @@ a {
 	{
 	padding: 10px;
 	max-height: 100%;
-	overflow-x: auto;
+	overflow: auto;
 }
 
 .main-page .box-main-home-page .box-main-home-page-left .list-user-following ul li
@@ -184,6 +184,7 @@ a {
 	{
 	display: flex;
 	flex-direction: column;
+	row-gap: 30px;
 }
 
 .main-page .box-main-home-page .box-main-home-page-left .list-post-photo-user-following .box-post-photo-content
@@ -214,8 +215,15 @@ a {
 .main-page .box-main-home-page .box-main-home-page-left .list-post-photo-user-following .box-post-photo-content .post-photo-content-photo
 	{
 	height: 80%;
+	background-color: black;
+	text-align: center;
 }
 
+.main-page .box-main-home-page .box-main-home-page-left .list-post-photo-user-following .box-post-photo-content .post-photo-content-photo img
+	{
+	max-width: 100%;
+	height: 100%;
+}
 /* -- css for box-main-home-page-right -- */
 .main-page .box-main-home-page .box-main-home-page-right {
 	width: 35%;
@@ -535,7 +543,7 @@ a {
 }
 
 /* css for form post photo, form following, form followers in profile */
-.post-photo, .post-photo-content, .form-list-following,
+.post-photo, .post-photo-content-profile-page, .form-list-following,
 	.form-list-follower, .form-list-follower-history {
 	display: none;
 	position: absolute;
@@ -549,50 +557,55 @@ a {
 }
 
 /* css for form post photo content */
-.post-photo-content {
+.post-photo-content-profile-page {
 	position: fixed;
 	width: 600px;
 	height: 600px;
 }
 
-.post-photo-content .post-photo-content-title {
+.post-photo-content-profile-page .post-photo-content-title {
 	height: 10%;
 }
 
-.post-photo-content .box-post-photo-content {
+.post-photo-content-profile-page .box-post-photo-content {
 	height: 90%;
 }
 
-.box-post-photo-content .post-photo-content-photo {
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-photo
+	{
 	height: 70%;
 	background-color: black;
 	text-align: center;
 }
 
-.box-post-photo-content .post-photo-content-photo img {
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-photo img
+	{
 	max-width: 100%;
 	height: 100%;
 }
 
-#form-post-photo-content .box-post-photo-content .post-photo-content-user {
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-user
+	{
 	display: flex;
-	justify-content: space-around;
 	align-items: center;
+	column-gap: 30px;
+	padding: 5px;
 }
 
-.box-post-photo-content .post-photo-content-user .submit-edit-delete {
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-user .submit-edit-delete
+	{
 	display: flex;
 	justify-content: flex-end;
 }
 
-.box-post-photo-content .post-photo-content-user .submit-edit-delete #submit-edit-post
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-user .submit-edit-delete #submit-edit-post
 	{
 	margin-right: 5px;
 }
 
-.post-photo-content .box-post-photo-content .post-photo-content-content
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-content
 	{
-	padding: 0 50px 0 50px;
+	padding: 10px 50px 10px 50px;
 }
 /* end */
 .form-list-follower-history {
@@ -605,7 +618,7 @@ a {
 	width: 450px;
 }
 
-.post-photo .post-photo-title, .post-photo-content .post-photo-content-title,
+.post-photo .post-photo-title, .post-photo-content-profile-page .post-photo-content-title,
 	.form-list-following-title, .form-list-follower-title,
 	.form-list-follower-history-title {
 	display: flex;
@@ -616,7 +629,7 @@ a {
 	border-bottom: 1px solid silver;
 }
 
-.post-photo .post-photo-title button, .post-photo-content .post-photo-content-title button,
+.post-photo .post-photo-title button, .post-photo-content-profile-page .post-photo-content-title button,
 	.form-list-following-title button, .form-list-follower-title button,
 	.form-list-follower-history-title button {
 	background-color: white;
@@ -624,7 +637,8 @@ a {
 	font-size: 1.5rem;
 }
 
-.post-photo .post-photo-title button:hover, .post-photo-content .post-photo-content-title button:hover,
+.post-photo .post-photo-title button:hover,
+	.post-photo-content-profile-page .post-photo-content-title button:hover,
 	.form-list-following-title button:hover, .form-list-follower-title button:hover,
 	.form-list-follower-history-title button:hover {
 	cursor: pointer;

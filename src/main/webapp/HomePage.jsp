@@ -155,6 +155,29 @@
 			</div>
 		</div>
 	</div>
+	<div class="bottom-page">
+		<div class="box-bottom">
+			<div class="team-member">
+				<ul>
+					<li><a href="https://www.facebook.com/user001111000101/">Nguyen
+							Dang Kiet</a></li>
+					<li><a href="https://www.facebook.com/thanh2931">Duong
+							Dinh Thanh</a></li>
+					<li><a
+						href="https://www.facebook.com/profile.php?id=100008118754465">Nguyen
+							Tan Sy</a></li>
+				</ul>
+			</div>
+			<div class="university">
+				<ul>
+					<li><a href="http://dut.udn.vn/">Da Nang University of
+							Technology</a></li>
+					<li><a href="http://dut.udn.vn/KhoaCNTT">IT Falcuty</a></li>
+					<li><a href="#">PBL4</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 	<div id="form-follow-history" class="form-list-follower-history">
 		<div class="form-list-follower-history-title">
 			<div>
