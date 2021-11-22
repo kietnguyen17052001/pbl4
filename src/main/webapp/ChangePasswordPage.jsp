@@ -16,7 +16,6 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
-	String name = user.getLast_name() + " " + user.getFirst_name();
 	HashMap<User, String> hashMap = (HashMap<User, String>) request.getAttribute("hashMap");
 	%>
 	<div class="top-page">
@@ -68,7 +67,7 @@
 						<tr>
 							<td><img src="image/<%=user.getPhoto()%>" alt=" " width="50"
 								height="50"></td>
-							<td class="name-user"><strong><%=name%></strong></td>
+							<td class="name-user"><strong><%=user.getFull_name()%></strong></td>
 						</tr>
 						<tr>
 							<td><strong>Old password</strong></td>

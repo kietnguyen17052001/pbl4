@@ -49,53 +49,55 @@ public class User_DAO {
 	// ----- end -----
 	// insert new user
 	public void addUser(User user) throws Exception {
-		String query = "Insert into Users values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String query = "Insert into Users values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, user.getUser_type());
 		ps.setString(2, encrypt(user.getUser_name()));
 		ps.setString(3, user.getFirst_name());
 		ps.setString(4, user.getLast_name());
-		ps.setInt(5, user.getGender());
-		ps.setString(6, encrypt(user.getPassword()));
-		ps.setString(7, user.getEmail());
-		ps.setString(8, user.getPhone());
-		ps.setString(9, user.getCity());
-		ps.setObject(10, user.getBirthday());
-		ps.setString(11, user.getPhoto());
-		ps.setString(12, user.getAbout());
-		ps.setString(13, user.getPassion());
-		ps.setString(14, user.getJob());
-		ps.setString(15, user.getCompany());
-		ps.setString(16, user.getFacebook());
-		ps.setString(17, user.getInstagram());
-		ps.setString(18, user.getUser_status());
-		ps.setInt(19, user.getPost());
-		ps.setInt(20, user.getFollowing());
-		ps.setInt(21, user.getFollower());
-		ps.setObject(22, user.getRegistered_date());
-		ps.setObject(23, user.getUpdated_date());
+		ps.setString(5, user.getFull_name());
+		ps.setInt(6, user.getGender());
+		ps.setString(7, encrypt(user.getPassword()));
+		ps.setString(8, user.getEmail());
+		ps.setString(9, user.getPhone());
+		ps.setString(10, user.getCity());
+		ps.setObject(11, user.getBirthday());
+		ps.setString(12, user.getPhoto());
+		ps.setString(13, user.getAbout());
+		ps.setString(14, user.getPassion());
+		ps.setString(15, user.getJob());
+		ps.setString(16, user.getCompany());
+		ps.setString(17, user.getFacebook());
+		ps.setString(18, user.getInstagram());
+		ps.setString(19, user.getUser_status());
+		ps.setInt(20, user.getPost());
+		ps.setInt(21, user.getFollowing());
+		ps.setInt(22, user.getFollower());
+		ps.setObject(23, user.getRegistered_date());
+		ps.setObject(24, user.getUpdated_date());
 		ps.executeUpdate();
 	}
 
 	// edit user
 	public void editUser(User user) throws Exception {
-		String query = "Update Users set firstName = ?, lastName = ?, gender = ?, email = ?, mobilePhone = ?, city = ?, about = ?, job = ?, company = ?, facebook = ?, instagram = ?, updateDate = ? where userId = ?";
+		String query = "Update Users set firstName = ?, lastName = ?, fullName = ?, gender = ?, email = ?, mobilePhone = ?, city = ?, about = ?, job = ?, company = ?, facebook = ?, instagram = ?, updateDate = ? where userId = ?";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, user.getFirst_name());
 		ps.setString(2, user.getLast_name());
-		ps.setInt(3, user.getGender());
-		ps.setString(4, user.getEmail());
-		ps.setString(5, user.getPhone());
-		ps.setString(6, user.getCity());
-		ps.setString(7, user.getAbout());
-		ps.setString(8, user.getJob());
-		ps.setString(9, user.getCompany());
-		ps.setString(10, user.getFacebook());
-		ps.setString(11, user.getInstagram());
-		ps.setObject(12, user.getUpdated_date());
-		ps.setInt(13, user.getUser_id());
+		ps.setString(3, user.getFull_name());
+		ps.setInt(4, user.getGender());
+		ps.setString(5, user.getEmail());
+		ps.setString(6, user.getPhone());
+		ps.setString(7, user.getCity());
+		ps.setString(8, user.getAbout());
+		ps.setString(9, user.getJob());
+		ps.setString(10, user.getCompany());
+		ps.setString(11, user.getFacebook());
+		ps.setString(12, user.getInstagram());
+		ps.setObject(13, user.getUpdated_date());
+		ps.setInt(14, user.getUser_id());
 		ps.executeUpdate();
 	}
 
@@ -174,10 +176,10 @@ public class User_DAO {
 	public User getUser(String username_phone_mail, String password) throws Exception {
 		isExistUser(username_phone_mail, password);
 		User user = new User(rs.getInt("userId"), rs.getString("userType"), rs.getString("userName"),
-				rs.getString("firstName"), rs.getString("lastName"), rs.getInt("gender"), rs.getString("password_sha"),
-				rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"), rs.getObject("birthday"),
-				rs.getString("photo"), rs.getString("about"), rs.getString("passions"), rs.getString("job"),
-				rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
+				rs.getString("firstName"), rs.getString("lastName"), rs.getString("fullName"), rs.getInt("gender"),
+				rs.getString("password_sha"), rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"),
+				rs.getObject("birthday"), rs.getString("photo"), rs.getString("about"), rs.getString("passions"),
+				rs.getString("job"), rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
 				rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
 				rs.getObject("registeredDate"), rs.getObject("updateDate"));
 		return user;
@@ -192,10 +194,10 @@ public class User_DAO {
 		rs = ps.executeQuery();
 		rs.next();
 		User user = new User(rs.getInt("userId"), rs.getString("userType"), rs.getString("userName"),
-				rs.getString("firstName"), rs.getString("lastName"), rs.getInt("gender"), rs.getString("password_sha"),
-				rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"), rs.getObject("birthday"),
-				rs.getString("photo"), rs.getString("about"), rs.getString("passions"), rs.getString("job"),
-				rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
+				rs.getString("firstName"), rs.getString("lastName"), rs.getString("fullName"), rs.getInt("gender"),
+				rs.getString("password_sha"), rs.getString("email"), rs.getString("mobilePhone"), rs.getString("city"),
+				rs.getObject("birthday"), rs.getString("photo"), rs.getString("about"), rs.getString("passions"),
+				rs.getString("job"), rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
 				rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
 				rs.getObject("registeredDate"), rs.getObject("updateDate"));
 		return user;

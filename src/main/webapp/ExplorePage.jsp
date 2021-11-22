@@ -65,13 +65,14 @@
 							<div class="avatar">
 								<a
 									href="User_Controller?type=anotherProfilePage&anotherUserId=<%=another.getUser_id()%>"><img
-									src="image/<%=another.getPhoto()%>" alt="avatar" width="50" height="50"></a>
+									src="image/<%=another.getPhoto()%>" alt="avatar" width="50"
+									height="50"></a>
 							</div>
 							<div class="another">
 								<div class="name-another">
 									<a
 										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=another.getUser_id()%>"><strong>
-											<%=another.getLast_name() + " " + another.getFirst_name()%></strong></a>
+											<%=another.getFull_name()%></strong></a>
 								</div>
 								<div class="follower">
 									<%=hashMapExplore.get(another)%>
@@ -131,7 +132,6 @@
 		</div>
 		<%
 		for (User userFollower : hashMapNotification.keySet()) {
-			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
 		%>
 		<div class="list-follower">
 			<div class="list-follower-user-avatar">
@@ -143,7 +143,8 @@
 			<div class="list-follower-history-user-name">
 				<a
 					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
-					<strong><%=nameUserFollower%></strong> started following you. <%=hashMapNotification.get(userFollower)%>
+					<strong><%=userFollower.getFull_name()%></strong> started following
+					you. <%=hashMapNotification.get(userFollower)%>
 				</a>
 			</div>
 		</div>

@@ -267,6 +267,7 @@ public class User_Controller extends HttpServlet {
 		String username = request.getParameter("username");
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
+		String fullname = lastname + " " + firstname;
 		int gender = Integer.parseInt(request.getParameter("gender"));
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
@@ -275,8 +276,8 @@ public class User_Controller extends HttpServlet {
 				+ request.getParameter("year");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dBirthday = sdf.parse(birthday);
-		User user = new User(1, "user", username, firstname, lastname, gender, password, email, phone, "", dBirthday,
-				"user.jpg", "", "", "", "", "", "", "offline", 0, 0, 0, new Date(), new Date());
+		User user = new User(1, "user", username, firstname, lastname, fullname, gender, password, email, phone, "",
+				dBirthday, "user.jpg", "", "", "", "", "", "", "offline", 0, 0, 0, new Date(), new Date());
 		// call add_user() in User_DAO
 		User_BO.getInstance().addUser(user);
 	}
@@ -299,6 +300,7 @@ public class User_Controller extends HttpServlet {
 	public void editUser(HttpServletRequest request, HttpServletResponse response, User user) throws Exception {
 		String lastName = request.getParameter("lastname");
 		String firstName = request.getParameter("firstname");
+		String fullName = lastName + " " + firstName;
 		int gender = Integer.parseInt(request.getParameter("gender"));
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
@@ -311,6 +313,7 @@ public class User_Controller extends HttpServlet {
 		Object updateDate = new Date();
 		user.setLast_name(lastName);
 		user.setFirst_name(firstName);
+		user.setFull_name(fullName);
 		user.setGender(gender);
 		user.setEmail(email);
 		user.setPhone(phone);

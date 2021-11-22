@@ -29,16 +29,13 @@ a {
 .top-page {
 	background-color: white;
 	border-bottom: 1px solid silver;
-	background-color: white;
 	padding: 5px;
-}
-
-.top-page .top-page-fixed {
 	position: fixed;
-	width: 100%;
+	top: 0;
 }
 
 .main-page {
+	margin-top: 5%;
 	height: 80%;
 }
 
@@ -133,9 +130,10 @@ a {
 	justify-content: center;
 	width: 70%;
 	margin-left: 15%;
-	margin-top: 30px;
+	margin-top: 5%;
 	border: 1px solid silver;
 	background-color: white;
+	width: 70%;
 }
 
 /*  main page for home page */

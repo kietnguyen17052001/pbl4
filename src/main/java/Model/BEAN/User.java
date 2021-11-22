@@ -6,6 +6,7 @@ public class User {
 	private String user_name;
 	private String first_name;
 	private String last_name;
+	private String full_name;
 	private int gender;
 	private String password;
 	private String email;
@@ -26,15 +27,16 @@ public class User {
 	private Object registered_date;
 	private Object updated_date;
 
-	public User(int user_id, String user_type, String user_name, String first_name, String last_name, int gender,
-			String password, String email, String phone, String city, Object birthday, String photo, String about,
-			String passion, String job, String company, String facebook, String instagram, String user_status, int post,
-			int following, int follower, Object registered_date, Object updated_date) {
+	public User(int user_id, String user_type, String user_name, String first_name, String last_name, String full_name,
+			int gender, String password, String email, String phone, String city, Object birthday, String photo,
+			String about, String passion, String job, String company, String facebook, String instagram,
+			String user_status, int post, int following, int follower, Object registered_date, Object updated_date) {
 		this.user_id = user_id;
 		this.user_type = user_type;
 		this.user_name = user_name;
 		this.first_name = first_name;
 		this.last_name = last_name;
+		this.full_name = full_name;
 		this.gender = gender;
 		this.password = password;
 		this.email = email;
@@ -246,6 +248,14 @@ public class User {
 
 	public void setPost(int post) {
 		this.post = post;
+	}
+
+	public String getFull_name() {
+		return full_name;
+	}
+
+	public void setFull_name(String full_name) {
+		this.full_name = full_name;
 	}
 
 }

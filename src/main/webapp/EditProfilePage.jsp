@@ -191,7 +191,6 @@
 		</div>
 		<%
 		for (User userFollower : hashMap.keySet()) {
-			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
 		%>
 		<div class="list-follower">
 
@@ -204,7 +203,7 @@
 			<div class="list-follower-history-user-name">
 				<a
 					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
-					<strong><%=nameUserFollower%></strong> started following you. <%=hashMap.get(userFollower)%>
+					<strong><%=userFollower.getFull_name()%></strong> started following you. <%=hashMap.get(userFollower)%>
 				</a>
 			</div>
 		</div>

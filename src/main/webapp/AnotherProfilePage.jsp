@@ -24,7 +24,6 @@
 	HashMap<User, Boolean> hashMapListFollowing = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollowing");
 	HashMap<User, Boolean> hashMapListFollower = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollower");
 	HashMap<User, String> hashMap = (HashMap<User, String>) request.getAttribute("hashMap");
-	String nameAnotherUser = anotherUser.getLast_name() + " " + anotherUser.getFirst_name();
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -63,7 +62,7 @@
 				<div class="right">
 					<table>
 						<tr>
-							<td class="name-user"><%=nameAnotherUser%></td>
+							<td class="name-user"><%=anotherUser.getFull_name()%></td>
 							<td>
 								<%
 								if (isFollowed) {
@@ -356,7 +355,7 @@
 				</div>
 				<div class="name-user">
 					<a
-						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=anotherUser.getUser_id()%>"><strong><%=nameAnotherUser%></strong></a>
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=anotherUser.getUser_id()%>"><strong><%=anotherUser.getFull_name()%></strong></a>
 					<p id="create-date"></p>
 				</div>
 			</div>

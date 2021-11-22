@@ -91,7 +91,7 @@
 								</div>
 								<div class="name-user">
 									<a
-										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=value.getUser_id()%>"><strong><%=value.getLast_name() + " " + value.getFirst_name()%></strong></a>
+										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=value.getUser_id()%>"><strong><%=value.getFull_name()%></strong></a>
 									<p id="create-date"><%=createDate%></p>
 								</div>
 							</div>
@@ -116,7 +116,7 @@
 								height="50"></a>
 						</div>
 						<div class="name-user">
-							<a href="User_Controller?type=profilePage"><%=user.getLast_name() + " " + user.getFirst_name()%></a>
+							<a href="User_Controller?type=profilePage"><%=user.getFull_name()%></a>
 						</div>
 					</div>
 					<div class="box-main-home-page-right-explore">
@@ -139,7 +139,7 @@
 								</div>
 								<div class="name-user">
 									<a
-										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userExplore.getUser_id()%>"><%=userExplore.getLast_name() + " " + userExplore.getFirst_name()%></a>
+										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userExplore.getUser_id()%>"><%=userExplore.getFull_name()%></a>
 								</div>
 								<div class="follow">
 									<a

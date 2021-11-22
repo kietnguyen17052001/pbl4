@@ -102,16 +102,14 @@ public class Another_DAO {
 		List<User> listUser = new ArrayList<User>();
 		User user = null;
 		int userId;
-		String query = querySelect + " where firstName like ? or lastName like ?";
+		String query = querySelect + " where fullName like ?";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, "%" + contentSearch + "%");
-		ps.setString(2, "%" + contentSearch + "%");
 		rs = ps.executeQuery();
 		while (rs.next()) {
 			userId = rs.getInt("userId");
 			user = User_DAO.getInstance().getUserById(userId);
-			System.out.println(user.getFirst_name());
 			listUser.add(user);
 		}
 		return listUser;

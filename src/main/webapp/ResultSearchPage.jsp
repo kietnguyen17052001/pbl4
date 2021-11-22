@@ -52,7 +52,7 @@
 		<%
 		String type;
 		for (User another : hashMapListSearch.keySet()) {
-			String name = another.getLast_name() + " " + another.getFirst_name();
+			String name = another.getFull_name();
 			// hashMap.get(user) == true: user is following target
 			type = hashMapListSearch.get(another) ? "unfollow" : "follow";
 		%>

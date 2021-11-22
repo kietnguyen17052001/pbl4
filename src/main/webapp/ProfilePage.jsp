@@ -18,7 +18,7 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
-	String name = user.getLast_name() + " " + user.getFirst_name();
+	String name = user.getFull_name();
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	List<User> listFollowing = (ArrayList<User>) request.getAttribute("listFollowing");
 	List<User> listFollower = (ArrayList<User>) request.getAttribute("listFollower");

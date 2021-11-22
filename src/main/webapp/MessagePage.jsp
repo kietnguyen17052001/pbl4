@@ -21,31 +21,26 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage"
-					target="top-main">Suger App</a>
+				<a href="User_Controller?type=homePage" target="top-main">Suger
+					App</a>
 			</div>
 			<div class="search">
-				<form action="User_Controller?type=search"
-					method="post">
+				<form action="User_Controller?type=search" method="post">
 					<input type="text" placeholder="Search" name="contentSearch">
 					<input type="submit" value="Search">
 				</form>
 			</div>
 			<div class="option">
 				<ul>
-					<li class="home"><a
-						href="User_Controller?type=homePage"><i
+					<li class="home"><a href="User_Controller?type=homePage"><i
 							class="fas fa-home"></i></a></li>
-					<li class="message"><a
-						href="User_Controller?type=messagePage"><i
+					<li class="message"><a href="User_Controller?type=messagePage"><i
 							class="far fa-comments"></i></a></li>
 					<li class="follow" onclick="openFormListFollowerHistory()"><a><i
 							class="far fa-heart"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=profilePage"><i
+					<li class="profile"><a href="User_Controller?type=profilePage"><i
 							class="far fa-user"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=logout"><i
+					<li class="profile"><a href="User_Controller?type=logout"><i
 							class="fas fa-sign-out-alt"></i></a></li>
 				</ul>
 			</div>
@@ -71,7 +66,6 @@
 		</div>
 		<%
 		for (User userFollower : hashMap.keySet()) {
-			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
 		%>
 		<div class="list-follower">
 
@@ -84,7 +78,8 @@
 			<div class="list-follower-history-user-name">
 				<a
 					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
-					<strong><%=nameUserFollower%></strong> started following you. <%=hashMap.get(userFollower)%>
+					<strong><%=userFollower.getFull_name()%></strong> started following
+					you. <%=hashMap.get(userFollower)%>
 				</a>
 			</div>
 		</div>
