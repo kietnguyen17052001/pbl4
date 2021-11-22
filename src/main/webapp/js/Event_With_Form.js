@@ -8,6 +8,7 @@ function closeFormPostPhoto() {
 // event open-close form post photo content
 function openFormPostPhotoContent(type, userId, postId, contentPost, linkImage, createDate) {
 	document.getElementById("post-photo-content-content").innerHTML = contentPost;
+	document.getElementById("textarea-photo-content").disabled = "true";
 	document.getElementById("create-date").innerHTML = createDate;
 	document.getElementById("photo").src = "image/" + linkImage;
 	if (type == "user") {

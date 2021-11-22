@@ -24,8 +24,8 @@ public class Post_Photo_BO {
 	}
 
 	// edit post photo
-	public void editPostPhoto(Post_Photo postPhoto) throws Exception {
-		Post_Photo_DAO.getInstance().editPostPhoto(postPhoto);
+	public void editPostPhoto(int postId, String newContent) throws Exception {
+		Post_Photo_DAO.getInstance().editPostPhoto(postId, newContent);
 	}
 
 	// delete post

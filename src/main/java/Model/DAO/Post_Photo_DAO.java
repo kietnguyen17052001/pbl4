@@ -2,6 +2,7 @@ package Model.DAO;
 
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 import Context.ConnectDB;
 import Model.BEAN.*;
@@ -48,8 +49,14 @@ public class Post_Photo_DAO {
 	}
 
 	// edit post photo
-	public void editPostPhoto(Post_Photo postPhoto) throws Exception {
-
+	public void editPostPhoto(int postId, String newContent) throws Exception {
+		String query = "Update User_Post_Photo set content = ?, updateDate = ? where postId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, newContent);
+		ps.setObject(2, new Date());
+		ps.setInt(3, postId);
+		ps.executeUpdate();
 	}
 
 	// delete post photo

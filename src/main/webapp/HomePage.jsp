@@ -56,6 +56,9 @@
 		<div class="box-main-home-page">
 			<div class="box-main-home-page-left">
 				<div class="sub-box-main-home-page-left">
+					<%
+					if (listUserFollowing.size() != 0) {
+					%>
 					<div class="list-user-following">
 						<div>
 							<ul>
@@ -105,6 +108,33 @@
 						}
 						%>
 					</div>
+					<%
+					} else {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					%>
+					<div class="list-post-photo-user-following">
+						<div class="box-post-photo-content">
+							<div class="post-photo-content-user">
+								<div class="avatar">
+									<a href="#"> <img src="image/Dating-Apps.png"
+										alt="avatar-user" width="45" height="45">
+									</a>
+								</div>
+								<div class="name-user">
+									<a href="#>"><strong>Sugar App</strong></a>
+									<p id="create-date"><%=sdf.format(new Date())%></p>
+								</div>
+							</div>
+							<div id="post-photo-content-content"
+								class="post-photo-content-content">Welcome User</div>
+							<div class="post-photo-content-photo">
+								<img id="photo" src="image/Dating-Apps.png" alt="image-post">
+							</div>
+						</div>
+					</div>
+					<%
+					}
+					%>
 				</div>
 			</div>
 			<div class="box-main-home-page-right">

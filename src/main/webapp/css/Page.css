@@ -489,12 +489,11 @@ a {
 
 .right-main-page-edit-profile form, .right-main-page-change-password form
 	{
-	padding-top: 50px;
-	padding-bottom: 50px;
+	padding: 20px;
 }
 
-.right-main-page-edit-profile input:not(.select-image), textarea,
-	.gender {
+.right-main-page-edit-profile input:not(.select-image),
+	right-main-page-edit-profile textarea, .gender {
 	border-radius: 5px;
 	border: 1px solid silver;
 	margin-bottom: 10px;
@@ -677,10 +676,6 @@ a {
 	margin-right: 5px;
 }
 
-.post-photo-content-profile-page .box-post-photo-content .post-photo-content-content
-	{
-	padding: 10px 50px 10px 50px;
-}
 /* end */
 .form-list-follower-history {
 	top: 50%;
