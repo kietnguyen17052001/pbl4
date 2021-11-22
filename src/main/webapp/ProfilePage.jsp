@@ -210,32 +210,34 @@
 				</button>
 			</div>
 		</div>
-		<%
-		for (User userFollowing : listFollowing) {
-			String nameUserFollowing = userFollowing.getLast_name() + " " + userFollowing.getFirst_name();
-		%>
-		<form
-			action="Follow_Controller?type=unfollow&pageFollow=profilePage&targetId=<%=userFollowing.getUser_id()%>"
-			method="post">
-			<div class="list-following">
-				<div class="list-following-user-avatar">
-					<a
-						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><img
-						src="image/<%=userFollowing.getPhoto()%>" alt="avatar" height="50"
-						width="50"></a>
+		<div>
+			<%
+			for (User userFollowing : listFollowing) {
+				String nameUserFollowing = userFollowing.getLast_name() + " " + userFollowing.getFirst_name();
+			%>
+			<form
+				action="Follow_Controller?type=unfollow&pageFollow=profilePage&targetId=<%=userFollowing.getUser_id()%>"
+				method="post">
+				<div class="list-following">
+					<div class="list-following-user-avatar">
+						<a
+							href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><img
+							src="image/<%=userFollowing.getPhoto()%>" alt="avatar"
+							height="50" width="50"></a>
+					</div>
+					<div class="list-following-user-name">
+						<a
+							href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><%=nameUserFollowing%></a>
+					</div>
+					<div class="list-following-user-unfollow">
+						<input type="submit" value="Unfollow">
+					</div>
 				</div>
-				<div class="list-following-user-name">
-					<a
-						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><%=nameUserFollowing%></a>
-				</div>
-				<div class="list-following-user-unfollow">
-					<input type="submit" value="Unfollow">
-				</div>
-			</div>
-		</form>
-		<%
-		}
-		%>
+			</form>
+			<%
+			}
+			%>
+		</div>
 	</div>
 	<div id="form-follower" class="form-list-follower">
 		<div class="form-list-follower-title">
@@ -253,32 +255,34 @@
 				</button>
 			</div>
 		</div>
-		<%
-		for (User userFollower : listFollower) {
-			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
-		%>
-		<form
-			action="Follow_Controller?type=delete&pageFollow=profilePage&targetId=<%=userFollower.getUser_id()%>"
-			method="post">
-			<div class="list-follower">
-				<div class="list-follower-user-avatar">
-					<a
-						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
-						src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
-						width="50"></a>
+		<div>
+			<%
+			for (User userFollower : listFollower) {
+				String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
+			%>
+			<form
+				action="Follow_Controller?type=delete&pageFollow=profilePage&targetId=<%=userFollower.getUser_id()%>"
+				method="post">
+				<div class="list-follower">
+					<div class="list-follower-user-avatar">
+						<a
+							href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
+							src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
+							width="50"></a>
+					</div>
+					<div class="list-follower-user-name">
+						<a
+							href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><%=nameUserFollower%></a>
+					</div>
+					<div class="list-follower-user-delete">
+						<input type="submit" value="Delete">
+					</div>
 				</div>
-				<div class="list-follower-user-name">
-					<a
-						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><%=nameUserFollower%></a>
-				</div>
-				<div class="list-follower-user-delete">
-					<input type="submit" value="Delete">
-				</div>
-			</div>
-		</form>
-		<%
-		}
-		%>
+			</form>
+			<%
+			}
+			%>
+		</div>
 
 	</div>
 	<div id="form-follow-history" class="form-list-follower-history">
@@ -300,7 +304,6 @@
 		</div>
 		<%
 		for (User userFollower : hashMap.keySet()) {
-			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
 		%>
 		<div class="list-follower">
 
@@ -313,7 +316,8 @@
 			<div class="list-follower-history-user-name">
 				<a
 					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
-					<strong><%=nameUserFollower%></strong> started following you. <%=hashMap.get(userFollower)%>
+					<strong><%=userFollower.getFull_name()%></strong> started following
+					you. <%=hashMap.get(userFollower)%>
 				</a>
 			</div>
 		</div>

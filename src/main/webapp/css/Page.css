@@ -155,27 +155,32 @@ a {
 
 .main-page .box-main-home-page .box-main-home-page-left .list-user-following
 	{
-	height: 10%;
 	margin-bottom: 5%;
 	border: 1px solid silver;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	overflow: auto;
+	padding: 20px;
+	background-color: white;
 }
 
 .main-page .box-main-home-page .box-main-home-page-left .list-user-following div
 	{
-	padding: 10px;
-	max-height: 100%;
-	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	width: 90px;
+	max-width: 90px;
 }
 
-.main-page .box-main-home-page .box-main-home-page-left .list-user-following ul li
+.main-page .box-main-home-page .box-main-home-page-left .list-user-following .user-following div
 	{
-	display: inline-block;
+	text-align: center;
 }
 
-.main-page .box-main-home-page .box-main-home-page-left .list-user-following ul li img
+.main-page .box-main-home-page .box-main-home-page-left .list-user-following .user-following div:last-child a
 	{
-	background-color: white;
-	margin: 10px;
+	font-size: 0.8rem;
 }
 
 .main-page .box-main-home-page .box-main-home-page-left .list-post-photo-user-following
@@ -190,6 +195,7 @@ a {
 	border: 1px solid silver;
 	width: 100%;
 	height: 550px;
+	background-color: white;
 }
 
 .main-page .box-main-home-page .box-main-home-page-left .list-post-photo-user-following .box-post-photo-content .name-user,
@@ -601,7 +607,6 @@ a {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	display: flex;
 }
 
 .list-post-in-profile img {
@@ -662,6 +667,11 @@ a {
 	display: flex;
 	align-items: center;
 	column-gap: 30px;
+	padding: 5px;
+}
+
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-content
+	{
 	padding: 5px;
 }
 
@@ -747,7 +757,8 @@ a {
 }
 
 /* form following and form follower */
-.form-list-following form, .form-list-follower form {
+.form-list-following div:last-child, .form-list-follower div:last-child
+	{
 	max-height: 100%;
 	overflow: auto;
 }
@@ -759,36 +770,31 @@ a {
 	background-color: white;
 	color: black;
 	display: flex;
-	justify-content: left;
+	justify-content: flex-start;
 	align-items: center;
 }
 
-.list-following-user-avatar, .list-follower-user-avatar {
+.list-following div:nth-child(1), .list-follower div:nth-child(1) {
 	width: 15%;
 }
 
-.list-following-user-avatar img, .list-follower-user-avatar img {
-	background-color: white;
+.list-following div:nth-child(2), .list-follower div:nth-child(2) {
+	width: 65%;
 }
 
-.list-following-user-name, .list-follower-user-name {
-	width: 70%;
+.list-following div:nth-child(3), .list-follower div:nth-child(3) {
+	width: 20%;
 }
 
-.list-follower-history-user-name {
-	width: 85%;
+.list-following div:nth-child(3) input, .list-follower div:nth-child(3) input
+	{
+	width: 80%;
 }
 
 .box-main-home-page-right .list-suggestions .name-user a:hover,
 	.list-following-user-name a:hover, .list-follower-user-name a:hover,
 	.list-follower-history-user-name a:hover {
 	border-bottom: 1px solid black;
-}
-
-.list-following-user-unfollow, .list-following-user-follow,
-	.list-follower-user-unfollow, .list-follower-user-follow,
-	.list-follower-user-delete {
-	width: 15%;
 }
 
 .list-following-user-unfollow input, .list-following-user-follow input,

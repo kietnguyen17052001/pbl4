@@ -60,20 +60,28 @@
 					if (listUserFollowing.size() != 0) {
 					%>
 					<div class="list-user-following">
-						<div>
-							<ul>
-								<%
-								for (User userFollowing : listUserFollowing) {
-								%>
-								<li><a
+						<%
+						for (User userFollowing : listUserFollowing) {
+							String name = (userFollowing.getFull_name().length() >= 10) ? userFollowing.getFull_name().substring(0, 9) + "..."
+							: userFollowing.getFull_name();
+						%>
+						<div class="user-following">
+							<div>
+								<a
 									href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><img
-										src="image/<%=userFollowing.getPhoto()%>" alt="avatar"
-										width="60" height="60"></a></li>
-								<%
-								}
-								%>
-							</ul>
+									src="image/<%=userFollowing.getPhoto()%>" alt="avatar"
+									width="50" height="50"></a>
+							</div>
+							<div>
+								<a
+									href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>">
+									<%=name%>
+								</a>
+							</div>
 						</div>
+						<%
+						}
+						%>
 					</div>
 					<div class="list-post-photo-user-following">
 						<%
