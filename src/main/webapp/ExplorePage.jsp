@@ -17,11 +17,7 @@
 <body>
 	<%
 	User user = (User) session.getAttribute("user");
-	User anotherUser = null;
-	List<User> listUserFollowing = (List<User>) request.getAttribute("listUserFollowing");
-	List<User> listTopExplore = (List<User>) request.getAttribute("listTopExplore");
-	HashMap<Post_Photo, User> hashMapPostPhoto_User = (HashMap<Post_Photo, User>) request
-			.getAttribute("hashMapPostPhoto_User");
+	HashMap<User, String> hashMapExplore = (HashMap<User, String>) request.getAttribute("hashMapExplore");
 	HashMap<User, String> hashMapNotification = (HashMap<User, String>) request.getAttribute("hashMap");
 	%>
 	<div class="top-page">
@@ -53,105 +49,43 @@
 		</div>
 	</div>
 	<div class="main-page">
-		<div class="box-main-home-page">
-			<div class="box-main-home-page-left">
-				<div class="sub-box-main-home-page-left">
-					<div class="list-user-following">
-						<div>
-							<ul>
-								<%
-								for (User userFollowing : listUserFollowing) {
-								%>
-								<li><a
-									href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><img
-										src="image/<%=userFollowing.getPhoto()%>" alt="avatar"
-										width="60" height="60"></a></li>
-								<%
-								}
-								%>
-							</ul>
-						</div>
-					</div>
-					<div class="list-post-photo-user-following">
-						<%
-						for (HashMap.Entry<Post_Photo, User> entry : hashMapPostPhoto_User.entrySet()) {
-							Post_Photo key = entry.getKey(); // post user following
-							User value = entry.getValue(); // user following
-							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-							String createDate = sdf.format(key.getCreate_date());
-						%>
-						<div class="box-post-photo-content">
-							<div class="post-photo-content-user">
-								<div class="avatar">
-									<a
-										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=value.getUser_id()%>">
-										<img src="image/<%=value.getPhoto()%>" alt="avatar-user"
-										width="45" height="45">
-									</a>
-								</div>
-								<div class="name-user">
-									<a
-										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=value.getUser_id()%>"><strong><%=value.getLast_name() + " " + value.getFirst_name()%></strong></a>
-									<p id="create-date"><%=createDate%></p>
-								</div>
-							</div>
-							<div id="post-photo-content-content"
-								class="post-photo-content-content"><%=key.getContent()%></div>
-							<div class="post-photo-content-photo">
-								<img id="photo" src="image/<%=key.getPhoto()%>" alt="image-post">
-							</div>
-						</div>
-						<%
-						}
-						%>
-					</div>
-				</div>
+		<div class="box-main-explore-page">
+			<div class="suggestion-title">
+				<strong>Suggestions</strong>
 			</div>
-			<div class="box-main-home-page-right">
-				<div class="box-fixed">
-					<div class="box-main-home-page-right-user">
-						<div class="avatar-user">
-							<a href="User_Controller?type=profilePage"><img
-								src="image/<%=user.getPhoto()%>" alt="avatar" width="50"
-								height="50"></a>
-						</div>
-						<div class="name-user">
-							<a href="User_Controller?type=profilePage"><%=user.getLast_name() + " " + user.getFirst_name()%></a>
-						</div>
-					</div>
-					<div class="box-main-home-page-right-explore">
-						<div class="suggestions">
-							<div>Suggestions</div>
-							<div>
-								<a href="User_Controller?type=explorePage">See all</a>
+			<div class="list-suggestion">
+				<%
+				for (User another : hashMapExplore.keySet()) {
+				%>
+				<div class="sub-suggestion">
+					<form
+						action="Follow_Controller?type=follow&pageFollow=explorePage&targetId=<%=another.getUser_id()%>"
+						method="post">
+						<div class="box-another">
+							<div class="avatar">
+								<a
+									href="User_Controller?type=anotherProfilePage&anotherUserId=<%=another.getUser_id()%>"><img
+									src="image/<%=another.getPhoto()%>" alt="avatar" width="50" height="50"></a>
 							</div>
-						</div>
-						<div class="list-suggestions">
-							<%
-							for (User userExplore : listTopExplore) {
-							%>
 							<div class="another">
-								<div class="avatar">
+								<div class="name-another">
 									<a
-										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userExplore.getUser_id()%>"><img
-										src="image/<%=userExplore.getPhoto()%>" alt="avatar"
-										width="35" height="35"></a>
+										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=another.getUser_id()%>"><strong>
+											<%=another.getLast_name() + " " + another.getFirst_name()%></strong></a>
 								</div>
-								<div class="name-user">
-									<a
-										href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userExplore.getUser_id()%>"><%=userExplore.getLast_name() + " " + userExplore.getFirst_name()%></a>
-								</div>
-								<div class="follow">
-									<a
-										href="Follow_Controller?type=follow&pageFollow=homePage&targetId=<%=userExplore.getUser_id()%>">Follow</a>
+								<div class="follower">
+									<%=hashMapExplore.get(another)%>
 								</div>
 							</div>
-							<%
-							}
-							%>
+							<div class="follow">
+								<input type="submit" value="Follow">
+							</div>
 						</div>
-					</div>
+					</form>
 				</div>
+				<%
+				}
+				%>
 			</div>
 		</div>
 	</div>

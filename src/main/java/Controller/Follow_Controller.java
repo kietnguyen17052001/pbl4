@@ -96,7 +96,7 @@ public class Follow_Controller extends HttpServlet {
 					request.setAttribute("hashMapListFollowing", hashMapListFollowingOfAnotherUser);
 					request.setAttribute("hashMapListFollower", hashMapListFollowerOfAnotherUser);
 					// send data list follower history
-					sendDataListFollower(request, response, user.getUser_id());
+					sendDataListFollower(request, response, user.getUser_id(), false);
 					getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
 				} else if (pageFollow.equals("homePage")) {
 					HashMap<Post_Photo, User> hashMapPostPhoto_User = Another_BO.getInstance()
@@ -110,16 +110,19 @@ public class Follow_Controller extends HttpServlet {
 					request.setAttribute("listTopExplore", listTopExplore);
 					User_BO.getInstance().changeUserStatus(userId, true); // true: status=online
 					// send data list follower history
-					sendDataListFollower(request, response, userId);
+					sendDataListFollower(request, response, userId, false);
 					getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
-				} else {
+				} else if (pageFollow.equals("explorePage")) {
+					sendDataListFollower(request, response, userId, false);
+					HashMap<User, String> hashMapExplore = Another_BO.getInstance().listExplore(userId);
+					request.setAttribute("hashMapExplore", hashMapExplore);
+					getServletContext().getRequestDispatcher("/ExplorePage.jsp").forward(request, response);
+				} else { // type == profilePage
 					listPost = Post_Photo_BO.getInstance().listPost(userId);
 					listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
-					user = User_BO.getInstance().getUserById(userId); // anotherUser
-					session.setAttribute("user", user);
 					request.setAttribute("listFollowing", listFollowing);
 					request.setAttribute("listPost", listPost);
-					sendDataListFollower(request, response, userId);
+					sendDataListFollower(request, response, userId, true);
 					getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
@@ -151,14 +154,16 @@ public class Follow_Controller extends HttpServlet {
 	}
 
 	// send data
-	public void sendDataListFollower(HttpServletRequest request, HttpServletResponse response, int userId)
-			throws Exception {
+	public void sendDataListFollower(HttpServletRequest request, HttpServletResponse response, int userId,
+			boolean isProfilePage) throws Exception {
 		List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
 		HashMap<User, String> hashMap = new HashMap<User, String>();
 		for (User follower : listFollower) {
 			hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
 		}
-		request.setAttribute("listFollower", listFollower);
+		if (isProfilePage) {
+			request.setAttribute("listFollower", listFollower);
+		}
 		request.setAttribute("hashMap", hashMap);
 	}
 }

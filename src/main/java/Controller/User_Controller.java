@@ -148,6 +148,17 @@ public class User_Controller extends HttpServlet {
 				System.out.println(e.getMessage());
 			}
 			break;
+		case "explorePage":
+			try {
+				user = (User) session.getAttribute("user");
+				userId = user.getUser_id();
+				sendDataListFollowerHistory(request, response, userId);
+				HashMap<User, String> hashMapExplore = Another_BO.getInstance().listExplore(userId);
+				request.setAttribute("hashMapExplore", hashMapExplore);
+				getServletContext().getRequestDispatcher("/ExplorePage.jsp").forward(request, response);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		case "messagePage":
 			user = (User) session.getAttribute("user");
 			try {

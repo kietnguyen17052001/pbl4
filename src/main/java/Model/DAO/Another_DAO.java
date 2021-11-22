@@ -53,17 +53,48 @@ public class Another_DAO {
 	}
 
 	// get list explore
-	public List<User> listExplore(int userId) throws Exception {
+	public HashMap<User, String> listExplore(int userId) throws Exception {
 		List<User> list = new ArrayList<User>();
-		String query = "Select * from Users where userId <> ? order by follower DESC";
+		String query = "Select * from Users where userId <> ?";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, userId);
 		rs = ps.executeQuery();
 		while (rs.next()) {
-			list.add(User_DAO.getInstance().getUserById(rs.getInt("userId")));
+			if (!Follow_DAO.getInstance().isFollowed(userId, rs.getInt("userId"))) {
+				list.add(User_DAO.getInstance().getUserById(rs.getInt("userId")));
+			}
 		}
-		return list;
+		// hashmap: list explore, if another is following you, String = "Follow you"
+		// else String = ...
+		HashMap<User, String> hashMapAnother = new HashMap<User, String>();
+		// list user's following
+		List<User> listFollowing = Follow_DAO.getInstance().listFollowingOrFollowerInProfile(userId, true);
+		int count;
+		String s;
+		for (User another : list) {
+			if (Follow_DAO.getInstance().isFollowed(another.getUser_id(), userId)) {
+				hashMapAnother.put(another, "Follow you");
+			} else {
+				count = 0;
+				s = "";
+				for (User following : listFollowing) {
+					if (Follow_DAO.getInstance().isFollowed(following.getUser_id(), another.getUser_id())) {
+						s = following.getLast_name() + " " + following.getFirst_name();
+						count++;
+					}
+				}
+				if (count == 1) { // only 1 user's following is follow another
+					hashMapAnother.put(another, "Have " + s + " follow");
+				} else if (count >= 2) { // 2... more user's following is follow another
+					count--;
+					hashMapAnother.put(another, "Have " + s + " and " + count + " more followers");
+				} else {
+					hashMapAnother.put(another, s); // no user's following is follow another
+				}
+			}
+		}
+		return hashMapAnother;
 	}
 
 	// get list user when search

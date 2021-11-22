@@ -330,6 +330,82 @@ a {
 
 /* end */
 
+/* css for explore page */
+.main-page .box-main-explore-page {
+	width: 60%;
+	margin-left: 20%;
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
+
+.main-page .box-main-explore-page .suggestion-title {
+	padding: 20px;
+}
+
+.main-page .box-main-explore-page .list-suggestion {
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	border-radius: 5px;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another
+	{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 40px;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion form
+	{
+	padding: 20px;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another .avatar
+	{
+	width: 10%;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another .another
+	{
+	width: 75%;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another .another .follower
+	{
+	color: silver;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another .follow
+	{
+	width: 15%;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another .follow input
+	{
+	padding: 5px;
+	color: white;
+	background-color: #eb4d4b;
+	font-weight: bold;
+	border: 1px solid #eb4d4b;
+	border-radius: 5px;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another .another .name-another a:hover
+	{
+	border-bottom: 1px solid black;
+}
+
+.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another .follow input:hover
+	{
+	cursor: pointer;
+	opacity: 0.9;
+}
+/* end */
+
 /* search user */
 .main-page-search form {
 	width: 100%;
@@ -761,6 +837,7 @@ a {
 .main-page .box-main-home-page .box-main-home-page-left .list-user-following img,
 	.main-page .box-main-home-page .box-main-home-page-right .box-main-home-page-right-user .avatar-user img,
 	.main-page .box-main-home-page .box-main-home-page-right .box-main-home-page-right-explore .list-suggestions .another .avatar img,
+	.main-page .box-main-explore-page .list-suggestion .sub-suggestion .box-another .avatar img,
 	.main-page-search-user-avatar a img, .right-main-page-edit-profile img,
 	.right-main-page-change-password img, .box-post-photo-content .post-photo-content-user div:first-child a img,
 	.post-photo-user img, .list-following-user-avatar img,

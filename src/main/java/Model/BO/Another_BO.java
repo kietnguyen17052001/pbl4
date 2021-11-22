@@ -33,7 +33,7 @@ public class Another_BO {
 	}
 
 	// get list explore
-	public List<User> listExplore(int userId) throws Exception {
+	public HashMap<User, String> listExplore(int userId) throws Exception {
 		return Another_DAO.getInstance().listExplore(userId);
 	}
 
