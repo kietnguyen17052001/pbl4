@@ -29,7 +29,7 @@ public class Follow_DAO {
 		List<User> listUser = new ArrayList<User>();
 		User user = null;
 		String query = isFollowing ? "Select targetId from Follow where userId = ?"
-				: "Select userId from Follow where targetId = ?";
+				: "Select userId, followId from Follow where targetId = ? order by followId DESC";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, userId);

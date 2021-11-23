@@ -33,31 +33,26 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage"
-					target="top-main">Sugar App</a>
+				<a href="User_Controller?type=homePage" target="top-main">Sugar
+					App</a>
 			</div>
 			<div class="search">
-				<form action="User_Controller?type=search"
-					method="post">
+				<form action="User_Controller?type=search" method="post">
 					<input type="text" placeholder="Search" name="contentSearch">
 					<input type="submit" value="Search">
 				</form>
 			</div>
 			<div class="option">
 				<ul>
-					<li class="home"><a
-						href="User_Controller?type=homePage"><i
+					<li class="home"><a href="User_Controller?type=homePage"><i
 							class="fas fa-home"></i></a></li>
-					<li class="message"><a
-						href="User_Controller?type=messagePage"><i
+					<li class="message"><a href="User_Controller?type=messagePage"><i
 							class="far fa-comments"></i></a></li>
 					<li class="follow" onclick="openFormListFollowerHistory()"><a><i
 							class="far fa-heart"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=profilePage"><i
+					<li class="profile"><a href="User_Controller?type=profilePage"><i
 							class="far fa-user"></i></a></li>
-					<li class="profile"><a
-						href="User_Controller?type=logout"><i
+					<li class="profile"><a href="User_Controller?type=logout"><i
 							class="fas fa-sign-out-alt"></i></a></li>
 				</ul>
 			</div>
@@ -66,17 +61,15 @@
 	<div class="main-page-edit-profile">
 		<div class="left-main-page-edit-profile">
 			<ul>
-				<li><a
-					href="User_Controller?type=editProfilePage">Edit
+				<li><a href="User_Controller?type=editProfilePage">Edit
 						profile</a></li>
-				<li><a
-					href="User_Controller?type=changePasswordPage">Change
+				<li><a href="User_Controller?type=changePasswordPage">Change
 						Password</a></li>
 			</ul>
 		</div>
 		<div class="right-main-page-edit-profile">
-			<form action="User_Controller?type=edit"
-				method="post" enctype="multipart/form-data">
+			<form action="User_Controller?type=edit" method="post"
+				enctype="multipart/form-data">
 				<table>
 					<thead></thead>
 					<tbody>
@@ -189,27 +182,32 @@
 				</button>
 			</div>
 		</div>
-		<%
-		for (User userFollower : hashMap.keySet()) {
-		%>
-		<div class="list-follower">
-
-			<div class="list-follower-user-avatar">
-				<a
-					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
-					src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
-					width="50"></a>
+		<div>
+			<%
+			for (User userFollower : hashMap.keySet()) {
+			%>
+			<div class="list-follower">
+				<div class="list-follower-user-avatar">
+					<a
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
+						src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
+						width="50"></a>
+				</div>
+				<div class="list-follower-history-user-name">
+					<a
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
+						<strong><%=userFollower.getFull_name()%></strong> started
+						following you
+					</a>
+				</div>
+				<div>
+					<%=hashMap.get(userFollower)%>
+				</div>
 			</div>
-			<div class="list-follower-history-user-name">
-				<a
-					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
-					<strong><%=userFollower.getFull_name()%></strong> started following you. <%=hashMap.get(userFollower)%>
-				</a>
-			</div>
+			<%
+			}
+			%>
 		</div>
-		<%
-		}
-		%>
 	</div>
 </body>
 </html>

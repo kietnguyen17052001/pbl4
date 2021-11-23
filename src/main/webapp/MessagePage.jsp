@@ -64,28 +64,32 @@
 				</button>
 			</div>
 		</div>
-		<%
-		for (User userFollower : hashMap.keySet()) {
-		%>
-		<div class="list-follower">
-
-			<div class="list-follower-user-avatar">
-				<a
-					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
-					src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
-					width="50"></a>
+		<div>
+			<%
+			for (User userFollower : hashMap.keySet()) {
+			%>
+			<div class="list-follower">
+				<div class="list-follower-user-avatar">
+					<a
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
+						src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
+						width="50"></a>
+				</div>
+				<div class="list-follower-history-user-name">
+					<a
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
+						<strong><%=userFollower.getFull_name()%></strong> started
+						following you
+					</a>
+				</div>
+				<div>
+					<%=hashMap.get(userFollower)%>
+				</div>
 			</div>
-			<div class="list-follower-history-user-name">
-				<a
-					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
-					<strong><%=userFollower.getFull_name()%></strong> started following
-					you. <%=hashMap.get(userFollower)%>
-				</a>
-			</div>
+			<%
+			}
+			%>
 		</div>
-		<%
-		}
-		%>
 	</div>
 </body>
 </html>

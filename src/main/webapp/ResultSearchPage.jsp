@@ -121,28 +121,32 @@
 				</button>
 			</div>
 		</div>
-		<%
-		for (User userFollower : hashMapListFollower.keySet()) {
-			String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
-		%>
-		<div class="list-follower">
-
-			<div class="list-follower-user-avatar">
-				<a
-					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
-					src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
-					width="50"></a>
+		<div>
+			<%
+			for (User userFollower : hashMapListFollower.keySet()) {
+			%>
+			<div class="list-follower">
+				<div class="list-follower-user-avatar">
+					<a
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"><img
+						src="image/<%=userFollower.getPhoto()%>" alt="avatar" height="50"
+						width="50"></a>
+				</div>
+				<div class="list-follower-history-user-name">
+					<a
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
+						<strong><%=userFollower.getFull_name()%></strong> started
+						following you
+					</a>
+				</div>
+				<div>
+					<%=hashMapListFollower.get(userFollower)%>
+				</div>
 			</div>
-			<div class="list-follower-history-user-name">
-				<a
-					href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
-					<strong><%=nameUserFollower%></strong> started following you. <%=hashMapListFollower.get(userFollower)%>
-				</a>
-			</div>
+			<%
+			}
+			%>
 		</div>
-		<%
-		}
-		%>
 	</div>
 </body>
 </html>

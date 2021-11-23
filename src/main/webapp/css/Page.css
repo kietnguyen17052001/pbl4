@@ -45,6 +45,7 @@ a {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-left: 15%;
 }
 
 .box-top {
@@ -606,12 +607,18 @@ a {
 	margin-top: 10px;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: center;
+	width: 100%;
+}
+
+.list-post-in-profile div {
+	width: calc(100%/ 3);
+	height: 310px;
 }
 
 .list-post-in-profile img {
-	width: 320px;
-	height: 320px;
+	height: 100%;
+	width: 100%;
 	padding: 5px;
 }
 
@@ -687,42 +694,6 @@ a {
 }
 
 /* end */
-.form-list-follower-history {
-	top: 50%;
-	left: 50%;
-	transform: translateY(-75%);
-}
-
-.form-list-following, .form-list-follower, .form-list-follower-history {
-	width: 450px;
-}
-
-.post-photo .post-photo-title, .post-photo-content-profile-page .post-photo-content-title,
-	.form-list-following-title, .form-list-follower-title,
-	.form-list-follower-history-title {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	font-weight: bold;
-	padding: 10px;
-	border-bottom: 1px solid silver;
-}
-
-.post-photo .post-photo-title button, .post-photo-content-profile-page .post-photo-content-title button,
-	.form-list-following-title button, .form-list-follower-title button,
-	.form-list-follower-history-title button {
-	background-color: white;
-	border: none;
-	font-size: 1.5rem;
-}
-
-.post-photo .post-photo-title button:hover,
-	.post-photo-content-profile-page .post-photo-content-title button:hover,
-	.form-list-following-title button:hover, .form-list-follower-title button:hover,
-	.form-list-follower-history-title button:hover {
-	cursor: pointer;
-}
-
 .post-photo .post-photo-box {
 	padding: 10px;
 }
@@ -756,14 +727,52 @@ a {
 	border: 1px solid #eb4d4b;
 }
 
-/* form following and form follower */
-.form-list-following div:last-child, .form-list-follower div:last-child
-	{
+/* form following and form follower and form follower history*/
+.form-list-follower-history {
+	top: 50%;
+	left: 50%;
+	transform: translateY(-75%);
+	font-size: 0.9rem;
+}
+
+.form-list-following, .form-list-follower, .form-list-follower-history {
+	width: 450px;
+}
+
+.post-photo .post-photo-title, .post-photo-content-profile-page .post-photo-content-title,
+	.form-list-following-title, .form-list-follower-title,
+	.form-list-follower-history-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: bold;
+	padding: 10px;
+	border-bottom: 1px solid silver;
+}
+
+.post-photo .post-photo-title button, .post-photo-content-profile-page .post-photo-content-title button,
+	.form-list-following-title button, .form-list-follower-title button,
+	.form-list-follower-history-title button {
+	background-color: white;
+	border: none;
+	font-size: 1.5rem;
+}
+
+.post-photo .post-photo-title button:hover,
+	.post-photo-content-profile-page .post-photo-content-title button:hover,
+	.form-list-following-title button:hover, .form-list-follower-title button:hover,
+	.form-list-follower-history-title button:hover {
+	cursor: pointer;
+}
+
+.form-list-following div:last-child, .form-list-follower div:last-child,
+	.form-list-follower-history div:last-child {
 	max-height: 100%;
 	overflow: auto;
 }
 
-.list-following, .list-follower {
+.form-list-following .list-following, .form-list-follower .list-follower,
+	.form-list-follower-history .list-follower {
 	width: 100%;
 	height: 70px;
 	padding: 7px;
@@ -774,20 +783,26 @@ a {
 	align-items: center;
 }
 
-.list-following div:nth-child(1), .list-follower div:nth-child(1) {
+.form-list-following .list-following div:nth-child(1),
+	.form-list-follower .list-follower div:nth-child(1),
+	.form-list-follower-history .list-follower div:nth-child(1) {
 	width: 15%;
 }
 
-.list-following div:nth-child(2), .list-follower div:nth-child(2) {
+.form-list-following .list-following div:nth-child(2),
+	.form-list-follower .list-follower div:nth-child(2),
+	.form-list-follower-history .list-follower div:nth-child(2) {
 	width: 65%;
 }
 
-.list-following div:nth-child(3), .list-follower div:nth-child(3) {
+.form-list-following .list-following div:nth-child(3),
+	.form-list-follower .list-follower div:nth-child(3),
+	.form-list-follower-history .list-follower div:nth-child(3) {
 	width: 20%;
 }
 
-.list-following div:nth-child(3) input, .list-follower div:nth-child(3) input
-	{
+.form-list-following .list-following div:nth-child(3) input,
+	.form-list-follower .list-follower div:nth-child(3) input {
 	width: 80%;
 }
 
