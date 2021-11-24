@@ -27,11 +27,13 @@ a {
 }
 
 .top-page {
+	z-index: 1;
 	background-color: white;
 	border-bottom: 1px solid silver;
 	padding: 5px;
 	position: fixed;
 	top: 0;
+	background-color: white;
 }
 
 .main-page {
@@ -631,7 +633,7 @@ a {
 .post-photo, .post-photo-content-profile-page, .form-list-following,
 	.form-list-follower, .form-list-follower-history {
 	display: none;
-	position: absolute;
+	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -643,9 +645,9 @@ a {
 
 /* css for form post photo content */
 .post-photo-content-profile-page {
-	position: fixed;
 	width: 600px;
-	height: 600px;
+	height: 550px;
+	top: 55%;
 }
 
 .post-photo-content-profile-page .post-photo-content-title {

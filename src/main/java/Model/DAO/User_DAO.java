@@ -46,6 +46,21 @@ public class User_DAO {
 		return rs.next();
 	}
 
+	// Is valid user when forgot password
+	public User getUserIdByEmailAndPhone(String email, String phone) throws Exception {
+		String query = querySelect + " where email = ? and mobilePhone = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, email);
+		ps.setString(2, phone);
+		rs = ps.executeQuery();
+		if (rs.next()) {
+			return getUserById(rs.getInt("userId"));
+		} else {
+			return null;
+		}
+	}
+
 	// ----- end -----
 	// insert new user
 	public void addUser(User user) throws Exception {

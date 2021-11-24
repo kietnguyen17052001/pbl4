@@ -90,7 +90,7 @@ body {
 	color: black;
 }
 
-.name-app, input:last-child, .sign-up {
+.login .name-app, input:last-child, .sign-up {
 	font-weight: bold;
 }
 

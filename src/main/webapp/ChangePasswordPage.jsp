@@ -56,7 +56,9 @@
 			</ul>
 		</div>
 		<div class="right-main-page-change-password">
-			<form action="User_Controller?type=changePassword" method="post">
+			<form
+				action="User_Controller?type=changePassword&subType=changePasswordPage"
+				method="post">
 				<table>
 					<thead></thead>
 					<tbody>

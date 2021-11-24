@@ -26,7 +26,8 @@
 					</form>
 				</div>
 				<div class="forgot-password">
-					<a class="forgot-password" href="#">Forgot password?</a>
+					<a class="forgot-password" href="ForgotPassword.jsp">Forgot
+						password?</a>
 				</div>
 			</div>
 			<div class="bottom-form">

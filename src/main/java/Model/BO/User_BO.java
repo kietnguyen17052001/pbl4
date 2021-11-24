@@ -1,5 +1,6 @@
 package Model.BO;
 
+import Context.ConnectDB;
 import Model.BEAN.User;
 import Model.DAO.User_DAO;
 
@@ -19,6 +20,11 @@ public class User_BO {
 	// exist username or phone or email when registration
 	public boolean isExistUsername_phone_mail(String information) throws Exception {
 		return User_DAO.getInstance().isExistUsername_phone_mail(information);
+	}
+
+	// Is valid user when forgot password
+	public User getUserIdByEmailAndPhone(String email, String phone) throws Exception {
+		return User_DAO.getInstance().getUserIdByEmailAndPhone(email, phone);
 	}
 
 	// add user

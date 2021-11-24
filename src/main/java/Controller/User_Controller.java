@@ -71,6 +71,23 @@ public class User_Controller extends HttpServlet {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+			break;
+		case "forgotPassword":
+			String email = request.getParameter("email");
+			String phone = request.getParameter("phone");
+			try {
+				user = User_BO.getInstance().getUserIdByEmailAndPhone(email, phone);
+				if (user != null) {
+					userId = user.getUser_id();
+					request.setAttribute("userId", userId);
+					getServletContext().getRequestDispatcher("/ChangePasswordForgot.jsp").forward(request, response);
+				} else {
+					getServletContext().getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			break;
 		case "create": // create new user
 			try {
 				if (isExistUsername_phone_mail(request, response)) { // username or phone or email exist in db
@@ -123,18 +140,33 @@ public class User_Controller extends HttpServlet {
 				}
 			}
 		case "changePassword": // change password
-			user = (User) session.getAttribute("user");
-			userId = user.getUser_id();
+			String subType = request.getParameter("subType");
 			String oldPassword = request.getParameter("oldpassword");
+			String newPassword = request.getParameter("newpassword");
+			if (subType.equals("changePasswordPage")) {
+				user = (User) session.getAttribute("user");
+				userId = user.getUser_id();
+			} else { // change password when forgot password
+				userId = Integer.parseInt(request.getParameter("userId"));
+			}
 			try {
-				if (User_BO.getInstance().checkOldPassword(userId, oldPassword)) { // invalid ole password
-					String newPassword = request.getParameter("newpassword");
+				if (User_BO.getInstance().checkOldPassword(userId, oldPassword)) { // invalid old password
 					User_BO.getInstance().changePassword(userId, newPassword);
-					sendDataListFollowerHistory(request, response, userId);
-					session.setAttribute("user", User_BO.getInstance().getUserById(userId));
-					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
+					if (subType.equals("changePasswordPage")) {
+						sendDataListFollowerHistory(request, response, userId);
+						session.setAttribute("user", User_BO.getInstance().getUserById(userId));
+						getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
+					} else {
+						getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+					}
 				} else {
-					getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
+					if (subType.equals("changePasswordPage")) {
+						getServletContext().getRequestDispatcher("/ChangePasswordPage.jsp").forward(request, response);
+					} else {
+						request.setAttribute("userId", userId);
+						getServletContext().getRequestDispatcher("/ChangePasswordForgot.jsp").forward(request,
+								response);
+					}
 				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
