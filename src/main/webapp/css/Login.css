@@ -52,6 +52,10 @@ body {
 		'Lucida Sans', Arial, sans-serif;
 }
 
+.form-login {
+	position: relative;
+}
+
 .form-login input {
 	display: block;
 	width: 70%;
@@ -62,14 +66,24 @@ body {
 	margin-bottom: 10px;
 }
 
-.form-login input:last-child {
+.form-login input[type=submit] {
 	margin-top: 20px;
 	background-color: #eb4d4b;
 	color: white;
 	border: 1px solid #eb4d4b;
 }
 
-.form-login input:last-child:hover {
+.form-login i {
+	position: absolute;
+	right: 17%;
+	top: 42%;
+}
+
+.form-login i:hover {
+	cursor: pointer;
+}
+
+.form-login input[type=submit]:hover {
 	opacity: 0.9;
 	cursor: pointer;
 }

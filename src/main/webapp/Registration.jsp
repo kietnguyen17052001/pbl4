@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://kit.fontawesome.com/89a4fa0ef7.js"
+	crossorigin="anonymous"></script>
 <title>Register</title>
 <link rel="stylesheet" href="css/Registration.css" type="text/css" />
 <script src="js/Login_Registration.js"></script>
@@ -18,10 +20,12 @@
 						name="registration">
 						<input type="text" name="lastname" placeholder="Last name">
 						<input type="text" name="firstname" placeholder="First name">
-						<input type="text" name="email" placeholder="Email"> <input
-							type="text" name="phone" placeholder="Phone number"> <input
+						<input type="email" name="email" placeholder="Email"> <input
+							type="tel" name="phone" placeholder="Phone number"> <input
 							type="text" name="username" placeholder="Username"> <input
-							type="password" name="password" placeholder="Password">
+							id="input-password" type="password" name="password"
+							placeholder="Password"> <i id="eye"
+							class="fas fa-eye-slash" onclick="togglePassword('password')"></i>
 						<div class="birthday">
 							<p>Birthday</p>
 							<div>

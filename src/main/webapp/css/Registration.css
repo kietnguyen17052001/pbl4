@@ -47,6 +47,20 @@ body {
 		'Lucida Sans', Arial, sans-serif
 }
 
+form {
+	position: relative;
+}
+
+form i {
+	position: absolute;
+	top: 55%;
+	left: 80%;
+}
+
+form i:hover {
+	cursor: pointer;
+}
+
 .main .top-form .form-signup input, .gender, .birthday {
 	display: block;
 	width: 70%;
@@ -56,7 +70,8 @@ body {
 	border: 1px solid silver;
 	margin-bottom: 10px;
 }
-.main .top-form .form-signup input:focus{
+
+.main .top-form .form-signup input:focus {
 	border-color: #eb4d4b;
 }
 

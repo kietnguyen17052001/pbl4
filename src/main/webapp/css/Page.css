@@ -501,6 +501,31 @@ a {
 	padding: 20px;
 }
 
+.right-main-page-edit-profile form, .right-main-page-change-password form i
+	{
+	margin-left: -25px;
+}
+
+.right-main-page-edit-profile form, .right-main-page-change-password form i:hover
+	{
+	cursor: pointer;
+}
+
+.right-main-page-edit-profile form, .right-main-page-change-password form i#eye-oldpassword
+	{
+	top: 6%;
+}
+
+.right-main-page-edit-profile form, .right-main-page-change-password form i#eye-newpassword
+	{
+	top: 33%;
+}
+
+.right-main-page-edit-profile form, .right-main-page-change-password form i#eye-confirmpassword
+	{
+	top: 59%;
+}
+
 .right-main-page-edit-profile input:not(.select-image),
 	right-main-page-edit-profile textarea, .gender {
 	border-radius: 5px;

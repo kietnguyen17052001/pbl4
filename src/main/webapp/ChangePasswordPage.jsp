@@ -9,7 +9,8 @@
 <script src="https://kit.fontawesome.com/89a4fa0ef7.js"
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/Page.css" type="text/css">
-<script src="js/Event_With_Form.js"></script>
+<script type="text/javascript" src="js/Event_With_Form.js"></script>
+<script type="text/javascript" src="js/Login_Registration.js"></script>
 <title>Sugar App</title>
 </head>
 <body>
@@ -69,15 +70,22 @@
 						</tr>
 						<tr>
 							<td><strong>Old password</strong></td>
-							<td><input type="password" name="oldpassword"></td>
+							<td><input id="input-oldpassword" type="password"
+								name="oldpassword"><i id="eye-oldpassword"
+								class="fas fa-eye-slash" onclick="togglePassword('oldPassword')"></i></td>
 						</tr>
 						<tr>
 							<td><strong>New password</strong></td>
-							<td><input type="password" name="newpassword"></td>
+							<td><input id="input-newpassword" type="password"
+								name="newpassword"><i id="eye-newpassword"
+								class="fas fa-eye-slash" onclick="togglePassword('newPassword')"></i></td>
 						</tr>
 						<tr>
 							<td><strong>Confirm password</strong></td>
-							<td><input type="password" name="confirmpassword"></td>
+							<td><input id="input-confirmpassword" type="password"
+								name="confirmpassword"><i id="eye-confirmpassword"
+								class="fas fa-eye-slash"
+								onclick="togglePassword('confirmPassword')"></i></td>
 						</tr>
 						<tr>
 							<td></td>

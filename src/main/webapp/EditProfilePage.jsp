@@ -131,7 +131,7 @@
 						</tr>
 						<tr>
 							<td><strong>Phone number</strong></td>
-							<td><input type="text" value="<%=phoneNumber%>" name="phone"></td>
+							<td><input type="tel" value="<%=phoneNumber%>" name="phone"></td>
 						</tr>
 						<tr>
 							<td></td>

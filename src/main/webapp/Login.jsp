@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://kit.fontawesome.com/89a4fa0ef7.js"
+	crossorigin="anonymous"></script>
 <title>SugarApp</title>
 <link rel="stylesheet" href="css/Login.css" type="text/css" />
-<script src="js/Login_Registration.js"></script>
+<script type="text/javascript" src="js/Login_Registration.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -21,7 +23,9 @@
 						method="post">
 						<input type="text" name="username"
 							placeholder="Username, phone number or email"> <input
-							type="password" name="password" placeholder="Password"> <input
+							id="input-password" type="password" name="password"
+							placeholder="Password"><i id="eye"
+							class="fas fa-eye-slash" onclick="togglePassword('password')"></i><input
 							type="submit" value="Log in" onclick="checkLogin()">
 					</form>
 				</div>
