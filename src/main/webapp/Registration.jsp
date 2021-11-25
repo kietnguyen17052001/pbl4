@@ -22,10 +22,11 @@
 						<input id="lastname" type="text" name="lastname"
 							placeholder="Last name"> <input id="firstname"
 							type="text" name="firstname" placeholder="First name"> <input
-							id="email" type="email" name="email" placeholder="Email">
-						<input id="phone" type="tel" name="phone"
-							placeholder="Phone number" pattern=[0-9]{10}> <input
-							id="username" type="text" name="username" placeholder="Username">
+							id="email" type="email" name="email"
+							placeholder="Email Address (you@gmail.com)"> <input
+							id="phone" type="tel" name="phone" placeholder="Phone number"
+							pattern=[0-9]{10}> <input id="username" type="text"
+							name="username" placeholder="Username (Only lowercase letters)">
 						<input id="input-password" type="password" name="password"
 							placeholder="Password"> <i id="eye"
 							class="fas fa-eye-slash" onclick="togglePassword('password')"></i>
