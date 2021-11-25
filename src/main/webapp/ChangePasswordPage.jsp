@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/Page.css" type="text/css">
 <script type="text/javascript" src="js/Event_With_Form.js"></script>
 <script type="text/javascript" src="js/Login_Registration.js"></script>
+<script type="text/javascript" src="js/Exception.js"></script>
 <title>Sugar App</title>
 </head>
 <body>
@@ -57,7 +58,7 @@
 			</ul>
 		</div>
 		<div class="right-main-page-change-password">
-			<form
+			<form name="formChangePassword"
 				action="User_Controller?type=changePassword&subType=changePasswordPage"
 				method="post">
 				<table>
@@ -90,7 +91,8 @@
 						<tr>
 							<td></td>
 							<td><input type="submit" value="Submit"
-								class="submit-change-password"></td>
+								class="submit-change-password"
+								onclick="return checkChangePassword()"></td>
 						</tr>
 					</tbody>
 				</table>

@@ -9,6 +9,7 @@
 <title>SugarApp</title>
 <link rel="stylesheet" href="css/Login.css" type="text/css" />
 <script type="text/javascript" src="js/Login_Registration.js"></script>
+<script type="text/javascript" src="js/Exception.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -21,12 +22,12 @@
 				<div class="form-login">
 					<form name="formLogin" action="User_Controller?type=login"
 						method="post">
-						<input type="text" name="username"
+						<input id="username" type="text" name="username"
 							placeholder="Username, phone number or email"> <input
 							id="input-password" type="password" name="password"
 							placeholder="Password"><i id="eye"
 							class="fas fa-eye-slash" onclick="togglePassword('password')"></i><input
-							type="submit" value="Log in" onclick="checkLogin()">
+							type="submit" value="Log in" onclick="return checkLogin()">
 					</form>
 				</div>
 				<div class="forgot-password">

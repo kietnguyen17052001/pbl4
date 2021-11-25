@@ -8,7 +8,8 @@
 	crossorigin="anonymous"></script>
 <title>Register</title>
 <link rel="stylesheet" href="css/Registration.css" type="text/css" />
-<script src="js/Login_Registration.js"></script>
+<script type="text/javascript" src="js/Login_Registration.js"></script>
+<script type="text/javascript" src="js/Exception.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -17,13 +18,15 @@
 				<p class="name-app">SUGAR APP</p>
 				<div class="form-signup">
 					<form action="User_Controller?type=create" method="post"
-						name="registration">
-						<input type="text" name="lastname" placeholder="Last name">
-						<input type="text" name="firstname" placeholder="First name">
-						<input type="email" name="email" placeholder="Email"> <input
-							type="tel" name="phone" placeholder="Phone number"> <input
-							type="text" name="username" placeholder="Username"> <input
-							id="input-password" type="password" name="password"
+						name="formRegistration">
+						<input id="lastname" type="text" name="lastname"
+							placeholder="Last name"> <input id="firstname"
+							type="text" name="firstname" placeholder="First name"> <input
+							id="email" type="email" name="email" placeholder="Email">
+						<input id="phone" type="tel" name="phone"
+							placeholder="Phone number" pattern=[0-9]{10}> <input
+							id="username" type="text" name="username" placeholder="Username">
+						<input id="input-password" type="password" name="password"
 							placeholder="Password"> <i id="eye"
 							class="fas fa-eye-slash" onclick="togglePassword('password')"></i>
 						<div class="birthday">
@@ -135,7 +138,8 @@
 								</select>
 							</div>
 						</div>
-						<input type="submit" value="Register">
+						<input type="submit" value="Register"
+							onclick="return checkRegistration()">
 					</form>
 				</div>
 			</div>

@@ -10,6 +10,7 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/Page.css" type="text/css">
 <script src="js/Event_With_Form.js"></script>
+<script type="text/javascript" src="js/Exception.js"></script>
 <title>Sugar App</title>
 </head>
 <body>
@@ -68,8 +69,8 @@
 			</ul>
 		</div>
 		<div class="right-main-page-edit-profile">
-			<form action="User_Controller?type=edit" method="post"
-				enctype="multipart/form-data">
+			<form name="formEditInformation" action="User_Controller?type=edit"
+				method="post" enctype="multipart/form-data">
 				<table>
 					<thead></thead>
 					<tbody>
@@ -85,12 +86,13 @@
 						</tr>
 						<tr>
 							<td><strong>Last name</strong></td>
-							<td><input type="text" value="<%=lastName%>" name="lastname"></td>
+							<td><input type="text" value="<%=lastName%>" name="lastname"
+								id="lastname"></td>
 						</tr>
 						<tr>
 							<td><strong>First name</strong></td>
 							<td><input type="text" value="<%=firstName%>"
-								name="firstname"></td>
+								name="firstname" id="firstname"></td>
 						</tr>
 						<tr>
 							<td><strong>City</strong></td>
@@ -127,15 +129,18 @@
 						</tr>
 						<tr>
 							<td><strong>Email</strong></td>
-							<td><input type="email" value="<%=email%>" name="email"></td>
+							<td><input type="email" value="<%=email%>" name="email"
+								id="email"></td>
 						</tr>
 						<tr>
 							<td><strong>Phone number</strong></td>
-							<td><input type="tel" value="<%=phoneNumber%>" name="phone"></td>
+							<td><input type="tel" value="<%=phoneNumber%>" name="phone"
+								id="phone" pattern=[0-9]{10}></td>
 						</tr>
 						<tr>
 							<td></td>
-							<td><input type="submit" value="Submit" class="submit-edit"></td>
+							<td><input type="submit" value="Submit" class="submit-edit"
+								onclick="return checkEditInformation()"></td>
 						</tr>
 					</tbody>
 				</table>
