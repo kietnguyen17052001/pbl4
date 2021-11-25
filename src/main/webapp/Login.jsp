@@ -12,6 +12,13 @@
 <script type="text/javascript" src="js/Exception.js"></script>
 </head>
 <body>
+	<%
+	String username = (String) request.getAttribute("username");
+	String password = (String) request.getAttribute("password");
+	if (username == null && password == null) {
+		username = password = "";
+	}
+	%>
 	<div class="container">
 		<div class="left">
 			<img src="image/Dating-Apps.png" alt="image">
@@ -23,9 +30,10 @@
 					<form name="formLogin" action="User_Controller?type=login"
 						method="post">
 						<input id="username" type="text" name="username"
-							placeholder="Username, phone number or email"> <input
-							id="input-password" type="password" name="password"
-							placeholder="Password"><i id="eye"
+							placeholder="Username, phone number or email"
+							value="<%=username%>"> <input id="input-password"
+							type="password" name="password" placeholder="Password"
+							value="<%=password%>"><i id="eye"
 							class="fas fa-eye-slash" onclick="togglePassword('password')"></i><input
 							type="submit" value="Log in" onclick="return checkLogin()">
 					</form>

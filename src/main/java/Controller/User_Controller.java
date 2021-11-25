@@ -10,6 +10,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,6 +66,14 @@ public class User_Controller extends HttpServlet {
 					// create and push user up session
 					session.setAttribute("user", user);
 					userId = user.getUser_id();
+					// cookie
+					Cookie cookieUsername = new Cookie("username", username);
+					Cookie cookiePassword = new Cookie("password", password);
+					cookieUsername.setMaxAge(120);
+					cookiePassword.setMaxAge(120);
+					// save cookie
+					response.addCookie(cookieUsername);
+					response.addCookie(cookiePassword);
 					directHomePage(request, response, userId);
 				} else {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
@@ -277,6 +286,16 @@ public class User_Controller extends HttpServlet {
 			try {
 				User_BO.getInstance().changeUserStatus(userId, false);// false: status=offline
 				session.removeAttribute("user");
+				// get username and password from cookie
+				Cookie arrCookie[] = request.getCookies();
+				for (Cookie cookie : arrCookie) {
+					if (cookie.getName().equals("username")) {
+						request.setAttribute("username", cookie.getValue());
+					}
+					if (cookie.getName().equals("password")) {
+						request.setAttribute("password", cookie.getValue());
+					}
+				}
 				getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
