@@ -22,7 +22,7 @@
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	List<User> listFollowing = (ArrayList<User>) request.getAttribute("listFollowing");
 	List<User> listFollower = (ArrayList<User>) request.getAttribute("listFollower");
-	HashMap<User, String> hashMap = (HashMap<User, String>) request.getAttribute("hashMap");
+	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -303,7 +303,7 @@
 		</div>
 		<div>
 			<%
-			for (User userFollower : hashMap.keySet()) {
+			for (User userFollower : hashMapNotification.keySet()) {
 			%>
 			<div class="list-follower">
 				<div class="list-follower-user-avatar">
@@ -320,7 +320,7 @@
 					</a>
 				</div>
 				<div>
-					<%=hashMap.get(userFollower)%>
+					<%=hashMapNotification.get(userFollower)%>
 				</div>
 			</div>
 			<%

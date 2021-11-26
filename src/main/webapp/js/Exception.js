@@ -13,6 +13,16 @@ function checkLogin() {
 	}
 }
 
+// check username
+function invalidUsername(username) {
+	for (var i = 0; i < username.length; i++) {
+		if (username.charAt(i) == username.charAt(i).toUpperCase()) {
+			return false;
+		}
+	}
+	return true;
+}
+
 // check information when registration
 function checkRegistration() {
 	var lastname = document.formRegistration.lastname.value;
@@ -21,7 +31,7 @@ function checkRegistration() {
 	var phone = document.formRegistration.phone.value;
 	var username = document.formRegistration.username.value;
 	var password = document.formRegistration.password.value;
-	if (lastname == "" || firstname == "" || email == "" || phone == "" || username == "" || password == "" || invalidUsername(username)) {
+	if (lastname == "" || firstname == "" || email == "" || phone == "" || username == "" || password == "" || invalidUsername(username) == false) {
 		if (lastname == "") {
 			document.getElementById("lastname").style.borderColor = "red";
 		}
@@ -34,12 +44,12 @@ function checkRegistration() {
 		if (phone == "") {
 			document.getElementById("phone").style.borderColor = "red";
 		}
-		if (username == "") {
+		if (username == "" || invalidUsername(username) == false) {
 			document.getElementById("username").style.borderColor = "red";
-		}
-		if (!invalidUsername(username) && username != "") {
-			alert("Invalid username!");
-			document.getElementById("username").style.borderColor = "red";
+			if (invalidUsername(username) == false && username != "") {
+				alert("Invalid username (Only letters lowercase)!");
+				return false;
+			}
 		}
 		if (password == "") {
 			document.getElementById("input-password").style.borderColor = "red";
@@ -109,11 +119,5 @@ function checkEditInformation() {
 		return false;
 	}
 }
-// check username
-function invalidUsername(username) {
-	for (var i = 0; i < username.length; i++) {
-		if (username.charAt(i) == username.charAt(i).toUpperCase())
-			return false;
-	}
-}
+
 

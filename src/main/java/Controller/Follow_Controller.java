@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -157,13 +158,13 @@ public class Follow_Controller extends HttpServlet {
 	public void sendDataListFollower(HttpServletRequest request, HttpServletResponse response, int userId,
 			boolean isProfilePage) throws Exception {
 		List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-		HashMap<User, String> hashMap = new HashMap<User, String>();
+		LinkedHashMap<User, String> linkedHashMap = new LinkedHashMap<User, String>();
 		for (User follower : listFollower) {
-			hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
+			linkedHashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
 		}
 		if (isProfilePage) {
 			request.setAttribute("listFollower", listFollower);
 		}
-		request.setAttribute("hashMap", hashMap);
+		request.setAttribute("linkedHashMap", linkedHashMap);
 	}
 }

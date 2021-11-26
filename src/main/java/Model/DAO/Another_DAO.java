@@ -116,18 +116,17 @@ public class Another_DAO {
 	}
 
 	// get list post photo of user's following
-	public HashMap<Post_Photo, User> listPostPhotoOfFollowing(int userId) throws Exception {
-		HashMap<Post_Photo, User> hashMap = new HashMap<Post_Photo, User>();
-		String query = "Select User_Post_Photo.postId, User_Post_Photo.userId from User_Post_Photo inner join Follow on User_Post_Photo.userId = Follow.targetId where Follow.userId = ?";
+	public LinkedHashMap<Post_Photo, User> listPostPhotoOfFollowing(int userId) throws Exception {
+		LinkedHashMap<Post_Photo, User> linkedHashMap = new LinkedHashMap<Post_Photo, User>();
+		String query = "Select User_Post_Photo.postId, User_Post_Photo.userId from User_Post_Photo inner join Follow on User_Post_Photo.userId = Follow.targetId where Follow.userId = ? order by User_Post_Photo.postId desc";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, userId);
 		rs = ps.executeQuery();
 		while (rs.next()) {
-			hashMap.put(Post_Photo_DAO.getInstance().getPostPhoto(rs.getInt("postId")),
+			linkedHashMap.put(Post_Photo_DAO.getInstance().getPostPhoto(rs.getInt("postId")),
 					User_DAO.getInstance().getUserById(rs.getInt("userId")));
 		}
-		System.out.println(hashMap.size());
-		return hashMap;
+		return linkedHashMap;
 	}
 }

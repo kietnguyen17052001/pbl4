@@ -1,6 +1,7 @@
 package Model.BO;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import Model.BEAN.Post_Photo;
@@ -38,7 +39,7 @@ public class Another_BO {
 	}
 
 	// get list post photo of user's following
-	public HashMap<Post_Photo, User> listPostPhotoOfFollowing(int userId) throws Exception {
+	public LinkedHashMap<Post_Photo, User> listPostPhotoOfFollowing(int userId) throws Exception {
 		return Another_DAO.getInstance().listPostPhotoOfFollowing(userId);
 	}
 }

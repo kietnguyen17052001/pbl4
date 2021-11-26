@@ -24,10 +24,11 @@
 							type="text" name="firstname" placeholder="First name"> <input
 							id="email" type="email" name="email"
 							placeholder="Email Address (you@gmail.com)"> <input
-							id="phone" type="tel" name="phone" placeholder="Phone number"
-							pattern=[0-9]{10}> <input id="username" type="text"
-							name="username" placeholder="Username (Only lowercase letters)">
-						<input id="input-password" type="password" name="password"
+							id="phone" type="tel" name="phone"
+							placeholder="Phone number [0-9] {10}" pattern=[0-9]{10}>
+						<input id="username" type="text" name="username"
+							placeholder="Username (Only lowercase letters)"> <input
+							id="input-password" type="password" name="password"
 							placeholder="Password"> <i id="eye"
 							class="fas fa-eye-slash" onclick="togglePassword('password')"></i>
 						<div class="birthday">

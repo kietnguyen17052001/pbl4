@@ -18,7 +18,7 @@
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
 	HashMap<User, Boolean> hashMapListSearch = (HashMap<User, Boolean>) request.getAttribute("hashMapp");
-	HashMap<User, String> hashMapListFollower = (HashMap<User, String>) request.getAttribute("hashMap");
+	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -123,7 +123,7 @@
 		</div>
 		<div>
 			<%
-			for (User userFollower : hashMapListFollower.keySet()) {
+			for (User userFollower : hashMapNotification.keySet()) {
 			%>
 			<div class="list-follower">
 				<div class="list-follower-user-avatar">
@@ -140,7 +140,7 @@
 					</a>
 				</div>
 				<div>
-					<%=hashMapListFollower.get(userFollower)%>
+					<%=hashMapNotification.get(userFollower)%>
 				</div>
 			</div>
 			<%

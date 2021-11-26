@@ -18,7 +18,7 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	HashMap<User, String> hashMapExplore = (HashMap<User, String>) request.getAttribute("hashMapExplore");
-	HashMap<User, String> hashMapNotification = (HashMap<User, String>) request.getAttribute("hashMap");
+	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	%>
 	<div class="top-page">
 		<div class="box-top">

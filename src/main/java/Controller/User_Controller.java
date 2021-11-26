@@ -69,8 +69,8 @@ public class User_Controller extends HttpServlet {
 					// cookie
 					Cookie cookieUsername = new Cookie("username", username);
 					Cookie cookiePassword = new Cookie("password", password);
-					cookieUsername.setMaxAge(120);
-					cookiePassword.setMaxAge(120);
+					cookieUsername.setMaxAge(60 * 60 * 24);
+					cookiePassword.setMaxAge(60 * 60 * 24);
 					// save cookie
 					response.addCookie(cookieUsername);
 					response.addCookie(cookiePassword);
@@ -245,15 +245,15 @@ public class User_Controller extends HttpServlet {
 				List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
 				List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
 				List<User> listFollowerr = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-				HashMap<User, String> hashMapp = new HashMap<User, String>();
+				LinkedHashMap<User, String> linkedHashMap = new LinkedHashMap<User, String>();
 				for (User follower : listFollowerr) {
-					hashMapp.put(follower,
+					linkedHashMap.put(follower,
 							Follow_BO.getInstance().getDateFollow(follower.getUser_id(), user.getUser_id()));
 				}
 				request.setAttribute("listFollowing", listFollowing);
 				request.setAttribute("listFollower", listFollowerr);
 				request.setAttribute("listPost", listPost);
-				request.setAttribute("hashMap", hashMapp);
+				request.setAttribute("linkedHashMap", linkedHashMap);
 				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -384,8 +384,8 @@ public class User_Controller extends HttpServlet {
 	// direct to homepage
 	public void directHomePage(HttpServletRequest request, HttpServletResponse response, int userId) throws Exception {
 		// hashMap: list post photo and user when direct to home page
-		HashMap<Post_Photo, User> hashMapPostPhoto_User = Another_BO.getInstance().listPostPhotoOfFollowing(userId);
-		request.setAttribute("hashMapPostPhoto_User", hashMapPostPhoto_User);
+		LinkedHashMap<Post_Photo, User> linkedHashMapPost = Another_BO.getInstance().listPostPhotoOfFollowing(userId);
+		request.setAttribute("linkedHashMapPost", linkedHashMapPost);
 		List<User> listUserFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
 		request.setAttribute("listUserFollowing", listUserFollowing);
 		// list top explore
@@ -400,11 +400,11 @@ public class User_Controller extends HttpServlet {
 	public void sendDataListFollowerHistory(HttpServletRequest request, HttpServletResponse response, int userId)
 			throws Exception {
 		List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-		HashMap<User, String> hashMap = new HashMap<User, String>();
+		LinkedHashMap<User, String> linkedHashMap = new LinkedHashMap<User, String>();
 		for (User follower : listFollower) {
-			hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
+			linkedHashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
 		}
-		request.setAttribute("hashMap", hashMap);
+		request.setAttribute("linkedHashMap", linkedHashMap);
 	}
 
 	// check exist username or phone or mail
