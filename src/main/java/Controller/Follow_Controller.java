@@ -100,9 +100,9 @@ public class Follow_Controller extends HttpServlet {
 					sendDataListFollower(request, response, user.getUser_id(), false);
 					getServletContext().getRequestDispatcher("/AnotherProfilePage.jsp").forward(request, response);
 				} else if (pageFollow.equals("homePage")) {
-					HashMap<Post_Photo, User> hashMapPostPhoto_User = Another_BO.getInstance()
+					LinkedHashMap<Post_Photo, User> linkedHashMapPost = Another_BO.getInstance()
 							.listPostPhotoOfFollowing(userId);
-					request.setAttribute("hashMapPostPhoto_User", hashMapPostPhoto_User);
+					request.setAttribute("linkedHashMapPost", linkedHashMapPost);
 					List<User> listUserFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId,
 							true);
 					request.setAttribute("listUserFollowing", listUserFollowing);

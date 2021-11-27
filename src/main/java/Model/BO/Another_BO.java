@@ -7,8 +7,6 @@ import java.util.List;
 import Model.BEAN.Post_Photo;
 import Model.BEAN.User;
 import Model.DAO.Another_DAO;
-import Model.DAO.Post_Photo_DAO;
-import Model.DAO.User_DAO;
 
 public class Another_BO {
 	private static Another_BO instance;

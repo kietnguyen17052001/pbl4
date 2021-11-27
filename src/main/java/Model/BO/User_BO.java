@@ -1,6 +1,5 @@
 package Model.BO;
 
-import Context.ConnectDB;
 import Model.BEAN.User;
 import Model.DAO.User_DAO;
 

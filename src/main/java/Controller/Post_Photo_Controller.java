@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -115,14 +116,14 @@ public class Post_Photo_Controller extends HttpServlet {
 		List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
 		List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
 		List<User> listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, false);
-		HashMap<User, String> hashMap = new HashMap<User, String>();
+		LinkedHashMap<User, String> linkedHashMap = new LinkedHashMap<User, String>();
 		for (User follower : listFollower) {
-			hashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
+			linkedHashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
 		}
 		request.setAttribute("listFollowing", listFollowing);
 		request.setAttribute("listFollower", listFollower);
 		request.setAttribute("listPost", listPost);
-		request.setAttribute("hashMap", hashMap);
+		request.setAttribute("linkedHashMap", linkedHashMap);
 		HttpSession session = request.getSession();
 		User user = User_BO.getInstance().getUserById(userId);
 		session.setAttribute("user", user);

@@ -27,7 +27,7 @@
 	<div class="top-page">
 		<div class="box-top">
 			<div class="name-app">
-				<a href="User_Controller?type=homePage" target="top-main">Suger
+				<a href="User_Controller?type=homePage" target="top-main">Sugar
 					App</a>
 			</div>
 			<div class="search">
