@@ -21,8 +21,8 @@
 	User anotherUser = (User) request.getAttribute("anotherUser");
 	boolean isFollowed = (boolean) request.getAttribute("isFollowed");
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
-	HashMap<User, Boolean> hashMapListFollowing = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollowing");
-	HashMap<User, Boolean> hashMapListFollower = (HashMap<User, Boolean>) request.getAttribute("hashMapListFollower");
+	HashMap<User, Integer> hashMapListFollowing = (HashMap<User, Integer>) request.getAttribute("hashMapListFollowing");
+	HashMap<User, Integer> hashMapListFollower = (HashMap<User, Integer>) request.getAttribute("hashMapListFollower");
 	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	%>
 	<div class="top-page">
@@ -200,8 +200,8 @@
 			String typeUserFollowing;
 			for (User userFollowing : hashMapListFollowing.keySet()) {
 				String nameUserFollowing = userFollowing.getLast_name() + " " + userFollowing.getFirst_name();
-				// hashMap.get(user) == true: user is following target
-				typeUserFollowing = hashMapListFollowing.get(userFollowing) ? "unfollow" : "follow";
+				// hashMap.get(user) == 1: user is following target
+				typeUserFollowing = (hashMapListFollowing.get(userFollowing) == 1) ? "unfollow" : "follow";
 			%>
 			<form
 				action="Follow_Controller?type=<%=typeUserFollowing%>&pageFollow=anotherProfilePage&targetId=<%=userFollowing.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"
@@ -257,7 +257,7 @@
 			String typeUserFollower;
 			for (User userFollower : hashMapListFollower.keySet()) {
 				String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
-				typeUserFollower = hashMapListFollower.get(userFollower) ? "unfollow" : "follow";
+				typeUserFollower = (hashMapListFollower.get(userFollower) == 1) ? "unfollow" : "follow";
 			%>
 			<form
 				action="Follow_Controller?type=<%=typeUserFollower%>&pageFollow=anotherProfilePage&targetId=<%=userFollower.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"

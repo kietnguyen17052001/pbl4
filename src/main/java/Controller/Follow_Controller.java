@@ -87,8 +87,8 @@ public class Follow_Controller extends HttpServlet {
 					listPost = Post_Photo_BO.getInstance().listPost(anotherUserId);
 					listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(anotherUserId, true);
 					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(anotherUserId, false);
-					HashMap<User, Boolean> hashMapListFollowingOfAnotherUser = hashMap(listFollowing, userId, false);
-					HashMap<User, Boolean> hashMapListFollowerOfAnotherUser = hashMap(listFollower, userId, false);
+					HashMap<User, Integer> hashMapListFollowingOfAnotherUser = hashMap(listFollowing, userId);
+					HashMap<User, Integer> hashMapListFollowerOfAnotherUser = hashMap(listFollower, userId);
 					boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
 																									// following
 					request.setAttribute("anotherUser", anotherUser);
@@ -136,19 +136,16 @@ public class Follow_Controller extends HttpServlet {
 
 	// hashMap get user following and user not following in form list user following
 	// and form list user follower
-	public HashMap<User, Boolean> hashMap(List<User> listUser, int userId, boolean isProfilePage) throws Exception {
-		HashMap<User, Boolean> hashMap = new HashMap<User, Boolean>();
+	public HashMap<User, Integer> hashMap(List<User> listUser, int userId) throws Exception {
+		HashMap<User, Integer> hashMap = new HashMap<User, Integer>();
 		for (User u : listUser) {
-			// remove user has id == userId
-			if (isProfilePage) {
-				if (u.getUser_id() == userId) {
-					listUser.remove(u);
-				}
+			if (u.getUser_id() == userId) {
+				hashMap.put(u, 3); // is user
 			}
 			if (Follow_BO.getInstance().isFollowed(userId, u.getUser_id())) {
-				hashMap.put(u, true); // user is following target
+				hashMap.put(u, 1); // user is following target
 			} else {
-				hashMap.put(u, false); // user isn't following target
+				hashMap.put(u, 0); // user isn't following target
 			}
 		}
 		return hashMap;

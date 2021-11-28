@@ -28,7 +28,8 @@ public class Follow_DAO {
 	public List<User> listFollowingOrFollowerInProfile(int userId, boolean isFollowing) throws Exception {
 		List<User> listUser = new ArrayList<User>();
 		User user = null;
-		String query = isFollowing ? "Select targetId from Follow where userId = ?"
+		String query = isFollowing
+				? "Select Follow.targetId from Follow inner join Users on Follow.targetId = Users.userId where Follow.userId = ? order by Users.userStatus DESC"
 				: "Select userId, followId from Follow where targetId = ? order by followId DESC";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);

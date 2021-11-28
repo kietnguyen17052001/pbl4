@@ -181,6 +181,23 @@ a {
 	text-align: center;
 }
 
+.main-page .box-main-home-page .box-main-home-page-left .list-user-following .user-following div:first-child
+	{
+	position: relative;
+}
+
+.main-page .box-main-home-page .box-main-home-page-left .list-user-following .user-following div:first-child div
+	{
+	position: absolute;
+	top: 75%;
+	left: 65%;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: green;
+	width: 10px;
+}
+
 .main-page .box-main-home-page .box-main-home-page-left .list-user-following .user-following div:last-child a
 	{
 	font-size: 0.8rem;
@@ -427,8 +444,9 @@ a {
 	border: 2px solid #eb4d4b;
 	border-radius: 10px;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
+	padding: 7px;
 }
 
 .main-page-search-user-avatar, .main-page-search-user-follow {
@@ -452,7 +470,8 @@ a {
 }
 
 .main-page-search-user div:last-child input {
-	width: 100px;
+	width: 100%;
+	max-width: 100%;
 }
 /* end */
 .left-main-page-edit-profile, .left-main-page-change-password {

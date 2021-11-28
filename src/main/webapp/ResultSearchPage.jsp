@@ -17,7 +17,7 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
-	HashMap<User, Boolean> hashMapListSearch = (HashMap<User, Boolean>) request.getAttribute("hashMapp");
+	HashMap<User, Integer> hashMapListSearch = (HashMap<User, Integer>) request.getAttribute("hashMap");
 	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	%>
 	<div class="top-page">
@@ -51,30 +51,53 @@
 	<div class="main-page-search">
 		<%
 		String type;
+		int index; // 1: type = unfollow, 0: type = follow, 3: you
 		for (User another : hashMapListSearch.keySet()) {
 			String name = another.getFull_name();
-			// hashMap.get(user) == true: user is following target
-			type = hashMapListSearch.get(another) ? "unfollow" : "follow";
+			index = hashMapListSearch.get(another);
+			System.out.println(index);
+			if (index == 1) {
+				type = "unfollow";
+			} else if (index == 0) {
+				type = "follow";
+			} else {
+				type = "you";
+			}
 		%>
 		<form
 			action="Follow_Controller?type=<%=type%>&pageFollow=profilePage&targetId=<%=another.getUser_id()%>"
 			method="post">
 			<div class="main-page-search-user">
+				<%
+				String link;
+				if (type.equals("you")) {
+					link = "User_Controller?type=profilePage";
+				} else {
+					link = "User_Controller?type=anotherProfilePage&anotherUserId=" + another.getUser_id();
+				}
+				%>
 				<div class="main-page-search-user-avatar">
-					<a
-						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=another.getUser_id()%>"><img
-						src="image/<%=another.getPhoto()%>" alt="avatar" width="70"
-						height="70"></a>
+					<a href="<%=link%>"><img src="image/<%=another.getPhoto()%>"
+						alt="avatar" width="70" height="70"></a>
 				</div>
 				<div class="main-page-search-user-information">
 					<ul>
-						<li><a
-							href="User_Controller?type=anotherProfilePage&anotherUserId=<%=another.getUser_id()%>"><strong><%=name%></strong></a></li>
+						<li><a href="<%=link%>"><strong><%=name%></strong></a></li>
 					</ul>
 				</div>
+				<%
+				if (!type.equals("you")) {
+				%>
 				<div class="main-page-search-user-<%=type%>">
 					<input type="submit" value=<%=type%>>
 				</div>
+				<%
+				} else {
+				%>
+				<div></div>
+				<%
+				}
+				%>
 			</div>
 		</form>
 		<%

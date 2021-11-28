@@ -70,7 +70,14 @@
 								<a
 									href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollowing.getUser_id()%>"><img
 									src="image/<%=userFollowing.getPhoto()%>" alt="avatar"
-									width="50" height="50"></a>
+									width="50" height="50"> </a>
+								<%
+								if (userFollowing.getUser_status().equals("online")) {
+								%>
+								<div class="status"></div>
+								<%
+								}
+								%>
 							</div>
 							<div>
 								<a

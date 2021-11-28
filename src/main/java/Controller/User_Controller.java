@@ -5,6 +5,7 @@ import java.lang.ProcessBuilder.Redirect;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
+import java.net.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -63,6 +64,11 @@ public class User_Controller extends HttpServlet {
 			try {
 				if (User_BO.getInstance().isExistUser(username, password)) {
 					user = User_BO.getInstance().getUser(username, password);
+//					Socket socket = new Socket("localhost", 6969);
+//					DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+//					String msg = "name-" + user.getFull_name() + ", id-" + user.getUser_id();
+//					dos.writeUTF(msg);
+//					socket.close();
 					// create and push user up session
 					session.setAttribute("user", user);
 					userId = user.getUser_id();
@@ -133,14 +139,14 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "search":
-			String contentSearch = request.getParameter("contentSearch");
+			String contentSearch = request.getParameter("contentSearch").trim();
 			user = (User) session.getAttribute("user");
 			userId = user.getUser_id();
 			try {
 				List<User> listUser = Another_BO.getInstance().listUserSearch(contentSearch);
-				HashMap<User, Boolean> hashMap = hashMap(listUser, userId, true);
+				HashMap<User, Integer> hashMap = hashMap(listUser, userId);
 				sendDataListFollowerHistory(request, response, userId);
-				request.setAttribute("hashMapp", hashMap);
+				request.setAttribute("hashMap", hashMap);
 				getServletContext().getRequestDispatcher("/ResultSearchPage.jsp").forward(request, response);
 			} catch (Exception e) {
 				try {
@@ -149,6 +155,7 @@ public class User_Controller extends HttpServlet {
 					System.out.println(e1.getMessage());
 				}
 			}
+			break;
 		case "changePassword": // change password
 			String subType = request.getParameter("subType");
 			String oldPassword = request.getParameter("oldpassword");
@@ -221,10 +228,8 @@ public class User_Controller extends HttpServlet {
 						.listFollowingOrFollowerInProfile(anotherUserId, true);
 				List<User> listFollowerOfAnotherUser = Follow_BO.getInstance()
 						.listFollowingOrFollowerInProfile(anotherUserId, false);
-				HashMap<User, Boolean> hashMapListFollowingOfAnotherUser = hashMap(listFollowingOfAnotherUser, userId,
-						false);
-				HashMap<User, Boolean> hashMapListFollowerOfAnotherUser = hashMap(listFollowerOfAnotherUser, userId,
-						false);
+				HashMap<User, Integer> hashMapListFollowingOfAnotherUser = hashMap(listFollowingOfAnotherUser, userId);
+				HashMap<User, Integer> hashMapListFollowerOfAnotherUser = hashMap(listFollowerOfAnotherUser, userId);
 				boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
 																								// following anotherUser
 				sendDataListFollowerHistory(request, response, userId);
@@ -316,14 +321,14 @@ public class User_Controller extends HttpServlet {
 
 	// create new user
 	public void createUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String username = request.getParameter("username");
-		String firstname = request.getParameter("firstname");
-		String lastname = request.getParameter("lastname");
+		String username = request.getParameter("username").trim();
+		String firstname = request.getParameter("firstname").trim();
+		String lastname = request.getParameter("lastname").trim();
 		String fullname = lastname + " " + firstname;
 		int gender = Integer.parseInt(request.getParameter("gender"));
-		String email = request.getParameter("email");
-		String phone = request.getParameter("phone");
-		String password = request.getParameter("password");
+		String email = request.getParameter("email").trim();
+		String phone = request.getParameter("phone").trim();
+		String password = request.getParameter("password").trim();
 		String birthday = request.getParameter("day") + "/" + request.getParameter("month") + "/"
 				+ request.getParameter("year");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -350,18 +355,18 @@ public class User_Controller extends HttpServlet {
 
 	// edit user
 	public void editUser(HttpServletRequest request, HttpServletResponse response, User user) throws Exception {
-		String lastName = request.getParameter("lastname");
-		String firstName = request.getParameter("firstname");
+		String lastName = request.getParameter("lastname").trim();
+		String firstName = request.getParameter("firstname").trim();
 		String fullName = lastName + " " + firstName;
 		int gender = Integer.parseInt(request.getParameter("gender"));
-		String email = request.getParameter("email");
-		String phone = request.getParameter("phone");
-		String city = request.getParameter("city");
-		String about = request.getParameter("about");
-		String job = request.getParameter("job");
-		String company = request.getParameter("company");
-		String facebook = request.getParameter("facebook");
-		String instagram = request.getParameter("instagram");
+		String email = request.getParameter("email").trim();
+		String phone = request.getParameter("phone").trim();
+		String city = request.getParameter("city").trim();
+		String about = request.getParameter("about").trim();
+		String job = request.getParameter("job").trim();
+		String company = request.getParameter("company").trim();
+		String facebook = request.getParameter("facebook").trim();
+		String instagram = request.getParameter("instagram").trim();
 		Object updateDate = new Date();
 		user.setLast_name(lastName);
 		user.setFirst_name(firstName);
@@ -420,19 +425,17 @@ public class User_Controller extends HttpServlet {
 
 	// hashMap get user following and user not following in form list user following
 	// and form list user follower
-	public HashMap<User, Boolean> hashMap(List<User> listUser, int userId, boolean isProfilePage) throws Exception {
-		HashMap<User, Boolean> hashMap = new HashMap<User, Boolean>();
+	public HashMap<User, Integer> hashMap(List<User> listUser, int userId) throws Exception {
+		HashMap<User, Integer> hashMap = new HashMap<User, Integer>();
 		for (User u : listUser) {
-			// remove user has id == userId
-			if (isProfilePage) {
-				if (u.getUser_id() == userId) {
-					listUser.remove(u);
-				}
+			if (u.getUser_id() == userId) {
+				hashMap.put(u, 3); // is user
+				continue;
 			}
 			if (Follow_BO.getInstance().isFollowed(userId, u.getUser_id())) {
-				hashMap.put(u, true); // user is following target
+				hashMap.put(u, 1); // user is following target
 			} else {
-				hashMap.put(u, false); // user isn't following target
+				hashMap.put(u, 0); // user isn't following target
 			}
 		}
 		return hashMap;
