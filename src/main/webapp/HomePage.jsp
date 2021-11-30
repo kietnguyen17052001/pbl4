@@ -106,6 +106,13 @@
 										<img src="image/<%=value.getPhoto()%>" alt="avatar-user"
 										width="45" height="45">
 									</a>
+									<%
+									if (value.getUser_status().equals("online")) {
+									%>
+									<div class="status"></div>
+									<%
+									}
+									%>
 								</div>
 								<div class="name-user">
 									<a

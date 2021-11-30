@@ -58,6 +58,13 @@
 				<div class="left">
 					<img class="avatar" alt="Avatar"
 						src="image/<%=anotherUser.getPhoto()%>">
+					<%
+					if (isFollowed && anotherUser.getUser_status().equals("online")) {
+					%>
+					<div class="status"></div>
+					<%
+					}
+					%>
 				</div>
 				<div class="right">
 					<table>

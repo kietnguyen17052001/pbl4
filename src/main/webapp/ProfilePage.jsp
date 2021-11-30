@@ -56,6 +56,7 @@
 			<div class="user">
 				<div class="left">
 					<img class="avatar" alt="Avatar" src="image/<%=user.getPhoto()%>">
+					<div class="status"></div>
 				</div>
 				<div class="right">
 					<table>

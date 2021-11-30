@@ -1,13 +1,9 @@
 package Controller;
 
 import java.io.*;
-import java.lang.ProcessBuilder.Redirect;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
-import java.net.*;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -246,6 +242,11 @@ public class User_Controller extends HttpServlet {
 		case "profilePage":
 			user = (User) session.getAttribute("user");
 			userId = user.getUser_id();
+			try {
+				user = User_BO.getInstance().getUserById(userId);
+			} catch (Exception e) {
+			}
+			session.setAttribute("user", user);
 			try {
 				List<Post_Photo> listPost = Post_Photo_BO.getInstance().listPost(userId);
 				List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
