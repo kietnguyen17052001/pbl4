@@ -18,7 +18,8 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	User anotherUser = null;
-	List<User> listUserFollowing = (List<User>) request.getAttribute("listUserFollowing");
+	LinkedHashMap<User, Boolean> listUserFollowing = (LinkedHashMap<User, Boolean>) request
+			.getAttribute("listUserFollowing");
 	List<User> listTopExplore = (List<User>) request.getAttribute("listTopExplore");
 	LinkedHashMap<Post_Photo, User> hashMapPostPhoto_User = (LinkedHashMap<Post_Photo, User>) request
 			.getAttribute("linkedHashMapPost");
@@ -61,7 +62,7 @@
 					%>
 					<div class="list-user-following">
 						<%
-						for (User userFollowing : listUserFollowing) {
+						for (User userFollowing : listUserFollowing.keySet()) {
 							String name = (userFollowing.getFull_name().length() >= 10) ? userFollowing.getFull_name().substring(0, 9) + "..."
 							: userFollowing.getFull_name();
 						%>
@@ -72,7 +73,7 @@
 									src="image/<%=userFollowing.getPhoto()%>" alt="avatar"
 									width="50" height="50"> </a>
 								<%
-								if (userFollowing.getUser_status().equals("online")) {
+								if (listUserFollowing.get(userFollowing) && userFollowing.getUser_status().equals("online")) {
 								%>
 								<div class="status"></div>
 								<%
@@ -106,13 +107,6 @@
 										<img src="image/<%=value.getPhoto()%>" alt="avatar-user"
 										width="45" height="45">
 									</a>
-									<%
-									if (value.getUser_status().equals("online")) {
-									%>
-									<div class="status"></div>
-									<%
-									}
-									%>
 								</div>
 								<div class="name-user">
 									<a

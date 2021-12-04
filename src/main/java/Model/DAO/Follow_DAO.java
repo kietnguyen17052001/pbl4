@@ -42,6 +42,19 @@ public class Follow_DAO {
 		return listUser;
 	}
 
+	// LinkedHashMap<K,V>: list following in homepage
+	public LinkedHashMap<User, Boolean> listFollowing(int userId) throws Exception {
+		LinkedHashMap<User, Boolean> linkedHashMap = new LinkedHashMap<User, Boolean>();
+		for (User user : listFollowingOrFollowerInProfile(userId, true)) {
+			if (isFollowed(user.getUser_id(), userId)) { // check follow each other
+				linkedHashMap.put(user, true);
+			} else {
+				linkedHashMap.put(user, false);
+			}
+		}
+		return linkedHashMap;
+	}
+
 	// check is followed?
 	public boolean isFollowed(int userId, int targetId) throws Exception {
 		String query = "Select * from Follow where userId = ? and targetId = ?";

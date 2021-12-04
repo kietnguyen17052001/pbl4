@@ -22,8 +22,8 @@ public class Another_BO {
 	}
 
 	// get list user when search
-	public List<User> listUserSearch(String contentSearch) throws Exception {
-		return Another_DAO.getInstance().listUserSearch(contentSearch);
+	public LinkedHashMap<User, String> listUserSearch(int userId, String contentSearch) throws Exception {
+		return Another_DAO.getInstance().listUserSearch(userId, contentSearch);
 	}
 
 	// get list top 5 explore

@@ -19,6 +19,7 @@
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
 	User anotherUser = (User) request.getAttribute("anotherUser");
+	boolean isFollowing = (boolean) request.getAttribute("isFollowing");
 	boolean isFollowed = (boolean) request.getAttribute("isFollowed");
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	HashMap<User, Integer> hashMapListFollowing = (HashMap<User, Integer>) request.getAttribute("hashMapListFollowing");
@@ -59,7 +60,7 @@
 					<img class="avatar" alt="Avatar"
 						src="image/<%=anotherUser.getPhoto()%>">
 					<%
-					if (isFollowed && anotherUser.getUser_status().equals("online")) {
+					if (isFollowing && isFollowed && anotherUser.getUser_status().equals("online")) { // follow each other and another's status is online
 					%>
 					<div class="status"></div>
 					<%
@@ -72,7 +73,7 @@
 							<td class="name-user"><%=anotherUser.getFull_name()%></td>
 							<td>
 								<%
-								if (isFollowed) {
+								if (isFollowing) { // user is following another
 								%>
 								<form action="User_Controller?type=messagePage" method="post">
 									<input class="message-another" type="submit" value="Message">
@@ -89,7 +90,7 @@
 							</td>
 							<td>
 								<%
-								if (isFollowed) {
+								if (isFollowing) {
 								%>
 								<form
 									action="Follow_Controller?type=unfollow&pageFollow=anotherProfilePage&targetId=<%=anotherUser.getUser_id()%>&anotherUserId=<%=anotherUser.getUser_id()%>"

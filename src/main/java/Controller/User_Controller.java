@@ -2,8 +2,8 @@ package Controller;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.*;
+import java.net.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -139,10 +139,11 @@ public class User_Controller extends HttpServlet {
 			user = (User) session.getAttribute("user");
 			userId = user.getUser_id();
 			try {
-				List<User> listUser = Another_BO.getInstance().listUserSearch(contentSearch);
-				HashMap<User, Integer> hashMap = hashMap(listUser, userId);
+				LinkedHashMap<User, String> listUserSearch = Another_BO.getInstance().listUserSearch(userId,
+						contentSearch);
 				sendDataListFollowerHistory(request, response, userId);
-				request.setAttribute("hashMap", hashMap);
+				request.setAttribute("contentSearch", contentSearch);
+				request.setAttribute("listUserSearch", listUserSearch);
 				getServletContext().getRequestDispatcher("/ResultSearchPage.jsp").forward(request, response);
 			} catch (Exception e) {
 				try {
@@ -226,10 +227,13 @@ public class User_Controller extends HttpServlet {
 						.listFollowingOrFollowerInProfile(anotherUserId, false);
 				HashMap<User, Integer> hashMapListFollowingOfAnotherUser = hashMap(listFollowingOfAnotherUser, userId);
 				HashMap<User, Integer> hashMapListFollowerOfAnotherUser = hashMap(listFollowerOfAnotherUser, userId);
-				boolean isFollowed = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
-																								// following anotherUser
+				boolean isFollowing = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
+																									// following another
+				boolean isFollowed = Follow_BO.getInstance().isFollowed(anotherUserId, userId); // check another is
+																								// following user
 				sendDataListFollowerHistory(request, response, userId);
 				request.setAttribute("anotherUser", anotherUser);
+				request.setAttribute("isFollowing", isFollowing);
 				request.setAttribute("isFollowed", isFollowed);
 				request.setAttribute("listPost", listPostOfAnotherUser);
 				request.setAttribute("hashMapListFollowing", hashMapListFollowingOfAnotherUser);
@@ -392,7 +396,8 @@ public class User_Controller extends HttpServlet {
 		// hashMap: list post photo and user when direct to home page
 		LinkedHashMap<Post_Photo, User> linkedHashMapPost = Another_BO.getInstance().listPostPhotoOfFollowing(userId);
 		request.setAttribute("linkedHashMapPost", linkedHashMapPost);
-		List<User> listUserFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(userId, true);
+		// LinkedHashMap: follow each other(user and another)
+		LinkedHashMap<User, Boolean> listUserFollowing = Follow_BO.getInstance().listFollowing(userId);
 		request.setAttribute("listUserFollowing", listUserFollowing);
 		// list top explore
 		List<User> listTopExplore = Another_BO.getInstance().listTopExplore(userId);

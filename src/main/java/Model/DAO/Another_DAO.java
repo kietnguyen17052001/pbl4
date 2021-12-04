@@ -80,7 +80,7 @@ public class Another_DAO {
 				s = "";
 				for (User following : listFollowing) {
 					if (Follow_DAO.getInstance().isFollowed(following.getUser_id(), another.getUser_id())) {
-						s = following.getLast_name() + " " + following.getFirst_name();
+						s = following.getFull_name();
 						count++;
 					}
 				}
@@ -98,21 +98,58 @@ public class Another_DAO {
 	}
 
 	// get list user when search
-	public List<User> listUserSearch(String contentSearch) throws Exception {
+	public LinkedHashMap<User, String> listUserSearch(int userId, String contentSearch) throws Exception {
+		LinkedHashMap<User, String> linkedHashMap = new LinkedHashMap<User, String>();
+		// list user search
 		List<User> listUser = new ArrayList<User>();
+		// list user following
+		List<User> listFollowing = Follow_DAO.getInstance().listFollowingOrFollowerInProfile(userId, true);
 		User user = null;
-		int userId;
+		int anotherId;
 		String query = querySelect + " where fullName like ?";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, "%" + contentSearch + "%");
 		rs = ps.executeQuery();
 		while (rs.next()) {
-			userId = rs.getInt("userId");
-			user = User_DAO.getInstance().getUserById(userId);
+			anotherId = rs.getInt("userId");
+			user = User_DAO.getInstance().getUserById(anotherId);
 			listUser.add(user);
 		}
-		return listUser;
+		StringBuffer status_suggestion;
+		int count;
+		String followingFullName = "";
+		for (User another : listUser) {
+			status_suggestion = new StringBuffer();
+			if (userId == another.getUser_id()) {
+				status_suggestion.append("3,You");
+				linkedHashMap.put(another, status_suggestion.toString());
+				continue;
+			} else if (Follow_DAO.getInstance().isFollowed(userId, another.getUser_id())) {
+				status_suggestion.append("1"); // following
+			} else if (!Follow_DAO.getInstance().isFollowed(userId, another.getUser_id())) {
+				status_suggestion.append("0"); // not folowwing
+			}
+			if (Follow_DAO.getInstance().isFollowed(another.getUser_id(), userId)) {
+				status_suggestion.append(",Follow you");
+			}
+			count = 0;
+			// suggestion number of followings is follow another
+			for (User following : listFollowing) {
+				if (Follow_DAO.getInstance().isFollowed(following.getUser_id(), another.getUser_id())) {
+					count++;
+					followingFullName = following.getFull_name();
+				}
+			}
+			if (count == 1) {
+				status_suggestion.append(",Have " + followingFullName + " follow");
+			} else if (count >= 2) {
+				count--;
+				status_suggestion.append(",Have " + followingFullName + " and " + count + " more followers");
+			}
+			linkedHashMap.put(another, status_suggestion.toString());
+		}
+		return linkedHashMap;
 	}
 
 	// get list post photo of user's following

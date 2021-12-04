@@ -17,7 +17,8 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
-	HashMap<User, Integer> hashMapListSearch = (HashMap<User, Integer>) request.getAttribute("hashMap");
+	String contentSearch = (String) request.getAttribute("contentSearch");
+	LinkedHashMap<User, String> listUserSearch = (LinkedHashMap<User, String>) request.getAttribute("listUserSearch");
 	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	%>
 	<div class="top-page">
@@ -27,8 +28,9 @@
 			</div>
 			<div class="search">
 				<form action="User_Controller?type=search" method="post">
-					<input type="text" placeholder="Search" name="contentSearch">
-					<input type="submit" value="Search">
+					<input type="text" placeholder="Search" name="contentSearch"
+						value="<%=contentSearch%>"> <input type="submit"
+						value="Search">
 				</form>
 			</div>
 			<div class="form-list-user"></div>
@@ -52,9 +54,10 @@
 		<%
 		String type;
 		int index; // 1: type = unfollow, 0: type = follow, 3: you
-		for (User another : hashMapListSearch.keySet()) {
+		for (User another : listUserSearch.keySet()) {
+			String[] split = listUserSearch.get(another).split(",");
 			String name = another.getFull_name();
-			index = hashMapListSearch.get(another);
+			index = Integer.parseInt(split[0]); // get status
 			System.out.println(index);
 			if (index == 1) {
 				type = "unfollow";
@@ -83,6 +86,21 @@
 				<div class="main-page-search-user-information">
 					<ul>
 						<li><a href="<%=link%>"><strong><%=name%></strong></a></li>
+						<%
+						if (split.length > 1) {
+							StringBuffer sb = new StringBuffer();
+							for (int i = 1; i < split.length; i++) {
+								if (i == 2) {
+							sb.append("- " + split[i]);
+							break;
+								}
+								sb.append(split[i] + " ");
+							}
+						%>
+						<li style="color: silver"><%=sb.toString()%></li>
+						<%
+						}
+						%>
 					</ul>
 				</div>
 				<%

@@ -1,5 +1,6 @@
 package Model.BO;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import Model.BEAN.User;
@@ -21,6 +22,11 @@ public class Follow_BO {
 	// list following, follower
 	public List<User> listFollowingOrFollowerInProfile(int userId, boolean isFollowing) throws Exception {
 		return Follow_DAO.getInstance().listFollowingOrFollowerInProfile(userId, isFollowing);
+	}
+
+	// list following in homepage
+	public LinkedHashMap<User, Boolean> listFollowing(int userId) throws Exception {
+		return Follow_DAO.getInstance().listFollowing(userId);
 	}
 
 	// check is followed?
