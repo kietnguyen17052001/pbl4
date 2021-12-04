@@ -24,6 +24,7 @@
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	HashMap<User, Integer> hashMapListFollowing = (HashMap<User, Integer>) request.getAttribute("hashMapListFollowing");
 	HashMap<User, Integer> hashMapListFollower = (HashMap<User, Integer>) request.getAttribute("hashMapListFollower");
+	String followingOfAnother = (String) request.getAttribute("followingOfAnother");
 	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	%>
 	<div class="top-page">
@@ -140,6 +141,15 @@
 						<p>
 							<strong>Instagram: </strong><a
 								href="<%=anotherUser.getInstagram()%>"><%=anotherUser.getInstagram()%></a>
+						</p>
+						<%
+						}
+						%>
+						<%
+						if (followingOfAnother != "") {
+						%>
+						<p>
+							<%=followingOfAnother%>
 						</p>
 						<%
 						}

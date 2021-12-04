@@ -84,6 +84,7 @@ public class Follow_Controller extends HttpServlet {
 				if (pageFollow.equals("anotherProfilePage")) {
 					int anotherUserId = Integer.parseInt(request.getParameter("anotherUserId"));
 					User anotherUser = User_BO.getInstance().getUserById(anotherUserId);
+
 					listPost = Post_Photo_BO.getInstance().listPost(anotherUserId);
 					listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(anotherUserId, true);
 					listFollower = Follow_BO.getInstance().listFollowingOrFollowerInProfile(anotherUserId, false);
@@ -93,9 +94,11 @@ public class Follow_Controller extends HttpServlet {
 																										// following
 					boolean isFollowed = Follow_BO.getInstance().isFollowed(anotherUserId, userId); // check another is
 																									// following user
+					String followingOfAnother = Another_BO.getInstance().followingOfAnother(userId, anotherUserId);
 					request.setAttribute("anotherUser", anotherUser);
 					request.setAttribute("isFollowing", isFollowing);
 					request.setAttribute("isFollowed", isFollowed);
+					request.setAttribute("followingOfAnother", followingOfAnother);
 					request.setAttribute("listPost", listPost);
 					request.setAttribute("hashMapListFollowing", hashMapListFollowingOfAnotherUser);
 					request.setAttribute("hashMapListFollower", hashMapListFollowerOfAnotherUser);

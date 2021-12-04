@@ -26,6 +26,11 @@ public class Another_BO {
 		return Another_DAO.getInstance().listUserSearch(userId, contentSearch);
 	}
 
+	// get list following of another in another profile
+	public String followingOfAnother(int userId, int anotherId) throws Exception {
+		return Another_DAO.getInstance().followingOfAnother(userId, anotherId);
+	}
+
 	// get list top 5 explore
 	public List<User> listTopExplore(int userId) throws Exception {
 		return Another_DAO.getInstance().listTopExplore(userId);

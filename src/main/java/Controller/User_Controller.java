@@ -232,9 +232,11 @@ public class User_Controller extends HttpServlet {
 				boolean isFollowed = Follow_BO.getInstance().isFollowed(anotherUserId, userId); // check another is
 																								// following user
 				sendDataListFollowerHistory(request, response, userId);
+				String followingOfAnother = Another_BO.getInstance().followingOfAnother(userId, anotherUserId);
 				request.setAttribute("anotherUser", anotherUser);
 				request.setAttribute("isFollowing", isFollowing);
 				request.setAttribute("isFollowed", isFollowed);
+				request.setAttribute("followingOfAnother", followingOfAnother);
 				request.setAttribute("listPost", listPostOfAnotherUser);
 				request.setAttribute("hashMapListFollowing", hashMapListFollowingOfAnotherUser);
 				request.setAttribute("hashMapListFollower", hashMapListFollowerOfAnotherUser);

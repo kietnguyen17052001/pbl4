@@ -152,6 +152,33 @@ public class Another_DAO {
 		return linkedHashMap;
 	}
 
+	// get list following of another in another profile
+	public String followingOfAnother(int userId, int anotherId) throws Exception {
+		String s = "";
+		// list user following
+		List<User> listFollowing = Follow_DAO.getInstance().listFollowingOrFollowerInProfile(userId, true);
+		List<User> listUserFollowingAnother = new ArrayList<User>();
+		for (User following : listFollowing) {
+			if (Follow_DAO.getInstance().isFollowed(following.getUser_id(), anotherId)) {
+				listUserFollowingAnother.add(following);
+			}
+		}
+		if (listUserFollowingAnother.size() >= 1) {
+			s += "Have " + listUserFollowingAnother.get(0).getFull_name();
+			if (listUserFollowingAnother.size() == 1) {
+				s += " follow";
+			}
+			if (listUserFollowingAnother.size() == 2) {
+				s += ", " + listUserFollowingAnother.get(1).getFull_name() + " follow";
+			}
+			if (listUserFollowingAnother.size() > 2) {
+				s += ", " + listUserFollowingAnother.get(1).getFull_name() + " and "
+						+ String.valueOf(listUserFollowingAnother.size() - 2) + " more followers";
+			}
+		}
+		return s;
+	}
+
 	// get list post photo of user's following
 	public LinkedHashMap<Post_Photo, User> listPostPhotoOfFollowing(int userId) throws Exception {
 		LinkedHashMap<Post_Photo, User> linkedHashMap = new LinkedHashMap<Post_Photo, User>();
