@@ -12,6 +12,8 @@
 <script type="text/javascript" src="js/Event_With_Form.js"></script>
 <script type="text/javascript" src="js/Login_Registration.js"></script>
 <script type="text/javascript" src="js/Exception.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Sugar App</title>
 </head>
 <body>
@@ -19,6 +21,7 @@
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
 	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
+	int newFollower = (int) request.getAttribute("newFollower");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -39,7 +42,13 @@
 					<li class="message"><a href="User_Controller?type=messagePage"><i
 							class="far fa-comments"></i></a></li>
 					<li class="follow" onclick="openFormListFollowerHistory()"><a><i
-							class="far fa-heart"></i></a></li>
+							class="far fa-heart"></i></a> <%
+ if (newFollower > 0) {
+ %>
+						<div id="id-newFollowerNumber" class="newFollower"><%=newFollower%></div>
+						<%
+						}
+						%></li>
 					<li class="profile"><a href="User_Controller?type=profilePage"><i
 							class="far fa-user"></i></a></li>
 					<li class="profile"><a href="User_Controller?type=logout"><i
@@ -139,10 +148,9 @@
 				</button>
 			</div>
 		</div>
-		<div>
+		<div id="list-follower-history">
 			<%
 			for (User userFollower : hashMapNotification.keySet()) {
-				String nameUserFollower = userFollower.getLast_name() + " " + userFollower.getFirst_name();
 			%>
 			<div class="list-follower">
 				<div class="list-follower-user-avatar">
@@ -152,11 +160,26 @@
 						width="50"></a>
 				</div>
 				<div class="list-follower-history-user-name">
+					<%
+					if (newFollower > 0) {
+					%>
+					<a
+						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>"
+						style="color: #eb4d4b"> <strong><%=userFollower.getFull_name()%></strong>
+						started following you
+					</a>
+					<%
+					newFollower--;
+					} else {
+					%>
 					<a
 						href="User_Controller?type=anotherProfilePage&anotherUserId=<%=userFollower.getUser_id()%>">
 						<strong><%=userFollower.getFull_name()%></strong> started
 						following you
 					</a>
+					<%
+					}
+					%>
 				</div>
 				<div>
 					<%=hashMapNotification.get(userFollower)%>

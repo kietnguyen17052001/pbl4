@@ -22,6 +22,7 @@ import Model.BEAN.User;
 import Model.BO.Follow_BO;
 import Model.BO.Post_Photo_BO;
 import Model.BO.User_BO;
+import Model.DAO.User_DAO;
 
 /**
  * Servlet implementation class Post_Photo_Controller
@@ -124,6 +125,7 @@ public class Post_Photo_Controller extends HttpServlet {
 		request.setAttribute("listFollower", listFollower);
 		request.setAttribute("listPost", listPost);
 		request.setAttribute("linkedHashMap", linkedHashMap);
+		request.setAttribute("newFollower", User_DAO.getInstance().getUserById(userId).getNewFollower());
 		HttpSession session = request.getSession();
 		User user = User_BO.getInstance().getUserById(userId);
 		session.setAttribute("user", user);

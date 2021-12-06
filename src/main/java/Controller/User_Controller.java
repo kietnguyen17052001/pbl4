@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.mysql.cj.Session;
+
 import Model.BEAN.Post_Photo;
 import Model.BEAN.User;
 import Model.BO.Another_BO;
@@ -81,7 +83,6 @@ public class User_Controller extends HttpServlet {
 					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
 			}
 			break;
 		case "forgotPassword":
@@ -214,6 +215,14 @@ public class User_Controller extends HttpServlet {
 				System.out.println(e.getMessage());
 			}
 			break;
+		case "changeNewFollowerNumber":
+			user = (User) session.getAttribute("user");
+			try {
+				User_BO.getInstance().resetNewFollower(user.getUser_id());
+			} catch (Exception e) {
+				System.out.println(e.getMessage() + " line 223");
+			}
+			break;
 		case "anotherProfilePage":
 			user = (User) session.getAttribute("user");
 			userId = user.getUser_id();
@@ -266,6 +275,7 @@ public class User_Controller extends HttpServlet {
 				request.setAttribute("listFollower", listFollowerr);
 				request.setAttribute("listPost", listPost);
 				request.setAttribute("linkedHashMap", linkedHashMap);
+				request.setAttribute("newFollower", User_DAO.getInstance().getUserById(userId).getNewFollower());
 				getServletContext().getRequestDispatcher("/ProfilePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -341,7 +351,7 @@ public class User_Controller extends HttpServlet {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dBirthday = sdf.parse(birthday);
 		User user = new User(1, "user", username, firstname, lastname, fullname, gender, password, email, phone, "",
-				dBirthday, "user.jpg", "", "", "", "", "", "", "offline", 0, 0, 0, new Date(), new Date());
+				dBirthday, "user.jpg", "", "", "", "", "", "", "offline", 0, 0, 0, 0, new Date(), new Date());
 		// call add_user() in User_DAO
 		User_BO.getInstance().addUser(user);
 	}
@@ -418,6 +428,9 @@ public class User_Controller extends HttpServlet {
 			linkedHashMap.put(follower, Follow_BO.getInstance().getDateFollow(follower.getUser_id(), userId));
 		}
 		request.setAttribute("linkedHashMap", linkedHashMap);
+		// get new follower number of user
+		request.setAttribute("newFollower", User_DAO.getInstance().getUserById(userId).getNewFollower());
+		// System.out.println(User_DAO.getInstance().getUserById(userId).getNewFollower());
 	}
 
 	// check exist username or phone or mail

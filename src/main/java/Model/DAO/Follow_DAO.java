@@ -98,7 +98,7 @@ public class Follow_DAO {
 		String query1 = "Select following from Users where userId = ?";
 		String query2 = "Select follower from Users where userId = ?";
 		String query3 = "Update Users set following = ? where userId = ?";
-		String query4 = "Update Users set follower = ? where userId = ?";
+		String query4 = "Update Users set follower = ?, newFollower = ? where userId = ?";
 		conn = new ConnectDB().getConnection();
 		// get following of user and update + 1
 		ps = conn.prepareStatement(query1);
@@ -119,9 +119,23 @@ public class Follow_DAO {
 		ps.setInt(2, userId);
 		ps.executeUpdate();
 		// update target
+		int currentNewFollowerOfTarget = 0;
+		String qr = "Select newFollower from Users where userId = ?";
+		ps = conn.prepareStatement(qr);
+		ps.setInt(1, targetId);
+		rs = ps.executeQuery();
+		rs.next();
+		if (isFollow) {
+			currentNewFollowerOfTarget = rs.getInt(1) + 1;
+		} else {
+			if (rs.getInt(1) > 0) {
+				currentNewFollowerOfTarget = rs.getInt(1) + 1;
+			}
+		}
 		ps = conn.prepareStatement(query4);
 		ps.setInt(1, currentFollowerOfTarget);
-		ps.setInt(2, targetId);
+		ps.setInt(2, currentNewFollowerOfTarget);
+		ps.setInt(3, targetId);
 		ps.executeUpdate();
 	}
 

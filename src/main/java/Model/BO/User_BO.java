@@ -75,4 +75,9 @@ public class User_BO {
 	public User getUserById(int userId) throws Exception {
 		return User_DAO.getInstance().getUserById(userId);
 	}
+
+	// reset new follower
+	public void resetNewFollower(int userId) throws Exception {
+		User_DAO.getInstance().resetNewFollower(userId);
+	}
 }

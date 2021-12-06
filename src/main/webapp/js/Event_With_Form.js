@@ -34,6 +34,18 @@ function closeFormListFollower() {
 // event open-close form list follower history
 function openFormListFollowerHistory() {
 	document.getElementById("form-follow-history").style.display = "block";
+	var newFollowerNumber = document.getElementById("id-newFollowerNumber").innerHTML;
+	console.log(newFollowerNumber);
+	if (newFollowerNumber > 0) {
+		document.getElementById("id-newFollowerNumber").style.display = "none";
+		// ajax
+		$.ajax({
+			url: '/AppPBL4/User_Controller?type=changeNewFollowerNumber',
+			type: 'GET',
+			success: function(response) {
+			}
+		});
+	}
 }
 function closeFormListFollowerHistory() {
 	document.getElementById("form-follow-history").style.display = "none";

@@ -107,6 +107,26 @@ a {
 	margin-left: 15px;
 }
 
+/* new follower */
+.option .follow {
+	position: relative;
+}
+
+.newFollower {
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	background-color: red;
+	border-radius: 50%;
+	color: white;
+	font-size: 0.7rem;
+	text-align: center;
+	top: 0%;
+	left: 60%;
+	top: 0%;
+	text-align: center;
+}
+
 .option ul li a {
 	font-size: 2rem;
 }
@@ -636,7 +656,7 @@ a {
 	margin-top: 10px;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
+	justify-content: flex-start;
 	width: 100%;
 }
 
@@ -828,11 +848,6 @@ a {
 	.form-list-follower .list-follower div:nth-child(3),
 	.form-list-follower-history .list-follower div:nth-child(3) {
 	width: 20%;
-}
-
-.form-list-following .list-following div:nth-child(3) input,
-	.form-list-follower .list-follower div:nth-child(3) input {
-	width: 80%;
 }
 
 .box-main-home-page-right .list-suggestions .name-user a:hover,

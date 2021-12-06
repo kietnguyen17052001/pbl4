@@ -64,7 +64,7 @@ public class User_DAO {
 	// ----- end -----
 	// insert new user
 	public void addUser(User user) throws Exception {
-		String query = "Insert into Users values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String query = "Insert into Users values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		conn = new ConnectDB().getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, user.getUser_type());
@@ -89,8 +89,9 @@ public class User_DAO {
 		ps.setInt(20, user.getPost());
 		ps.setInt(21, user.getFollowing());
 		ps.setInt(22, user.getFollower());
-		ps.setObject(23, user.getRegistered_date());
-		ps.setObject(24, user.getUpdated_date());
+		ps.setInt(23, user.getNewFollower());
+		ps.setObject(24, user.getRegistered_date());
+		ps.setObject(25, user.getUpdated_date());
 		ps.executeUpdate();
 	}
 
@@ -196,7 +197,7 @@ public class User_DAO {
 				rs.getObject("birthday"), rs.getString("photo"), rs.getString("about"), rs.getString("passions"),
 				rs.getString("job"), rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
 				rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
-				rs.getObject("registeredDate"), rs.getObject("updateDate"));
+				rs.getInt("newFollower"), rs.getObject("registeredDate"), rs.getObject("updateDate"));
 		return user;
 	}
 
@@ -214,8 +215,17 @@ public class User_DAO {
 				rs.getObject("birthday"), rs.getString("photo"), rs.getString("about"), rs.getString("passions"),
 				rs.getString("job"), rs.getString("company"), rs.getString("facebook"), rs.getString("instagram"),
 				rs.getString("userStatus"), rs.getInt("post"), rs.getInt("following"), rs.getInt("follower"),
-				rs.getObject("registeredDate"), rs.getObject("updateDate"));
+				rs.getInt("newFollower"), rs.getObject("registeredDate"), rs.getObject("updateDate"));
 		return user;
 	}
 
+	// reset new follower
+	public void resetNewFollower(int userId) throws Exception {
+		String query = "Update Users set newFollower = ? where userId = ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, 0);
+		ps.setInt(2, userId);
+		ps.executeUpdate();
+	}
 }

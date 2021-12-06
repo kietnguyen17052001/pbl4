@@ -24,13 +24,15 @@ public class User {
 	private int post; // so luong bai viet
 	private int following; // so luong nguoi ma ban theo doi
 	private int follower; // so luong nguoi theo doi ban
+	private int newFollower; // so luong nguoi moi theo doi khi chua doc thong bao
 	private Object registered_date;
 	private Object updated_date;
 
 	public User(int user_id, String user_type, String user_name, String first_name, String last_name, String full_name,
 			int gender, String password, String email, String phone, String city, Object birthday, String photo,
 			String about, String passion, String job, String company, String facebook, String instagram,
-			String user_status, int post, int following, int follower, Object registered_date, Object updated_date) {
+			String user_status, int post, int following, int follower, int newFollower, Object registered_date,
+			Object updated_date) {
 		this.user_id = user_id;
 		this.user_type = user_type;
 		this.user_name = user_name;
@@ -54,6 +56,7 @@ public class User {
 		this.post = post;
 		this.following = following;
 		this.follower = follower;
+		this.newFollower = newFollower;
 		this.registered_date = registered_date;
 		this.updated_date = updated_date;
 	}
@@ -224,6 +227,14 @@ public class User {
 
 	public void setFollower(int follower) {
 		this.follower = follower;
+	}
+
+	public int getNewFollower() {
+		return newFollower;
+	}
+
+	public void setNewFollower(int newFollower) {
+		this.newFollower = newFollower;
 	}
 
 	public Object getRegistered_date() {
