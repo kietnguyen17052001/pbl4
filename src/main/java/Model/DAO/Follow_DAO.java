@@ -129,7 +129,7 @@ public class Follow_DAO {
 			currentNewFollowerOfTarget = rs.getInt(1) + 1;
 		} else {
 			if (rs.getInt(1) > 0) {
-				currentNewFollowerOfTarget = rs.getInt(1) + 1;
+				currentNewFollowerOfTarget = rs.getInt(1) - 1;
 			}
 		}
 		ps = conn.prepareStatement(query4);

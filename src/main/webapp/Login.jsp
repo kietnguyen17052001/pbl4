@@ -38,6 +38,7 @@
 							type="submit" value="Log in" onclick="return checkLogin()">
 					</form>
 				</div>
+				<div id="failed" style="text-align: center;"></div>
 				<div class="forgot-password">
 					<a class="forgot-password" href="ForgotPassword.jsp">Forgot
 						password?</a>

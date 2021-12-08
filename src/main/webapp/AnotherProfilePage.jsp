@@ -37,8 +37,9 @@
 			</div>
 			<div class="search">
 				<form action="User_Controller?type=search" method="post">
-					<input type="text" placeholder="Search" name="contentSearch">
-					<input type="submit" value="Search">
+					<input oninput="searchByName(this)" type="text"
+						placeholder="Search" name="contentSearch"> <input
+						id="search-user" type="submit" value="Search">
 				</form>
 			</div>
 			<div class="option">
@@ -226,7 +227,6 @@
 			<%
 			String typeUserFollowing;
 			for (User userFollowing : hashMapListFollowing.keySet()) {
-				String nameUserFollowing = userFollowing.getLast_name() + " " + userFollowing.getFirst_name();
 				// hashMap.get(user) == 1: user is following target
 				typeUserFollowing = (hashMapListFollowing.get(userFollowing) == 1) ? "unfollow" : "follow";
 			%>
@@ -245,7 +245,7 @@
 							height="50" width="50"></a>
 					</div>
 					<div class="list-following-user-name">
-						<a href="<%=href%>"><%=nameUserFollowing%></a>
+						<a href="<%=href%>"><%=userFollowing.getFull_name()%></a>
 					</div>
 					<%
 					if (!isUser) {
@@ -415,6 +415,24 @@
 				<img id="photo" src="" alt="image-post">
 			</div>
 		</div>
+	</div>
+	<div id="form-load-search" class="load-search">
+		<div class="title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			<div>
+				<p>Search</p>
+			</div>
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle" onclick="closeFormLoadSearch()"></i>
+				</button>
+			</div>
+		</div>
+		<div id="load-content-search"></div>
 	</div>
 </body>
 </html>

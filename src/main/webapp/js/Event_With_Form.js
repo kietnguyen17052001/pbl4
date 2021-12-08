@@ -11,9 +11,38 @@ function openFormPostPhotoContent(type, userId, postId, contentPost, linkImage, 
 	document.getElementById("create-date").innerHTML = createDate;
 	document.getElementById("photo").src = "image/" + linkImage;
 	if (type == "user") {
+		// delete post
 		document.getElementById("submit-delete-post").action = "Post_Photo_Controller?type=delete&postId=" + postId + "&userId=" + userId;
+		// id post
+		document.getElementById("id-post").innerHTML = postId;
 	}
 	document.getElementById("form-post-photo-content").style.display = "block";
+}
+// open form edit content post
+function openFormEdit() {
+	document.getElementById("form-edit-content-post").style.display = "block";
+}
+// close form dit content post
+function closeFormEdit() {
+	document.getElementById("form-edit-content-post").style.display = "none";
+}
+// save change edit content
+function saveChangePostContent() {
+	var id = document.getElementById("id-post").textContent;
+	var content = document.getElementById("content-edit").value;
+	document.getElementById("post-photo-content-content").innerHTML = content;
+	document.getElementById("form-edit-content-post").style.display = "none";
+	// ajax
+	$.ajax({
+		url: '/AppPBL4/Post_Photo_Controller?type=edit',
+		type: 'GET',
+		data: {
+			postId: id,
+			newContent: content
+		},
+		success: function(response) {
+		}
+	});
 }
 function closeFormPostPhotoContent() {
 	document.getElementById("form-post-photo-content").style.display = "none";
@@ -35,7 +64,6 @@ function closeFormListFollower() {
 function openFormListFollowerHistory() {
 	document.getElementById("form-follow-history").style.display = "block";
 	var newFollowerNumber = document.getElementById("id-newFollowerNumber").innerHTML;
-	console.log(newFollowerNumber);
 	if (newFollowerNumber > 0) {
 		document.getElementById("id-newFollowerNumber").style.display = "none";
 		// ajax
@@ -49,5 +77,29 @@ function openFormListFollowerHistory() {
 }
 function closeFormListFollowerHistory() {
 	document.getElementById("form-follow-history").style.display = "none";
+}
+
+
+// search
+function openFormLoadSearch() {
+	document.getElementById("form-load-search").style.display = "block";
+}
+function closeFormLoadSearch() {
+	document.getElementById("form-load-search").style.display = "none";
+}
+function searchByName(param) {
+	openFormLoadSearch();
+	var content = param.value;
+	$.ajax({
+		url: '/AppPBL4/User_Controller?type=searchAjax',
+		type: 'GET',
+		data: {
+			contentSearch: content
+		},
+		success: function(data) {
+			var row = document.getElementById("load-content-search");
+			row.innerHTML = data;
+		}
+	});
 }
 

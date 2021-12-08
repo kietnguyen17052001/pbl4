@@ -31,8 +31,9 @@
 			</div>
 			<div class="search">
 				<form action="User_Controller?type=search" method="post">
-					<input type="text" placeholder="Search" name="contentSearch">
-					<input type="submit" value="Search">
+					<input oninput="searchByName(this)" type="text"
+						placeholder="Search" name="contentSearch"> <input
+						id="search-user" type="submit" value="Search">
 				</form>
 			</div>
 			<div class="option">
@@ -189,6 +190,24 @@
 			}
 			%>
 		</div>
+	</div>
+	<div id="form-load-search" class="load-search">
+		<div class="title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			<div>
+				<p>Search</p>
+			</div>
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle" onclick="closeFormLoadSearch()"></i>
+				</button>
+			</div>
+		</div>
+		<div id="load-content-search"></div>
 	</div>
 </body>
 </html>

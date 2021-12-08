@@ -21,6 +21,11 @@ public class Another_BO {
 	private Another_BO() {
 	}
 
+	// list user by name
+	public List<User> listUserByName(String name) throws Exception {
+		return Another_DAO.getInstance().listUserByName(name);
+	}
+
 	// get list user when search
 	public LinkedHashMap<User, String> listUserSearch(int userId, String contentSearch) throws Exception {
 		return Another_DAO.getInstance().listUserSearch(userId, contentSearch);

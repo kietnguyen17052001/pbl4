@@ -21,6 +21,7 @@
 	User user = (User) session.getAttribute("user");
 	int userId = user.getUser_id();
 	String name = user.getFull_name();
+	int postId = 0;
 	List<Post_Photo> listPost = (ArrayList<Post_Photo>) request.getAttribute("listPost");
 	List<User> listFollowing = (ArrayList<User>) request.getAttribute("listFollowing");
 	List<User> listFollower = (ArrayList<User>) request.getAttribute("listFollower");
@@ -34,8 +35,9 @@
 			</div>
 			<div class="search">
 				<form action="User_Controller?type=search" method="post">
-					<input type="text" placeholder="Search" name="contentSearch">
-					<input type="submit" value="Search">
+					<input oninput="searchByName(this)" type="text"
+						placeholder="Search" name="contentSearch"> <input
+						id="search-user" type="submit" value="Search">
 				</form>
 			</div>
 			<div class="option">
@@ -371,23 +373,27 @@
 		</div>
 		<div class="box-post-photo-content">
 			<div class="post-photo-content-user">
-				<div class="avatar">
-					<a href="User_Controller?type=profilePage"> <img
-						src="image/<%=user.getPhoto()%>" alt="avatar-user" width="70"
-						height="70">
-					</a>
+				<div class="left-post-photo-content-user">
+					<div class="avatar">
+						<a href="User_Controller?type=profilePage"> <img
+							src="image/<%=user.getPhoto()%>" alt="avatar-user" width="70"
+							height="70">
+						</a>
+					</div>
+					<div class="name-user">
+						<a href="User_Controller?type=profilePage"><strong><%=name%></strong></a>
+						<p id="create-date"></p>
+					</div>
 				</div>
-				<div class="name-user">
-					<a href="User_Controller?type=profilePage"><strong><%=name%></strong></a>
-					<p id="create-date"></p>
-				</div>
-				<div class="submit-edit-delete">
-					<form id="submit-edit-post" action="" method="post">
-						<input type="submit" value="Edit post">
-					</form>
-					<form id="submit-delete-post" action="" method="post">
-						<input type="submit" value="Delete post">
-					</form>
+				<div class="right-post-photo-content-user">
+					<div>
+						<input type="submit" value="Edit content" onclick="openFormEdit()">
+					</div>
+					<div>
+						<form id="submit-delete-post" action="" method="post">
+							<input type="submit" value="Delete post">
+						</form>
+					</div>
 				</div>
 			</div>
 			<div id="post-photo-content-content"
@@ -396,6 +402,45 @@
 				<img id="photo" src="" alt="image-post">
 			</div>
 		</div>
+	</div>
+	<div id="form-edit-content-post" class="edit-content-post">
+		<div class="title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			Edit content <strong id="id-post" style="display: none"></strong>
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle" onclick="closeFormEdit()"></i>
+				</button>
+			</div>
+		</div>
+		<div class="content">
+			<textarea id="content-edit" rows="5" cols="20"></textarea>
+		</div>
+		<div class="savechange">
+			<button onclick="saveChangePostContent()">Save change</button>
+		</div>
+	</div>
+	<div id="form-load-search" class="load-search">
+		<div class="title">
+			<div>
+				<button type="button">
+					<i class="far fa-question-circle"></i>
+				</button>
+			</div>
+			<div>
+				<p>Search</p>
+			</div>
+			<div>
+				<button type="button">
+					<i class="far fa-times-circle" onclick="closeFormLoadSearch()"></i>
+				</button>
+			</div>
+		</div>
+		<div id="load-content-search"></div>
 	</div>
 </body>
 </html>

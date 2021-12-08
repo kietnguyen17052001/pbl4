@@ -154,6 +154,35 @@ public class User_Controller extends HttpServlet {
 				}
 			}
 			break;
+		case "searchAjax":
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
+			String name = request.getParameter("contentSearch").trim();
+			PrintWriter out = response.getWriter();
+			try {
+				List<User> listUser = Another_BO.getInstance().listUserByName(name);
+				if (name == "" || listUser.size() == 0) {
+					out.println("<div style=\"text-align:center\">No result</div>");
+				} else {
+					String link;
+					for (User u : listUser) {
+						link = (userId == u.getUser_id()) ? "User_Controller?type=profilePage"
+								: "User_Controller?type=anotherProfilePage&anotherUserId=" + u.getUser_id();
+						out.println("<div class=\"box-load-user\">");
+						out.println("<div>");
+						out.println("<a href=\"" + link + "\"><img src=\"image/" + u.getPhoto()
+								+ "\" alt=\"avatar\" width=\"40\" height=\"40\"></a>");
+						out.println("</div>");
+						out.println("<div>");
+						out.println("<a href=\"" + link + "\"><strong>" + u.getFull_name() + "</strong></a>");
+						out.println("</div>");
+						out.println("</div>");
+					}
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			break;
 		case "changePassword": // change password
 			String subType = request.getParameter("subType");
 			String oldPassword = request.getParameter("oldpassword");

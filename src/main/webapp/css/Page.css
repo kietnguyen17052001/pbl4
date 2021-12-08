@@ -677,8 +677,9 @@ a {
 }
 
 /* css for form post photo, form following, form followers in profile */
-.post-photo, .post-photo-content-profile-page, .form-list-following,
-	.form-list-follower, .form-list-follower-history {
+.post-photo, .post-photo-content-profile-page, .edit-content-post,
+	.form-list-following, .form-list-follower, .form-list-follower-history,
+	.load-search {
 	display: none;
 	position: fixed;
 	top: 50%;
@@ -690,6 +691,44 @@ a {
 	border-radius: 10px;
 }
 
+.edit-content-post {
+	width: 320px;
+	height: 200px;
+}
+
+.load-search {
+	top: 32%;
+	left: 47%;
+	width: 350px;
+	height: 300px;
+	width: 350px;
+	z-index: 1;
+}
+/* css for load search */
+.load-search .title {
+	height: 20%;
+}
+
+.load-search .box-load-user {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	column-gap: 20px;
+}
+
+.load-search div:last-child {
+	max-height: 80%;
+	overflow: auto;
+}
+
+.load-search .box-load-user div {
+	padding: 5px;
+}
+
+.load-search .box-load-user div:first-child img {
+	border-radius: 50%;
+}
+/* end */
 /* css for form post photo content */
 .post-photo-content-profile-page {
 	width: 600px;
@@ -722,24 +761,39 @@ a {
 	{
 	display: flex;
 	align-items: center;
-	column-gap: 30px;
 	padding: 5px;
+}
+
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-user .left-post-photo-content-user
+	{
+	width: 65%;
+	display: flex;
+	align-items: center;
+}
+
+.post-photo-content-profile-page .box-post-photo-content .post-photo-content-user .right-post-photo-content-user
+	{
+	width: 35%;
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .post-photo-content-profile-page .box-post-photo-content .post-photo-content-content
 	{
 	padding: 5px;
 }
-
-.post-photo-content-profile-page .box-post-photo-content .post-photo-content-user .submit-edit-delete
-	{
-	display: flex;
-	justify-content: flex-end;
+/* edit content post */
+.edit-content-post .content {
+	width: 90%;
+	margin: 5%;
 }
 
-.post-photo-content-profile-page .box-post-photo-content .post-photo-content-user .submit-edit-delete #submit-edit-post
-	{
-	margin-right: 5px;
+.edit-content-post .content textarea {
+	width: 100%;
+}
+
+.edit-content-post .savechange {
+	margin: 5%;
 }
 
 /* end */
@@ -789,8 +843,9 @@ a {
 }
 
 .post-photo .post-photo-title, .post-photo-content-profile-page .post-photo-content-title,
-	.form-list-following-title, .form-list-follower-title,
-	.form-list-follower-history-title {
+	.edit-content-post .title, .form-list-following-title,
+	.form-list-follower-title, .form-list-follower-history-title,
+	.load-search .title {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -800,8 +855,9 @@ a {
 }
 
 .post-photo .post-photo-title button, .post-photo-content-profile-page .post-photo-content-title button,
-	.form-list-following-title button, .form-list-follower-title button,
-	.form-list-follower-history-title button {
+	.edit-content-post .title button, .form-list-following-title button,
+	.form-list-follower-title button, .form-list-follower-history-title button,
+	.load-search .title button {
 	background-color: white;
 	border: none;
 	font-size: 1.5rem;
@@ -809,8 +865,10 @@ a {
 
 .post-photo .post-photo-title button:hover,
 	.post-photo-content-profile-page .post-photo-content-title button:hover,
-	.form-list-following-title button:hover, .form-list-follower-title button:hover,
-	.form-list-follower-history-title button:hover {
+	.edit-content-post .title button:hover, .form-list-following-title button:hover,
+	.form-list-follower-title button:hover,
+	.form-list-follower-history-title button:hover, .load-search .title button:hover
+	{
 	cursor: pointer;
 }
 
@@ -859,8 +917,8 @@ a {
 .list-following-user-unfollow input, .list-following-user-follow input,
 	.list-follower-user-unfollow input, .list-follower-user-follow input,
 	.list-follower-user-delete input, .box-post-photo-content .post-photo-content-user div:first-child input,
-	.box-post-photo-content .post-photo-content-user .submit-edit-delete input
-	{
+	.box-post-photo-content .post-photo-content-user div:last-child div input,
+	.edit-content-post .savechange button {
 	color: white;
 	border-radius: 3px;
 	padding: 5px;
@@ -868,23 +926,23 @@ a {
 }
 
 .list-following-user-unfollow input, .list-follower-user-unfollow input,
-	.box-post-photo-content .post-photo-content-user .submit-edit-delete #submit-edit-post input
+	.box-post-photo-content .post-photo-content-user div:last-child div:nth-child(1) input
 	{
 	background-color: #3498db;
 	border: 1px solid #3498db;
 }
 
 .list-follower-user-delete input, .list-following-user-follow input,
-	.list-follower-user-follow input, .box-post-photo-content .post-photo-content-user .submit-edit-delete #submit-delete-post input
-	{
+	.list-follower-user-follow input, .box-post-photo-content .post-photo-content-user div:last-child div:nth-child(2) input,
+	.edit-content-post .savechange button {
 	background-color: #eb4d4b;
 	border: 1px solid #eb4d4b;
 }
 
 .list-following-user-unfollow input:hover, .list-following-user-follow input:hover,
 	.list-follower-user-unfollow input:hover, .list-follower-user-follow input:hover,
-	.list-follower-user-delete input:hover, .box-post-photo-content .post-photo-content-user .submit-edit-delete input:hover
-	{
+	.list-follower-user-delete input:hover, .box-post-photo-content .post-photo-content-user div:last-child input:hover,
+	.edit-content-post .savechange button:hover {
 	opacity: 0.9;
 	cursor: pointer;
 }

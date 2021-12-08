@@ -1,12 +1,12 @@
 // check username and password when login
 function checkLogin() {
-	var username = document.formLogin.username.value;
-	var password = document.formLogin.password.value;
-	if (username == "" || password == "") {
-		if (username == "") {
+	var _username = document.getElementById("username").value;
+	var _password = document.getElementById("input-password").value;
+	if (_username == "" || _password == "") {
+		if (_username == "") {
 			document.getElementById("username").style.borderColor = "red";
 		}
-		if (password == "") {
+		if (_password == "") {
 			document.getElementById("input-password").style.borderColor = "red";
 		}
 		return false;

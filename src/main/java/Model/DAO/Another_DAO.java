@@ -97,6 +97,20 @@ public class Another_DAO {
 		return hashMapAnother;
 	}
 
+	// list user by name
+	public List<User> listUserByName(String name) throws Exception {
+		List<User> list = new ArrayList<User>();
+		String query = "Select * from Users where fullName like ?";
+		conn = new ConnectDB().getConnection();
+		ps = conn.prepareStatement(query);
+		ps.setString(1, "%" + name + "%");
+		rs = ps.executeQuery();
+		while (rs.next()) {
+			list.add(User_DAO.getInstance().getUserById(rs.getInt("userId")));
+		}
+		return list;
+	}
+
 	// get list user when search
 	public LinkedHashMap<User, String> listUserSearch(int userId, String contentSearch) throws Exception {
 		LinkedHashMap<User, String> linkedHashMap = new LinkedHashMap<User, String>();

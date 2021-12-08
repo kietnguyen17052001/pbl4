@@ -85,6 +85,12 @@ public class Post_Photo_Controller extends HttpServlet {
 			break;
 		case "edit":
 			postId = Integer.parseInt(request.getParameter("postId"));
+			String newContent = request.getParameter("newContent");
+			try {
+				Post_Photo_BO.getInstance().editPostPhoto(postId, newContent);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 			break;
 		case "delete":
 			postId = Integer.parseInt(request.getParameter("postId"));
