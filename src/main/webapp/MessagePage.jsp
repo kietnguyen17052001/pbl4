@@ -69,17 +69,32 @@
 					<%
 					for (User following : listFollowing) {
 					%>
-					<div id="chat-with-user" class="following-one" onclick="chatBox(<%=userId%>, <%=following.getUser_id()%>)">
+					<div id="chat-with-user" class="following-one"
+						onclick="chatBox(<%=userId%>, <%=following.getUser_id()%>)">
 						<img class="img-avatar-mess" alt="avatar"
 							src="image/<%=following.getPhoto()%>">
 						<p class="name-mess"><%=following.getFull_name()%></p>
+						<%
+						if (following.getUser_status().equals("online")){
+						%>
+						<div class="status"></div>
+						<%
+						}
+						%>
 					</div>
 					<%
 					}
 					%>
 				</div>
 			</div>
-			<div class="right-mess" id="right-mess-box"></div>
+			<div class="right-mess">
+				<div id="right-mess-box"></div>
+				<div class="input-chat">
+					<input type="text" id="content-message"
+						placeholder="Enter your message ..."> <input type="button"
+						onclick="sendMessage()" value="Send">
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="bottom-page">

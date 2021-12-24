@@ -104,13 +104,32 @@ function searchByName(param) {
 }
 
 // chat
-function chatBox(_userId, _targetId){
+function chatBox(_userId, _targetId) {
 	$.ajax({
 		url: '/AppPBL4/Message_Controller?type=chatBox',
 		type: 'GET',
 		data: {
 			userId: _userId,
-			targetId: _targetId 
+			targetId: _targetId
+		},
+		success: function(data) {
+			var row = document.getElementById("right-mess-box");
+			row.innerHTML = data;
+			var myDiv = document.getElementById("container-chat-ID");
+			myDiv.scrollTop = myDiv.scrollHeight;
+		}
+	});
+}
+
+// send message
+function sendMessage() {
+	var contentMessage = document.getElementById("content-message").value;
+	document.getElementById("content-message").value = "";
+	$.ajax({
+		url: '/AppPBL4/Message_Controller?type=addMessage',
+		type: 'GET',
+		data: {
+			message: contentMessage
 		},
 		success: function(data) {
 			var row = document.getElementById("right-mess-box");
@@ -118,3 +137,4 @@ function chatBox(_userId, _targetId){
 		}
 	});
 }
+

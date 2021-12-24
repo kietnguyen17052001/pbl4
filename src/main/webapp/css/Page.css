@@ -1040,7 +1040,6 @@ a {
 	width: 35%;
 	height: 100%;
 	border-right: 1px solid silver;
-	overflow: auto;
 }
 
 .left-mess-header {
@@ -1053,17 +1052,28 @@ a {
 }
 
 .left-mess-content {
-	
-}
-
-.frame-following-one:hover {
-	
+	width: 100%;
+	height: 85%;
+	overflow: auto;
 }
 
 .following-one {
+	position: relative;
 	display: flex;
 	align-items: center;
 	padding: 8px;
+	display: flex;
+}
+
+.following-one .status {
+	position: absolute;
+	top: 70%;
+	left: 16%;
+	border-radius: 50%;
+	width: 13px;
+	height: 13px;
+	background-color: green;
+	border-radius: 50%;
 }
 
 .following-one:hover {
@@ -1083,11 +1093,21 @@ a {
 .right-mess {
 	width: 65%;
 	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.right-mess #right-mess-box {
+	height: 90%;
+}
+
+.right-mess .input-chat {
+	height: 10%;
 }
 
 .right-mess-header {
 	width: 100%;
-	height: 15%;
+	height: 13%;
 	border-bottom: 1px solid silver;
 	display: flex;
 	align-items: center;
@@ -1100,8 +1120,8 @@ a {
 
 .container-chat {
 	width: 100%;
-	height: 90%;
-	overflow: auto;
+	height: 100%;
+	overflow: scroll;
 	border-bottom: 1px solid silver;
 	display: flex;
 	flex-direction: column;
@@ -1109,7 +1129,7 @@ a {
 
 .container-chat .message-box {
 	display: flex;
-	text-align: center;
+	align-items: center;
 	color: white;
 	padding: 5px;
 }
@@ -1132,7 +1152,31 @@ a {
 
 .input-chat {
 	width: 100%;
-	height: 10%;
+	display: flex;
+	align-items: center;
+	padding: 5px;
+}
+
+.input-chat input {
+	padding: 5px;
+	border-radius: 10px;
+}
+
+.input-chat input:first-child {
+	width: 83%;
+	margin-right: 2%;
+}
+
+.input-chat input:last-child {
+	width: 15%;
+	background-color: #eb4d4b;
+	border: 1px solid #eb4d4b;
+	color: white;
+}
+
+.input-chat input:last-child:hover {
+	opacity: 0.9;
+	cursor: pointer;
 }
 
 .input-txtchat {
