@@ -27,7 +27,7 @@
 			<div class="top-form">
 				<p class="name-app">SUGAR APP</p>
 				<div class="form-login">
-					<form name="formLogin" action="User_Controller?type=login"
+					<form name="formLogin" action="User_Controller?type=homePage"
 						method="post">
 						<input id="username" type="text" name="username"
 							placeholder="Username, phone number or email"
@@ -38,7 +38,7 @@
 							type="submit" value="Log in" onclick="return checkLogin()">
 					</form>
 				</div>
-				<div id="failed" style="text-align: center;"></div>
+				<div id="failed" style="text-align: center; color: red;"></div>
 				<div class="forgot-password">
 					<a class="forgot-password" href="ForgotPassword.jsp">Forgot
 						password?</a>

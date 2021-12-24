@@ -9,6 +9,7 @@ function checkLogin() {
 		if (_password == "") {
 			document.getElementById("input-password").style.borderColor = "red";
 		}
+		document.getElementById("failed").innerHTML = "Please enter information!"
 		return false;
 	}
 }

@@ -20,6 +20,7 @@
 	int userId = user.getUser_id();
 	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	int newFollower = (int) request.getAttribute("newFollower");
+	List<User> listFollowing = (ArrayList<User>) request.getAttribute("listFollowing");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -56,7 +57,54 @@
 			</div>
 		</div>
 	</div>
-	<div class="main-page"></div>
+	<div class="main-page-mess">
+		<div class="container-mess">
+			<div class="left-mess">
+				<div class="left-mess-header">
+					<img class="img-avatar-mess" alt="avatar"
+						src="image/<%=user.getPhoto()%>">
+					<h4 class="name-mess"><%=user.getFull_name()%></h4>
+				</div>
+				<div class="left-mess-content">
+					<%
+					for (User following : listFollowing) {
+					%>
+					<div id="chat-with-user" class="following-one" onclick="chatBox(<%=userId%>, <%=following.getUser_id()%>)">
+						<img class="img-avatar-mess" alt="avatar"
+							src="image/<%=following.getPhoto()%>">
+						<p class="name-mess"><%=following.getFull_name()%></p>
+					</div>
+					<%
+					}
+					%>
+				</div>
+			</div>
+			<div class="right-mess" id="right-mess-box"></div>
+		</div>
+	</div>
+	<div class="bottom-page">
+		<div class="box-bottom">
+			<div class="team-member">
+				<ul>
+					<li><a href="https://www.facebook.com/user001111000101/">Nguyen
+							Dang Kiet</a></li>
+					<li><a href="https://www.facebook.com/thanh2931">Duong
+							Dinh Thanh</a></li>
+					<li><a
+						href="https://www.facebook.com/profile.php?id=100008118754465">Nguyen
+							Tan Sy</a></li>
+				</ul>
+			</div>
+			<div class="university">
+				<ul>
+					<li><a href="http://dut.udn.vn/">Da Nang University of
+							Technology</a></li>
+					<li><a href="http://dut.udn.vn/KhoaCNTT">IT Falcuty</a></li>
+					<li><a href="#">PBL4</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 	<div id="form-follow-history" class="form-list-follower-history">
 		<div class="form-list-follower-history-title">
 			<div>

@@ -56,35 +56,6 @@ public class User_Controller extends HttpServlet {
 		User user;
 		HttpSession session = request.getSession();
 		switch (type) {
-		case "login": // login APP
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			try {
-				if (User_BO.getInstance().isExistUser(username, password)) {
-					user = User_BO.getInstance().getUser(username, password);
-//					Socket socket = new Socket("localhost", 6969);
-//					DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-//					String msg = "name-" + user.getFull_name() + ", id-" + user.getUser_id();
-//					dos.writeUTF(msg);
-//					socket.close();
-					// create and push user up session
-					session.setAttribute("user", user);
-					userId = user.getUser_id();
-					// cookie
-					Cookie cookieUsername = new Cookie("username", username);
-					Cookie cookiePassword = new Cookie("password", password);
-					cookieUsername.setMaxAge(60 * 60 * 24);
-					cookiePassword.setMaxAge(60 * 60 * 24);
-					// save cookie
-					response.addCookie(cookieUsername);
-					response.addCookie(cookiePassword);
-					directHomePage(request, response, userId);
-				} else {
-					getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
-				}
-			} catch (Exception e) {
-			}
-			break;
 		case "forgotPassword":
 			String email = request.getParameter("email");
 			String phone = request.getParameter("phone");
@@ -217,11 +188,41 @@ public class User_Controller extends HttpServlet {
 			}
 			break;
 		case "homePage":
-			try {
-				user = (User) session.getAttribute("user");
-				directHomePage(request, response, user.getUser_id());
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			if (username != null && password != null) {
+				try {
+					if (User_BO.getInstance().isExistUser(username, password)) {
+						user = User_BO.getInstance().getUser(username, password);
+//						Socket socket = new Socket("localhost", 6969);
+//						DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+//						String msg = "name-" + user.getFull_name() + ", id-" + user.getUser_id();
+//						dos.writeUTF(msg);
+//						socket.close();
+						// create and push user up session
+						session.setAttribute("user", user);
+						userId = user.getUser_id();
+						// cookie
+						Cookie cookieUsername = new Cookie("username", username);
+						Cookie cookiePassword = new Cookie("password", password);
+						cookieUsername.setMaxAge(60 * 60 * 24);
+						cookiePassword.setMaxAge(60 * 60 * 24);
+						// save cookie
+						response.addCookie(cookieUsername);
+						response.addCookie(cookiePassword);
+						directHomePage(request, response, userId);
+					} else {
+						getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+					}
+				} catch (Exception e) {
+				}
+			} else {
+				try {
+					user = (User) session.getAttribute("user");
+					directHomePage(request, response, user.getUser_id());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 			break;
 		case "explorePage":
@@ -239,6 +240,9 @@ public class User_Controller extends HttpServlet {
 			user = (User) session.getAttribute("user");
 			try {
 				sendDataListFollowerHistory(request, response, user.getUser_id());
+				List<User> listFollowing = Follow_BO.getInstance()
+						.listFollowingOrFollowerInProfile(user.getUser_id(), true);
+				request.setAttribute("listFollowing", listFollowing);
 				getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -266,7 +270,8 @@ public class User_Controller extends HttpServlet {
 				HashMap<User, Integer> hashMapListFollowingOfAnotherUser = hashMap(listFollowingOfAnotherUser, userId);
 				HashMap<User, Integer> hashMapListFollowerOfAnotherUser = hashMap(listFollowerOfAnotherUser, userId);
 				boolean isFollowing = Follow_BO.getInstance().isFollowed(userId, anotherUserId); // check user is
-																									// following another
+																									// following
+																									// another
 				boolean isFollowed = Follow_BO.getInstance().isFollowed(anotherUserId, userId); // check another is
 																								// following user
 				sendDataListFollowerHistory(request, response, userId);
@@ -458,7 +463,7 @@ public class User_Controller extends HttpServlet {
 		}
 		request.setAttribute("linkedHashMap", linkedHashMap);
 		// get new follower number of user
-		request.setAttribute("newFollower", User_DAO.getInstance().getUserById(userId).getNewFollower());
+		request.setAttribute("newFollower", User_BO.getInstance().getUserById(userId).getNewFollower());
 		// System.out.println(User_DAO.getInstance().getUserById(userId).getNewFollower());
 	}
 

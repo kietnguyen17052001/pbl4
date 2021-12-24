@@ -103,3 +103,18 @@ function searchByName(param) {
 	});
 }
 
+// chat
+function chatBox(_userId, _targetId){
+	$.ajax({
+		url: '/AppPBL4/Message_Controller?type=chatBox',
+		type: 'GET',
+		data: {
+			userId: _userId,
+			targetId: _targetId 
+		},
+		success: function(data) {
+			var row = document.getElementById("right-mess-box");
+			row.innerHTML = data;
+		}
+	});
+}
