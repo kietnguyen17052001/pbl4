@@ -45,11 +45,11 @@ public class Message_Controller extends HttpServlet {
 		int userId, targetId;
 		String type = request.getParameter("type");
 		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
 		switch (type) {
 		case "chatBox":
-			userId = Integer.parseInt(request.getParameter("userId"));
+			userId = user.getUser_id();
 			targetId = Integer.parseInt(request.getParameter("targetId"));
-			session.setAttribute("userId", userId);
 			session.setAttribute("targetId", targetId);
 			try {
 				User target = User_BO.getInstance().getUserById(targetId);
@@ -85,7 +85,7 @@ public class Message_Controller extends HttpServlet {
 			}
 			break;
 		case "addMessage":
-			userId = (int) session.getAttribute("userId");
+			userId = user.getUser_id();
 			targetId = (int) session.getAttribute("targetId");
 			try {
 				if (!Conversation_BO.getInstance().isExistConversation(userId, targetId)) {

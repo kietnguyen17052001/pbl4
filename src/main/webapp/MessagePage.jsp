@@ -1,3 +1,4 @@
+<%@page import="Model.BEAN.Message"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
@@ -21,6 +22,7 @@
 	LinkedHashMap<User, String> hashMapNotification = (LinkedHashMap<User, String>) request.getAttribute("linkedHashMap");
 	int newFollower = (int) request.getAttribute("newFollower");
 	List<User> listFollowing = (ArrayList<User>) request.getAttribute("listFollowing");
+	String flag = (String) request.getAttribute("flag");
 	%>
 	<div class="top-page">
 		<div class="box-top">
@@ -70,12 +72,12 @@
 					for (User following : listFollowing) {
 					%>
 					<div id="chat-with-user" class="following-one"
-						onclick="chatBox(<%=userId%>, <%=following.getUser_id()%>)">
+						onclick="chatBox(<%=following.getUser_id()%>)">
 						<img class="img-avatar-mess" alt="avatar"
 							src="image/<%=following.getPhoto()%>">
 						<p class="name-mess"><%=following.getFull_name()%></p>
 						<%
-						if (following.getUser_status().equals("online")){
+						if (following.getUser_status().equals("online")) {
 						%>
 						<div class="status"></div>
 						<%
@@ -88,7 +90,54 @@
 				</div>
 			</div>
 			<div class="right-mess">
-				<div id="right-mess-box"></div>
+				<div id="right-mess-box">
+					<%
+					if (flag.equals("t")) {
+						List<Message> listMessage = (ArrayList<Message>) request.getAttribute("listMessage");
+						User target = (User) request.getAttribute("target");
+					%>
+					<div class="right-mess-header">
+						<div class="following-one">
+							<img class="img-avatar-mess" alt="avatar"
+								src="image/<%=target.getPhoto()%>">
+							<h4 class="name-mess"><%=target.getFull_name()%></h4>
+						</div>
+					</div>
+					<div class="box-chat">
+						<div class="container-chat" id="container-chat-ID">
+							<%
+							for (Message msg : listMessage) {
+								if (msg.getId() == -1) {
+							%>
+							<div style="text-align: center;"><%=msg.getContent()%></div>
+							<%
+							break;
+							} else if (msg.getSender_id() == userId) {
+							%>
+							<div class="message-box sender">
+								<div></div>
+								<div class="message-sender"><%=msg.getContent()%></div>
+							</div>
+							<%
+							} else {
+							%>
+							<div class="message-box receiver">
+								<div>
+									<img src="image/<%=target.getPhoto()%>" alt="avatar" width="40"
+										height="40" style="border-radius: 50%;">
+								</div>
+								<div class="message-receiver"><%=msg.getContent()%></div>
+							</div>
+							<%
+							}
+							}
+							%>
+						</div>
+					</div>
+					<%
+					}
+					%>
+				</div>
 				<div class="input-chat">
 					<input type="text" id="content-message"
 						placeholder="Enter your message ..."> <input type="button"

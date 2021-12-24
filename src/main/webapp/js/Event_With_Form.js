@@ -104,12 +104,11 @@ function searchByName(param) {
 }
 
 // chat
-function chatBox(_userId, _targetId) {
+function chatBox(_targetId) {
 	$.ajax({
 		url: '/AppPBL4/Message_Controller?type=chatBox',
 		type: 'GET',
 		data: {
-			userId: _userId,
 			targetId: _targetId
 		},
 		success: function(data) {

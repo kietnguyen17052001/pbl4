@@ -86,7 +86,9 @@
 								<%
 								if (isFollowing) { // user is following another
 								%>
-								<form action="User_Controller?type=messagePage" method="post">
+								<form
+									action="User_Controller?type=chatWithUser&targetId=<%=anotherUser.getUser_id()%>"
+									method="post">
 									<input class="message-another" type="submit" value="Message">
 								</form> <%
  } else {

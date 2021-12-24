@@ -16,10 +16,13 @@ import javax.servlet.http.Part;
 
 import com.mysql.cj.Session;
 
+import Model.BEAN.Message;
 import Model.BEAN.Post_Photo;
 import Model.BEAN.User;
 import Model.BO.Another_BO;
+import Model.BO.Conversation_BO;
 import Model.BO.Follow_BO;
+import Model.BO.Message_BO;
 import Model.BO.Post_Photo_BO;
 import Model.BO.User_BO;
 import Model.DAO.User_DAO;
@@ -240,9 +243,39 @@ public class User_Controller extends HttpServlet {
 			user = (User) session.getAttribute("user");
 			try {
 				sendDataListFollowerHistory(request, response, user.getUser_id());
-				List<User> listFollowing = Follow_BO.getInstance()
-						.listFollowingOrFollowerInProfile(user.getUser_id(), true);
+				List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(user.getUser_id(),
+						true);
 				request.setAttribute("listFollowing", listFollowing);
+				request.setAttribute("flag", "f");
+				getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			break;
+		case "chatWithUser":
+			user = (User) session.getAttribute("user");
+			userId = user.getUser_id();
+			int targetId = Integer.parseInt(request.getParameter("targetId"));
+			session.setAttribute("targetId", targetId);
+			try {
+				User target = User_BO.getInstance().getUserById(targetId);
+				if (Conversation_BO.getInstance().isExistConversation(userId, targetId)) {
+					int conversationId = Conversation_BO.getInstance().getConversationId(userId, targetId);
+					List<Message> listMessage = Message_BO.getInstance().listMessageInConversation(conversationId);
+					request.setAttribute("listMessage", listMessage);
+				} else {
+					List<Message> listMessage = new ArrayList<Message>();
+					listMessage.add(new Message(-1, -1, userId, targetId, new Date(),
+							"Hay gui loi chao den " + target.getFull_name()));
+					request.setAttribute("listMessage", listMessage);
+				}
+				// get list message from conversation by conversation id
+				sendDataListFollowerHistory(request, response, user.getUser_id());
+				List<User> listFollowing = Follow_BO.getInstance().listFollowingOrFollowerInProfile(user.getUser_id(),
+						true);
+				request.setAttribute("listFollowing", listFollowing);
+				request.setAttribute("flag", "t");
+				request.setAttribute("target", target);
 				getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
